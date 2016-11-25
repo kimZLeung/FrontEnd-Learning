@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>window_formpanel</title>
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css">
+</head>
+<body>
+	<button id='sw'>window_formpanel</button>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+	var ll = document.getElementById('sw');
+	function createComBoStore(abbrs,names) {
+		var sum = abbrs.length;
+		var arr = [];
+		for(var i = 0; i<sum; i++) {
+			arr.push({'abbr':abbrs[i],'name':names[i]});
+		}
+		// console.log(arr);
+		var a = Ext.create('Ext.data.Store',{
+			fields: ['abbr','name'],
+			data: arr
+		});
+		return a;
+	}
+	// var pp = createComBoStore(['HUANGJIANYI','RonksTang','JeremyWu','AymaxLi'],['黄坚艺','曾庆宇','吴介民','李文杰']);
+	Ext.onReady(function  () {
+			ll.onclick = function() {
+				if(w.isHidden()) {
+					w.show();
+				}
+				else {
+					w.hide();
+				}
+			}
+			Ext.create('Ext.panel.Panel', {
+				title: 'Halo World',
+				width: 300,
+				x: 100,
+				y: 50,
+				layout: 'fit',
+				html: '<p>Fuck Halo</p>',
+				items: [
+					{
+						xtype: 'panel',
+						layout: 'fit',
+						title: 'Halo I am S',
+						html: '<h1>SSSSSSssssssSSSSSS</h1>'
+					},
+					{
+						xtype: 'textfield',
+						fieldLabel: 'foo'
+					}
+				],
+				renderTo: Ext.getBody()
+			});
+			
+			var w = Ext.create({
+				title: 'Halo World',
+				width: 400,
+				height: 500,
+				animateTarget: ll,
+				xtype: 'window',
+				// modal: true,
+				layout: 'fit',
+				items: [
+					{
+						xtype: 'form',
+						id: 'form',
+						layout:'vbox',
+						url:'',
+						items :[
+							{ 
+				        xtype: 'textfield',
+				        afterLabelTextTpl : '<span style="color:red;">*</span>',
+				        fieldLabel: '年级名称:',
+				        emptyText: '提交之后不能修改,字数不能超过16',
+				        allowBlank: false,
+				        blankText:'该输入项为必输项',
+				        msgTarget: 'under',
+				        maxLength: '16',
+				        size: '33',
+				        margin: '10 10 10 20',
+						    },
+						    {xtype:'tbspacer', flex:1},
+						    { 
+						        xtype: 'textfield',
+						        afterLabelTextTpl : '<span style="color:red;">*</span>',
+						        fieldLabel: '年级简称:',
+						        emptyText: '字数不能超过10',
+						        allowBlank: false,
+						        blankText:'该输入项为必输项',
+						        msgTarget: 'under',
+						        maxLength: '10',
+						        size: '33',
+						        margin: '10 10 10 20',
+						    },
+						    {xtype:'tbspacer', flex:1},
+						    { 
+						        xtype: 'datefield',
+						        afterLabelTextTpl : '<span style="color:red;">*</span>',
+						        fieldLabel: '入学时间:',
+						        emptyText: '格式如:2010-09-01',
+						        allowBlank: false,
+						        blankText:'该输入项为必输项',
+						        msgTarget: 'under',
+						        size: '33',
+						        format: 'Y-m-d',
+						        margin: '10 10 10 20',
+						    },
+						    {xtype:'tbspacer', flex:1},
+						    { 
+						        xtype: 'combobox',
+						        fieldLabel: '级长',
+						        emptyText: '请选择...',
+						        margin: '10 10 10 20',
+						        store: createComBoStore(['HUANGJIANYI','RonksTang','JeremyWu','AymaxLi'],['黄坚艺','曾庆宇','吴介民','李文杰']),
+						        displayField: 'name',
+						        valueField: 'abbr',
+						    },
+						    {xtype:'tbspacer', flex:1},
+						    { 
+						        xtype: 'textareafield',
+						        id: 'jianjie',
+						        fieldLabel: '年级简介',
+						        emptyText: '字数不能超过150',
+						        maxLength: '150',
+						        size: '33',
+						        msgTarget: 'under',
+						        margin: '10 10 10 20',
+						    },
+						    {xtype:'tbspacer', flex:1},
+						    { 
+						        xtype: 'textareafield',
+						        fieldLabel: '备注',
+						        emptyText: '字数不能超过150',
+						        maxLength: '150',
+						        size: '33',
+						        msgTarget: 'under',
+						        margin: '10 10 10 20',
+						    },
+						],
+
+				    buttons: [
+				    	{	
+				    		text: '保存',
+				    		width: 100,
+				    		formBind: true,
+				    		handler: function() {
+				    			Ext.getCmp('form').submit({
+				    				success: function(form, action){
+				    					Ext.Msg.alert('Success', action.result.msg);
+				    				},
+				    				failure: function(form, action){
+				    					Ext.Msg.alert('Failed', action.result.msg);
+				    				}
+				    			}); 
+				    		}
+				    	},
+				    	{
+				    		text: '取消',
+				    		width: 100,
+				    		handler: function() {
+				    			// Ext.Msg.alert('想取消?','没门');
+				    			var f = Ext.getCmp('form');
+				    			f.reset();
+				    			// w.animate({
+				    			// 	to: {
+				    			// 		width: (w.getWidth() == 400) ? 500 : 400,
+           //  					height: (w.getHeight() == 500) ? 600 : 500
+				    			// 	}
+				    			// });
+				    			w.hide();
+				    		}
+				    	},
+				    ]
+				}
+			  ]
+			}).show();
+		}
+	);
+	</script>
+</body>
+</html>

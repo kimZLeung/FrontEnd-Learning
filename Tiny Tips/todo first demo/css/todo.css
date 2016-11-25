@@ -1,0 +1,158 @@
+body {
+	min-width: 800px;
+	width: 1278px;
+	position: absolute;
+}
+
+/*div>[type='text'] {
+	height:50px;
+	font-size:1.8em;
+	display: block;
+}
+*/
+body>div>button {
+	width: 80px;
+	height: 30px;
+	overflow: hidden;
+}
+
+#cac {
+	width: 120px;
+	height: 30px;
+}
+
+li {
+	overflow: hidden;
+	display: inline-block;
+	width: 51%;
+	list-style: none;
+	position: relative;
+	margin-top: 10px;
+	transition: all 0.5s;
+	animation: pupu 1s 1;
+	padding-bottom: 5px;
+}
+@keyframes pupu {
+	0% {margin-top: -10px;}
+	100% {margin-top: 10px;}
+}
+
+li:hover>label {
+	background-color: green !important;
+}
+
+li>button {
+	position: absolute;
+	top: 30%;
+	right: 0%;
+	width: 40px;
+}
+
+.comple {
+	opacity: 0.5;
+	text-decoration: line-through;
+}
+
+.imcom {
+	opacity: 1.0;
+}
+
+.display {
+	display: none;
+}
+
+.displays {
+	display: block;
+}
+
+input[type='checkbox'] {
+	width: 25px;
+	height: 25px;
+}
+
+li:hover>button {
+	display: inline-block;
+}
+
+.change {
+	width: 300px;
+	height: 30px;
+	display: inline-block;
+	font-size: 1em;
+}
+
+
+#logPart {
+	display: none;
+	margin-top: 64px;
+	overflow: hidden;
+	animation:disp 0.5s 1 forwards;
+}
+
+@keyframes disp {
+	0% {margin-top: 0px;opacity: 0;}
+	100% {margin-top: 60px;opacity: 1;}
+}
+
+@keyframes pdis {
+	0% {margin-top: 60px;opacity: 1;}
+	100% {margin-top:0px;opacity: 0;}
+}
+
+#log {
+	position: absolute;
+	right: 2%;
+	top: 10px;
+	width: 200px;
+	height: 30px;
+	font-size: 1em;
+}
+
+#exit {
+	position: absolute;
+	right: 2%;
+	top: 50px;
+	width: 200px;
+	height: 30px;
+	font-size: 1em;
+	display: none;
+}
+
+li>label {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	border-radius: 50%;
+	background-color: white;
+	color: white;
+	font-size: 2em;
+	transition: all 0.5s;
+	border: dotted 0.1px #FF0;
+	left: -2%;
+	top: 50%;
+	margin-top: -20px;
+	padding: 1px;
+}
+
+
+[type='checkbox'] {
+	opacity: 0;
+	transition:margin 0.5s;
+}
+
+li>div {
+	width: 300px;
+	word-wrap:break-word;
+	font-size: 2em;
+	display: inline-block;
+	transition: all 0.5s;
+}
+
+.slide {
+	animation:slide 1 0.5s;
+}
+
+@keyframes slide {
+	0% {height: 45px;margin-top: 10px;margin-bottom:0px;padding: 5px}
+	100% {height: 0px;margin-top: 0px;margin-bottom:-10px;padding: 0px}
+}

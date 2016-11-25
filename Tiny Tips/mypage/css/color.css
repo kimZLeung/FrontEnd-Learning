@@ -1,0 +1,207 @@
+header {
+	background-color: white;
+	opacity: 0.9;
+}
+
+.listStyle {
+	background-color: black;
+	color: #1DC31D;
+}
+
+.oldListStyle {
+	background-color: white;
+	color: black;
+}
+
+#user {
+	color: white;
+}
+
+#sign {
+	color: white;
+}
+
+#to3d section {
+	background: rgb(50, 51, 54);
+}
+
+#welcome {
+	color: #1DC31D;
+	text-shadow: 10px 10px 25px #1DC31D;
+}
+
+#enter {
+	text-shadow: 20px 10px 25px rgb(50, 51, 54);
+}
+
+#myPage {
+	color: #1DC31D;
+	text-shadow: 30px 10px 25px #1DC31D;
+}
+
+#home article {
+	background-color: rgb(50, 51, 54);
+	color: white;
+}
+
+#animationer {
+	background-color: white;
+}
+
+#home article header {
+	background-color: black;
+	color: green;
+}
+
+#word>header,#img>header,#message>header,#home>header,#music>header,#personal>header {
+  background-color: black;
+}
+
+#word>header p,#img>header p,#message>header p,#home>header p,#music>header p,#personal>header p {
+	color: green;
+}
+
+#word>button {
+	background-color: black;
+	color: white;
+}
+
+#word article {
+	color: white;
+}
+
+#word article>header {
+	color: black;
+	background-color: white;
+}
+
+#word article>header input {
+	background-color: rgb(50, 51, 54);
+	color: white;
+}
+
+#word form legend {
+	color: white;
+}
+
+#word form label {
+	color: white;
+}
+
+#word>p {
+	color: white;
+	background-color: rgb(50, 51, 54);
+}
+
+#word nav ul {
+	background-color: rgb(50, 51, 54);
+}
+
+#word ul li a {
+	color: white;
+}
+
+#img>button {
+	background-color: black;
+	color: white;
+}
+
+#img>img {
+	color: white;
+}
+
+#perShow {
+	background-color: rgb(50, 51, 54);
+}
+
+#last {
+	background-color: black;
+	color: green;
+}
+
+#next {
+	background-color: black;
+	color: green;
+}
+
+.labelStyle {
+	color: green;
+}
+
+.oldLabelStyle {
+	color: white;
+}
+
+#message div article {
+	background-color: #1DC31D;
+	color: white;
+}
+
+#messageHolder article a {
+	color: white;
+}
+
+#messageHolder article a:hover {
+	color: red;
+}
+
+#music nav {   
+	background-color: black;
+}
+
+#music nav ul li {
+	background-color: rgb(50, 51, 54);
+}
+
+#music li a {
+	color: white;
+}
+
+#music li a:hover {
+	color: orange;
+}
+
+#playList {
+	background-color: black;
+	color: green;
+}
+
+#songName {
+	background-color: white;
+	color: black;
+	opacity: 0.3;
+}
+
+#musicBar1, #musicBar3, #musicBar5  {
+	background-color: black;
+}
+
+#musicBar2, #musicBar4 {
+	background-color: green;
+}
+
+#personal aside {
+	background-color: rgb(50, 51, 54);
+}
+
+#personal article {
+	background-color: rgb(50, 51, 54);
+	color: white;
+}
+
+#personal article header {
+	background-color: black;
+	color: green;
+}
+
+#toRewrite {
+	color: white;
+}
+
+footer {
+	background-color: black;
+}
+
+footer h2 {
+	color: green;
+}

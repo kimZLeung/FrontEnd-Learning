@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TestServer</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<h1>Welcome to Node.JS~</h1>
+	<a href="templates/about.html">-About-</a>
+	<a href="templates/infor.html">-Infor-</a>
+	<a href="javascript:void(0)" id='ga'>getAlert</a>
+	<script>
+		var ga = document.getElementById('ga');
+		ga.onclick = function(e) {
+			fetch('json/Hello.json').
+			then(function(res) {
+				if(res.status < 404) {
+					return res.text();
+				} else {
+					throw new Error('404 Not Found');
+				}
+			}).
+			then(function(res) {
+				alert(res);
+			}).
+			catch(function(e) {
+				console.error(e);
+			})
+		}
+	</script>
+</body>
+</html>

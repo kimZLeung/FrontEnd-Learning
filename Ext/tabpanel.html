@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>tabpanel</title>
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		Ext.onReady(function() {
+			Ext.create('Ext.tab.Panel', {
+				width: 1200,
+				height: 400,
+				x: 100,
+				y: 50,
+				title: 'Tab',
+				resizable: true,
+				collapsible: true,
+				tabPosition: 'left',
+				tabRotation: 0,
+				simpleDrag: true,
+				renderTo: Ext.getBody(),
+				items: [{
+					title: 'hei',
+					html: '<h1>这里是tab1</h1>',
+					closable: true,
+				}, {
+					title: 'bar',
+					html: '<h1>这里是tab2</h1>',
+					closable: true,
+				}, {
+					title: 'Haha',
+					html: '<h1>这里是tab3</h1>',
+					closable: true,
+				}, {
+					title: '+',
+					
+					listeners: {
+						beforeActivate: function() {
+							var index = 'panel' + (this.up('panel').items.getCount()-1).toString();
+							this.up('panel').insert(this.up('panel').items.getCount()-1, Ext.create({
+								xtype: 'panel',
+								title: index,
+								closable: true,
+								html: index+'niHao',
+								listeners: {
+									removed: function() {
+										this.up('panel').setActiveTab(this.up('panel').items.getCount()-3);
+									}
+								}
+							}));
+							this.up('panel').setActiveTab(this.up('panel').items.getCount()-2);
+							return false;
+						},
+					},
+				}]
+			})
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Promise_race</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var step1 = function(resolve, reject) {
+			if(true) {
+				resolve('我最快');
+			}
+			else {
+				reject(new Error('对不起'));
+			}
+		}
+		var step2 = function(resolve, reject) {
+			if(false) {
+				resolve('我比较快');
+			}
+			else {
+				reject(new Error('对不起2'));
+			}
+		}
+		var step3 = function(resolve, reject) {
+			if(false) {
+				resolve('你猜谁快');
+			}
+			else {
+				reject(new Error('对不起'));
+			}
+		}
+
+		var arr = [new Promise(step1), new Promise(step2), new Promise(step3)];
+		Promise.race(arr).then(function(val) {
+			console.log(val);
+		})
+	</script>	
+</body>
+</html>

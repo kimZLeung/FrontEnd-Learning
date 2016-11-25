@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Proxy</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var target = {
+			name: 'kimz',
+			_age: 19,
+		};
+		var obj = new Proxy(target, {
+			get(target, propKey) {
+				if(propKey[0] !== '_') {
+					console.log(target, propKey);
+				}
+				else {
+					return false;
+				}
+			},
+			set(target, propKey, value) {
+				// return true;				//单纯return true没写进去
+				// target[propKey] = value;	//可以这样手设
+				Reflect.set(target,propKey,value);	//也可以这样调用Reflect对象的方法去设置
+			},
+			has(target, propKey) {
+				if(propKey[0] === '_') {
+					return false;
+				}
+				// console.log(propKey in target)
+				return propKey;
+			}
+		});
+		obj.name;
+		var c = obj._age;
+		obj.name = 'kimzzzzz';
+		obj.name;
+		console.log('name' in obj);
+		console.log('_age' in obj);
+		// console.log(c);
+		// console.log(target.name);
+	</script>
+</body>
+</html>

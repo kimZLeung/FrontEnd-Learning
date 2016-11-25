@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MyModules</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		/**
+		 * [Manager 模块化构造出一个MyModules,直接调用define可创建模块]
+		 * @param {Object} ) {			var modules [description]
+		 */
+		var MyModules = (function Manager() {
+			var modules = {};
+
+			function define(name, deps, impl) {
+				for(var i = 0; i < deps.length; i++) {
+					// var hold = deps[i];
+					// deps[i] = modules[hold];
+
+					deps[i] = modules[deps[i]];
+
+				}
+				modules[name] = impl.apply(impl, deps);
+			}
+
+			function get(name) {
+				return modules[name];
+			}
+
+			return {
+				define: define,
+				get: get
+			};
+		})();
+
+
+		/**
+		 * [测试Module定义方法]
+		 * @param  {[type]} ) {			function hello(who) {				console.log('Let me introduce' + who);			}			return {				hello: hello,			}		} [description]
+		 * @return {[type]}   [description]
+		 */
+		MyModules.define('bar', [], function() {
+			function hello(who) {
+				return ('Let me introduce ' + who);
+			}
+
+			return {
+				hello: hello,
+			}
+		});
+
+		//引入了前面定义的bar模块,可以调用前面bar模块的方法
+		MyModules.define('foo', ['bar'], function(bar) {
+			var hungry = 'hippo';
+
+			function awesome() {
+				console.log(bar.hello(hungry).toUpperCase());
+			}
+
+			return {
+				awesome: awesome
+			}
+		});
+
+		var bar = MyModules.get('bar');
+		var foo = MyModules.get('foo');
+
+		console.log(bar.hello('you'));
+		foo.awesome();
+	</script>
+</body>
+</html>

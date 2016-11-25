@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Promise_Resolve</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var step1 = function(resolve, reject) {
+			if(true) {
+				resolve('第一');
+			}
+			else {
+				reject(new Error('对不起'));
+			}
+		}
+		var step2 = function(resolve, reject) {
+			if(false) {
+				resolve('第二');
+			}
+			else {
+				reject(new Error('对不起2'));
+			}
+		}
+		var step3 = function(resolve, reject) {
+			if(true) {
+				resolve('第三');
+			}
+			else {
+				reject(new Error('对不起'));
+			}
+		}
+
+		new Promise(step1).then(function(val) {
+			console.log('第一个then'+val);
+			return new Promise(step2);
+		})
+		.then(function(val) {
+			console.log('第二个then'+val);
+			return new Promise(step3);
+		})
+		.then(function(val) {
+			console.log('第三个then'+val);
+		})
+		.catch(function(val) {
+			console.warn(val);
+		});
+	</script>
+</body>
+</html>

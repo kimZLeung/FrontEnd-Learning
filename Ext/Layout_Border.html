@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Layout_Border</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		Ext.onReady(function () {
+			Ext.create({
+				title: '事件登记',
+				xtype: 'viewport',
+				// autoheight: true,
+				layout: 'border',
+				items: [
+					{
+						title: 'haha',
+						xtype: 'panel',
+						region: 'north',
+						html: '<h1>dssdsdsdsddsssd</h1>'
+					},{
+						xtype: 'panel',
+						region: 'center',
+						html: '<h1>hahahahahah</h1>',
+						items: [{
+							region: 'center',
+							html: 'hahaah',
+						}, {
+							region: 'north',
+							html: 'hahaha',
+						}],
+					},
+				],
+				renderTo: Ext.getBody()
+			});
+		});
+	</script>
+</body>
+</html>

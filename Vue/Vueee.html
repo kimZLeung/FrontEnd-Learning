@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>V.V</title>
+	<script src='js/vue.js'></script>
+	<style>
+		.clicked {
+			background-color: #1cb122!important;
+			color: white;
+			width: 70%;
+			font-size: 3em;
+			display: inline-block;
+			transition: all .5s;
+		}
+
+		.click {
+			width: 70%;
+			font-size: 3em;
+			display: inline-block;
+		}
+
+		.enter {
+			padding: 10px;
+			background-color: #1cb122;
+			color: white;
+			font-size: .5em;
+			float: right;
+			/*border: none;*/
+		}
+
+		.output {
+			padding: 10px;
+			background-color: #de2323;
+			color: white;
+			font-size: .5em;
+			float: right;
+		}
+
+		.searchBox {
+			font-size: 1.5em;
+			padding-left: 5px;
+			width: 30%;
+		}
+	</style>
+</head>
+<body>
+	<!-- box组件 -->
+	<template id='box'>
+		<div style='width:100%'>
+			<h1>Halo Gays~</h1>
+			<!-- <bar title='item' v-for='item in arr'></bar> -->
+			<bar title='深入浅出Node.C++'></bar>
+			<bar title='You Dont’t Know HTML'></bar>
+			<bar title='关于手指和键盘的吻合度大众测评'></bar>
+			<slot></slot>
+		</div>
+	</template>
+	
+	<!-- bar组件 -->
+	<template id='bar'>
+		<div v-show='isShow'>
+			<span :class='["click", {"clicked": isClick}]'>{{ title }}
+				<button @click='handleClick' :class='isClick ? "enter" : "output"'>{{ btn }}</button>
+			</span>
+		</div>
+	</template>
+
+	<!-- search组件 -->
+	<template id='search'>
+		<input type="text" class='searchBox' v-model='key' />
+	</template>
+
+	<!-- Vue根节点 -->
+	<div id='app'>
+		<box>
+			<h1>以上内容:</h1><search></search>
+		</box>
+	</div>
+
+	<script>
+		var arr = ['深入浅出Node.C++', 'You Dont’t Know HTML','关于手指和键盘的吻合度大众测评'];
+
+		Vue.component('box', {
+			template: '#box'
+		});
+
+		Vue.component('bar', {
+			template: '#bar',
+			props: ['title'],
+			data: function() {
+				return {
+					isClick: false,
+					isShow: true
+				};
+			},
+			computed: {
+				btn: function() {
+					return this.isClick ? '拔♀出' : '进♂入';
+				}
+			},
+			methods: {
+				handleClick: function() {
+					this.isClick = !this.isClick;
+				}
+			},
+			events: {
+				hsearch: function(key) {
+					if(this.title.indexOf(key) != -1) {
+						this.isShow = true;
+					} else {
+						this.isShow = false;
+					}
+					console.log(this.isShow)
+				}
+			}
+		})
+
+		Vue.component('search', {
+			template: '#search',
+			data: function() {
+				return {
+					key: ''
+				};
+			},
+			methods: {
+
+			},
+			watch: {
+				key: function() {
+					// console.log(this.key);
+					this.$dispatch('hsearch', this.key);
+					console.log('dd')
+				}
+			}
+		})
+
+		new Vue({
+			el: '#app'
+		})
+	</script>
+</body>
+</html>

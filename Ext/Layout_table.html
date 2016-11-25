@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Layout_table</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		Ext.onReady(function() {
+			Ext.create({
+				xtype: 'panel',
+				title: 'table',
+				// height: 800,
+				layout: {
+					type: 'table',
+					columns: 4,
+				},
+				items: [{
+					xtype: 'panel',
+					title: '1',
+					style: 'border: 1px solid red',
+					html: '<h1>hahahahadddddddddddddddddddddh</h1>',
+					colspan: 2,
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '2',
+					style: 'border: 1px solid red',
+					html: '<h1>hahahahah</h1>',
+					colspan: 2,
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '1',
+					colspan: 2,
+					style: 'border: 1px solid red',
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '2',
+					colspan: 2,
+					style: 'border: 1px solid red',
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '1',
+					colspan: 2,
+					style: 'border: 1px solid red',
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '2',
+					colspan: 2,
+					style: 'border: 1px solid red',
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '1',
+					colspan: 2,
+					style: 'border: 1px solid red',
+					rowspan: 1,
+				}, {
+					xtype: 'panel',
+					title: '2',
+					colspan: 2,
+					style: 'border: 1px solid red',
+					rowspan: 1,
+				}, ],
+				renderTo: Ext.getBody()
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+div {
+	width: 200px;
+	height: 50px;
+	border: 1px solid red;
+	font-size: 3em;
+}
+
+#word, #num {
+	font-size: 2em;
+}
+
+#btn {
+	width: 100px;
+	height: 50px;
+}
+

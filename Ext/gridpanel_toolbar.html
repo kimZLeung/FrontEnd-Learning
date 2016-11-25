@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>gridpanel_toolbar</title>
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+	// function createGird(data) {
+	// 	var states = Ext.create('Ext.data.Store', {
+	// 		    fields: [],
+	// 		    data : [
+	// 		        // {"abbr":"AL", "name":"Alabama"},
+	// 		        // {"abbr":"AK", "name":"Alaska"},
+	// 		        // {"abbr":"AZ", "name":"Arizona"}
+	// 		    ]
+	// 		});
+	// 	return JSON.parse(states);
+	// }
+	function createComBoStore(abbrs,names) {
+		var sum = abbrs.length;
+		var arr = [];
+		for(var i = 0; i<sum; i++) {
+			arr.push({'abbr':abbrs[i],'name':names[i]});
+		}
+		var a = Ext.create('Ext.data.Store',{
+			fields: ['abbr','name'],
+			data: arr
+		});
+		return a;
+	}
+	// function createGird(fields, data, heads, to) {
+	// 	var len = fields.length;
+	// 	var a = Ext.create('Ext.data.Store', {
+	// 			storeId: id,
+	// 			fields: fields,
+	// 			data: data,
+	// 			pageSize: 2,
+	// 		});
+	// 	var arr_head = [];
+	// 	if(heads.wid) {
+	// 		for(var i = 0;i<len; i++) {
+	// 			arr_head.push({
+	// 				text:heads.name[i],
+	// 				dataIndex: fields[i],
+	// 				width: parseInt(heads.wid[i]),
+	// 				editable: true,
+	// 				editor: new Ext.form.TextField({
+	// 	               allowBlank: false
+	// 		        }),
+	// 		        html:'<h1>hahahah</h1>'
+	// 			});
+	// 		}
+	// 	}
+	// 	else {
+	// 		for(var i = 0;i<len; i++) {
+	// 			arr_head.push({
+	// 				text:heads[i],
+	// 				dataIndex: fields[i],
+	// 				width: 350,
+	// 				editable: true,
+	// 				editor: {
+	// 					xtype: 'textfield',
+	// 					emptyText: '哈哈'
+	// 				}
+	// 			});
+	// 		}
+	// 	}
+		
+	// 	var g = Ext.create({
+	// 		xtype: 'grid',
+	// 		id: 'grid_infor',
+	// 		simpleDrag: true,
+	// 		enableColumnMove:true,
+	// 		selModel:Ext.create('Ext.selection.CheckboxModel',{
+	// 			mode:"SIMPLE",
+	// 			listeners: {
+	// 				select:function(self,record,index,eOpts) {
+	// 					console.log(index,record.data)
+	// 				},
+	// 				deselect:function(self,record,index,eOpts ) {
+	// 					console.log(index,record.data) 
+	// 				},
+	// 			}
+	// 		}),
+	// 		viewConfig: {
+	// 			plugins: {
+	// 				ptype:'gridviewdragdrop',
+	// 				dragText: '拖动至'
+	// 			}
+	// 		},
+	// 		listeners: {
+	// 			drop: function(event,b) {
+	// 				console.log(b.records[0].data)
+	// 				var store = Ext.getCmp('grid_infor').store;
+	// 				var arr = [];
+	// 				for(var i=0;i<store.totalCount;i++) {
+	// 					// store.getAt(i).set('考试时间',i+1);
+	// 					arr.push(store.getAt(i).data);
+	// 					console.log(store.getAt(i).data);
+	// 				}
+	// 				store.setData(arr);
+	// 				console.log(store.data);
+	// 			}
+	// 		},
+	// 		store: a,
+	// 		columns: arr_head,
+
+	// 	});
+	// 	console.log(arr_head);
+	// 	return {g:g,a:a};
+	// }
+	// Ext.Ajax.request({
+	//      url: 'json/progress.json',
+
+	//     success: function(response, opts) {
+	//         var obj = JSON.parse(response.responseText);
+	//         // var test = createGird(obj.fields, obj.data);
+	// 		Ext.onReady(function(){
+	// 			var gir = createGird(obj.fields, obj.data, {name:['考试名称','班级','考试时间','查看成绩'],wid:[300,300,300,300]});
+	// 			showPG(gir);
+	// 		});
+	// 	},
+
+	//      failure: function(response, opts) {
+	//          console.log('server-side failure with status code ' + response.status);
+	//      }
+	//  });
+	Ext.onReady(function() {
+		var gridStore = Ext.create('Ext.data.Store', {
+			storeId: 'gird',
+			autoLoad: false,
+			fields: ["考试名称", "班级", "考试时间", "查看成绩"],
+			pageSize: 2,
+			// nextPage: {
+			// 	params: {
+			// 		value: 'next',
+			// 	}
+			// },
+			// prevPage: {
+			// 	params: {
+			// 		value: 'prev',
+			// 	}
+			// },
+			listeners: {
+				beforeload: function() {
+					msgTip = Ext.MessageBox.show({
+						title: 'tips',
+						msg: 'Dead-Server加载中...'
+					});
+				},
+				load: function() {
+					msgTip.hide();
+				}
+			},
+			proxy: {
+				type: 'ajax',
+				url: 'json/gird.json',
+				reader: {
+					type: 'json',
+					rootProperty: 'data',
+				}
+			}
+		});
+		
+		gridStore.load({
+			params: {
+				start: 2,
+				limit: 2,
+			},
+			// callback: function() {
+			// 	msgTip.hide();
+			// }
+		});
+		// gridStore.nextPage({
+		// 	params: {
+		// 		value: 123,
+		// 		start: 2,
+		// 		limit: 2,
+		// 	}
+		// });
+
+		Ext.create('Ext.panel.Panel', {
+			layout: 'fit',
+			items: [{
+				title: 'gridpanel_toolbar',
+				id: 'ac',
+				xtype: 'panel',
+				// minHeight: 400,
+				height: 800,
+				layout: 'border',
+				// flex: 1,
+				items: [{
+						xtype: 'toolbar',
+						height: '70px',
+						region: 'north',
+						title: 'gridpanel_toolbar',
+						layout: 'hbox',
+						padding: 5,
+						items :[{
+							xtype: 'form',
+							layout: 'column',
+							border: false,
+							id:'bar',
+							flex: 5,
+							items: [{
+								xtype: 'combobox',
+								fieldLabel: '学科选择:',
+								labelWidth: 65,
+								columnWidth: .25,
+								emptyText: '请选择...',
+								width: 200,	
+								padding: 5,
+								store: createComBoStore(['va','la','ff'], 
+									['高数','电工','大英']),
+								valueField : 'abbr', 
+								displayField:'name', 
+								listeners: {
+									change: function() {
+										Ext.getCmp('com2').setStore(createComBoStore(['va','la','ff'],['大一','大二','大三']));
+									}
+								}		
+							}, {
+								xtype: 'combobox',
+								id: 'com2',
+								fieldLabel: '年级选择:',
+								emptyText: '请选择...',
+								width: 200,
+								labelWidth: 65,
+								columnWidth: .25,
+								padding: 5,
+								valueField : 'abbr', 
+								displayField:'name', 
+								listeners: {
+									change: function() {
+										Ext.getCmp('com3').setStore(createComBoStore(['va','la','ff'],['第一学期','第二学期','第三学期']));
+										Ext.Msg.alert(Ext.getCmp('com2').value);
+										gridStore.reload({
+											params: {
+												value: Ext.getCmp('com2').value
+											},
+											// callback: function() {
+											// 	msgTip.hide();
+											// }
+										});
+									}
+								}	
+							}, {
+								xtype: 'combobox',
+								id: 'com3',
+								fieldLabel: '学期选择:',
+								emptyText: '请选择...',
+								width: 200,	
+								labelWidth: 65,
+								columnWidth: .25,
+								padding: 5,
+								valueField : 'abbr', 
+								displayField:'name',
+								listeners: {
+									change: function() {
+										Ext.getCmp('com4').setStore(createComBoStore(['va','la','ff','66'],['黄坚艺','李文杰','吴介民','曾庆宇']));
+									},
+									collapse: function(cmb,newValue,oldValue,eOpts ) {   
+										this.focus();  
+										console.log(this);
+									}     
+									
+								}	
+							}, {
+								xtype: 'combobox',
+								id: 'com4',
+								fieldLabel: '任课老师:',
+								emptyText: '请选择...',
+								width: 200,	
+								labelWidth: 65,
+								columnWidth: .25,
+								padding: 5,
+								valueField : 'abbr', 
+								displayField:'name',
+								}]
+							}, '->', {
+							xtype: 'button',
+							text: '重置',
+							// flex: 1,
+							handler: function() {
+								Ext.getCmp('bar').reset();
+								Ext.Msg.alert(parent.width);
+							},
+							width: 70
+						}, {
+							xtype: 'button',
+							text: '删除',
+							width: 70,
+							// flex: 1,
+							handler: function() {
+								var rows = Ext.getCmp('grid_infor').getSelectModel().getgetSelections();
+								console.log(rows);
+							}
+						}]
+					}, 
+					{
+						xtype: 'grid',
+						store: gridStore,
+						region: 'center',
+						columns: [{
+							text: '考试名称',
+							dataIndex: '考试名称',
+							flex: 1,
+						}, {
+							text: '班级',
+							dataIndex: '班级',
+							flex: 1,
+						}, {
+							text: '考试时间',
+							dataIndex: '考试时间',
+							flex: 1,
+						}, {
+							text: '查看成绩',
+							dataIndex: '查看成绩',
+							flex: 1,
+						}]
+					}
+				],
+				dockedItems: [{
+					xtype: 'pagingtoolbar',
+					store: gridStore,
+					dock: 'bottom',
+					displayInfo: true,
+					displayMsg: '当前显示 {0} - {1} 条，共 {2} 条',
+					emptyMsg: '无显示数据',
+					listeners: {
+						change: function(a,b,c,d) {
+							console.log(a,b,c,d);
+							// gridStore.nextPage({
+							// 	params: {
+							// 		value: 123,
+							// 		start: 2,
+							// 		limit: 2,
+							// 	}
+							// });
+							return false;
+						}
+					}
+				}],
+			}],
+			renderTo: Ext.getBody()
+			
+		});
+	});
+	
+
+	
+	
+	</script>
+</body>
+</html>

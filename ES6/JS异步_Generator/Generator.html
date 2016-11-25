@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Generator</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * [*helloWorldGenerator 测试yield]
+		 * @yield {[type]} []
+		 */
+		function* helloWorldGenerator() {
+			yield 'hello';
+			yield function(word) {
+				alert(word);
+			};
+			return 'ending';
+		}
+
+		var hw = helloWorldGenerator();
+		console.log(hw.next());
+		hw.next().value('nimazhale');
+		console.log(hw.next());
+
+		/**
+		 * [*foo 尝试next中传入不同参数的效果]
+		 * @param {[type]} x [number]
+		 * @yield {[type]} []
+		 */
+		function* foo(x) {
+			var y = 2*(yield (x + 1));
+			var z = yield(y / 3);
+			return (x + y + z);
+		}
+
+		var a = foo(5);
+		console.log(a.next());
+		console.log(a.next());
+		console.log(a.next());
+
+		var c = foo(5);
+		console.log(c.next());
+		console.log(c.next(13));
+		console.log(c.next('haha'));
+		//next中传参数之后该参数会作为你上一次yield返回的值
+
+		/**
+		 * [*testFoo 测试for...of]
+		 * @yield {[type]} [test]
+		 */
+		function* testFoo() {
+			yield 1;
+			yield 2;
+			yield 3;
+			yield 4;
+			yield 5;
+			return 6;
+		}
+
+		for(let f of testFoo()) {
+			console.log(f);
+		}
+
+		/**
+		 * [*fibonacci 那什么波奇那多数列]
+		 * @yield {[type]} [description]
+		 */
+		function* fibonacci() {
+			let [prev, curr] = [0, 1];
+			for (;;) {
+				[prev, curr] = [curr, prev + curr];
+				yield curr;
+			}
+		}
+
+		for (let n of fibonacci()) {
+			if (n > 1000) break;
+			console.log(n);
+		}
+		
+		/**
+		 * [*foo 在一个Genertator中调用yield*可以调用另一个Genertator]
+		 * @yield {[type]} [description]
+		 */
+		function* foo() {
+			yield 'a';
+			yield 'b';
+		}
+		function* bar() {
+			yield 'x';
+			yield* foo();
+			yield 'y';
+		}
+
+		var testBar = bar();
+		console.log(testBar.next());	//x
+		console.log(testBar.next());	//a
+		console.log(testBar.next());	//b
+		console.log(testBar.next());	//y
+		console.log(testBar.next());	//undefined
+
+		/**
+		 * [*inner 对比用yield*的不同之处]
+		 * @yield {[type]} [description]
+		 */
+		function* inner() {
+			yield 'hello!';
+		}
+
+		function* outer1() {
+			yield 'open';
+			yield inner();		//返回的value值时inner()函数
+			yield 'close';
+		}
+
+		var gen = outer1()
+		console.log(gen.next().value);
+		console.log(gen.next().value); 
+		console.log(gen.next().value);
+
+		function* outer2() {
+			yield 'open';
+			yield* inner();		//返回的value值是inner()函数的yield返回值
+			yield 'close';
+		}
+
+		var gen = outer2()
+		console.log(gen.next().value);
+		console.log(gen.next().value);
+		console.log(gen.next().value);
+
+		/**
+		 * [*gen 如果yield*后面跟原生带有iterator的数据结构,加了星号就表示返回的是数组的遍历器对象]
+		 * @yield {[type]} [description]
+		 */
+		function* gend(){
+			yield* ["a", "b", "c"];
+		}
+		console.log(gend().next().value);
+		// 用来遍历拆解原生数组这些数据结构会很方便
+		// yield* 加了星号之后会想方设法接受遍历器对象
+
+
+
+		/* yield*后面的Generator函数（没有return语句时），不过是for...of的一种简写形式，完全可以用后者替代前者。讲到for..of
+		又会想起原生数组带有的原生iterator,既然这里说到和for..of差不多
+		我们来看看for...of的定义：一个数据结构只要部署了Symbol.iterator属性，就被视为具有iterator接口，就可以用for...of循环遍历它的成员
+		for...of是可以直接把数组整个放到of后面的(当然也可以把这个数组的iterator传到of后面),所以这里yield*这个写法和for...of循环应该有异曲同工之妙 */
+	</script>
+</body>
+</html>

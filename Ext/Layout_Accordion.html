@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Layout_Accordion</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		Ext.onReady(function() {
+			Ext.create({
+				xtype: 'viewport',
+				layout: 'fit',
+				items: [{
+					xtype: 'panel',
+					title: 'Accordion',
+					layout: {
+						type: 'accordion',
+						titleCollapse: false,
+						animate: true,
+						activeOnTop: true
+					},
+					items: [{
+						title: '1',
+						html: '1'
+					}, {
+						title: '2',
+						html: '2'
+					}, {
+						title: '3',
+						html: '3'
+					}, {
+						title: '4',
+						html: '4'
+					}, {
+						title: '5',
+						html: '5'
+					}, {
+						title: '6',
+						html: '6'
+					}],
+				}],
+				renderTo: Ext.getBody()
+			});
+		});
+	</script>
+</body>
+</html>

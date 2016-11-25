@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta charset="UTF-8">
+	<title>test</title>
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<button id='w'>dasdsa</button>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		
+		Ext.onReady(function() {
+			Ext.define('User', {
+			    extend: 'Ext.data.Model',
+			    fields: ['haha', '班级', '考试时间'],
+			});
+
+			var store = Ext.create('Ext.data.Store', {
+			    model: 'User',
+			    proxy: {
+			        type: 'ajax',
+			        url : 'json/test.json',
+			        reader: {
+			        	type: 'json'
+			        }
+			    },
+			    // autoLoad:true
+			});
+			// store.load();
+			Ext.create({
+				xtype: 'combobox',
+				store: store,
+				displayField: 'haha',
+				valueField: '班级',
+				renderTo: Ext.getBody()
+			});
+		});
+	</script>
+	<script type="text/javascript">
+	</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Point</title>
+	<script src="http://cdn.bootcss.com/expect/1.20.2/expect.js"></script>
+</head>
+<body>
+	<script>
+		class Point {
+			constructor(x, y) {
+				this.x = x;
+				this.y = y;
+			}
+
+			getLocation() {
+				return '(' + this.x + ',' + this.y + ')';
+			}
+
+		}
+
+		var p = new Point(1, 3);
+		console.log(p.getLocation());
+		console.log(p.__proto__);
+		console.log(Point.prototype);
+		// console.log(Point.__proto__);
+
+		class PowerPoint extends Point {
+			constructor(x, y, z) {
+				super(x, y);	// 子类构造方法要先调用spuer才能使用this
+				// this.x = x;
+				// this.y = y;
+				this.z = z;
+			}
+		}
+		console.log(PowerPoint.__proto__ == Point);
+		console.log(PowerPoint.prototype);
+		console.log(PowerPoint.prototype.__proto__);
+
+		var pp = new PowerPoint(1,2,3);
+		console.log(pp.prototype);
+		console.log(pp.__proto__);
+
+		var aa = (e) => e;
+		aa(1);
+
+		expect(aa(1)).toEqual(1);
+		console.log('Test Success!')
+	</script>
+</body>
+</html>

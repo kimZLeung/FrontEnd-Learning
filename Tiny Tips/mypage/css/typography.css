@@ -1,0 +1,138 @@
+aside nav ul {
+	list-style: none;
+}
+
+aside nav ul a {
+	text-decoration: none;
+}
+
+.listStyle {
+	font-weight: bold;
+}
+
+.oldListStyle {
+	font-weight: normal;
+}
+
+#user {
+	font-weight: bolder;
+}
+
+#welcome {
+	font-size: 2em;
+	font-weight: bold;
+	color: #1DC31D;
+}
+
+#enter {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+#myPage {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+#home article header {
+	font-weight: bold;
+}
+
+#word>header p,#img>header p,#message>header p,#home>header p,#music>header p,#personal>header p {
+	font-weight: bold;
+	font-size: 3em;
+}
+
+#word>button {
+	font-size: 1.3em;
+}
+
+#word legend {
+	font-size: 1.5em;
+	font-weight: bolder;
+}
+
+#word article p {
+	font-size: 0.5em;
+}
+
+#word article header {
+	font-weight: bold;
+	font-size: 2em;
+	text-align: center;
+}
+
+#word>p {
+	font-weight: bold;
+	font-size: 2em;
+}
+
+#word nav ul {
+	list-style: none;
+}
+
+#word ul li a {
+	text-decoration: none;
+}
+
+#word ul li span {
+	color: white;
+}
+
+#picture {
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.labelStyle {
+	font-size: 1.3em;
+}
+
+.oldLabelStyle {
+	font-size: 1.3em;
+}
+
+#message div article p {
+	font-size: 1.5em;
+}
+
+#messageHolder article span {
+	font-size: 1em;
+}
+
+#messageHolder article a {
+	font-size: 1em;
+	text-decoration: none;
+}
+
+#music nav ul li {
+	list-style: none;
+}
+
+#music li a {
+	text-decoration: none;
+}
+
+#playList {
+	font-size: 1.7em;
+	font-weight: bold;
+	text-align: center;
+}
+
+#songName {
+	font-size: 1.5em;
+	text-align: center;
+	font-weight: bold;
+}
+
+#toRewrite {
+	text-decoration: none;
+}
+
+#rewrite input {
+	font-weight: bold;
+}
+
+footer {
+	text-align: center;
+}

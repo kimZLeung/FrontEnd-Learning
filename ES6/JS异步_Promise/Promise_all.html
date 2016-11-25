@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Promise_all</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var step1 = function(resolve, reject) {
+			if(true) {
+				resolve('第一');
+			}
+			else {
+				reject(new Error('对不起'));
+			}
+		}
+		var step2 = function(resolve, reject) {
+			if(true) {
+				resolve('第二');
+			}
+			else {
+				reject(new Error('对不起2'));
+			}
+		}
+		var step3 = function(resolve, reject) {
+			if(true) {
+				resolve('第三');
+			}
+			else {
+				reject(new Error('对不起'));
+			}
+		}
+
+		var arr = [new Promise(step1), new Promise(step2), new Promise(step3)];
+		Promise.all(arr).then(function(val) {
+			console.log(val);
+			val.push('hahaha');
+			return val;
+		})
+		.then(function(val) {
+			console.log(val);
+		})
+		.catch(function(Error) {
+			console.log(Error);
+		});
+	</script>
+</body>
+</html>

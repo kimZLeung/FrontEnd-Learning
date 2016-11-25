@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>viewport_treepanel</title>
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		Ext.Ajax.request({
+	     url: 'json/studentTree.json',
+
+	     success: function(response, opts) {
+	     	var obj = JSON.parse(response.responseText);
+	        var tree = createTreeS(obj.data);
+	        createWin(tree);
+	        // createTreeS(obj.data);
+		},
+
+	     failure: function(response, opts) {
+	         console.log('server-side failure with status code ' + response.status);
+	     }
+	 });
+	 function createTreeS(data) {
+	 	var root = {expanded: true, children: []};
+	 	function use(dt,laodou) {
+	 		var arr = [];
+		 	for(var it in dt) {
+		 		if(Object.keys(dt[it]).length != 0) {
+		 			var ch = {text: it, expanded: true, children: []};
+		 			if(laodou) {
+		 				laodou.children.push(ch);
+		 			}
+		 			else {
+		 				root.children.push(ch);
+		 			}
+		 			var res = use(dt[it],ch);
+		 			for(var i = 0; i<res.length; i++) {
+		 				ch.children.push(res[i]);
+		 			}
+		 		}
+		 		else {
+		 			arr.push({text: it, leaf: true})
+		 		}
+		 	}
+		 	return arr;
+	 	}
+	 	console.log(data);
+	 	use(data);
+	 	console.log(root);
+	 	var a = Ext.create('Ext.data.TreeStore',{
+	 		root: root
+	 	});
+
+	 	return a;
+	 }
+	 function createWin(treeStore) {
+		 Ext.onReady(function(){
+		 	Ext.create('Ext.container.Viewport', {
+		 		bodyPadding: 20,
+		 		layout:'border',
+			 	items:[{
+			 		xtype: 'panel',
+			 		region: 'center',
+			 		title: 'haloEXT',
+			 	},{
+			 		xtype:'header',
+			 		region: 'north',
+			 		padding: 20,
+			 		margin: 10,
+			 		height: 60,
+			 		html: '<h1>这里一般是header</h1>'
+			 	},{
+			 		xtype: 'treepanel',
+			 		title: '学校管理',
+			 		region: 'west',
+			 		rootVisible: false,
+			        collapsible: true,
+			        store: treeStore,
+			        useArrows: true,
+			        width: 300,
+			        
+			 	}],
+			 	renderTo: Ext.getBody()
+			 });
+		 });
+	 }
+	 
+	 
+	</script>
+</body>
+</html>

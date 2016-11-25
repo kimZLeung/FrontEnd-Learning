@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Layout_Card</title>
+	<link rel="stylesheet" href="ext-6.0.1/build/classic/theme-triton/resources/theme-triton-all.css" />
+</head>
+<body>
+	<script type="text/javascript" src="ext-6.0.1/ext-bootstrap.js"></script>
+	<script type="text/javascript">
+		Ext.onReady(function() {
+			var navigate = function(panel, direction, prev, next) {
+				var layout = panel.getLayout();
+				layout[direction]();
+				prev.setDisabled(!layout.getPrev());
+				next.setDisabled(!layout.getNext());
+			}
+			
+			Ext.create('Ext.panel.Panel',{
+				title: 'Card',
+				width: 1000,
+				height: 800,
+				id:'card',
+				layout: 'card',
+				fbar: [{
+					id: 'move-prev',
+					text: '<',
+					handler: function() {
+						// Ext.getCmp('card').getLayout();
+						// layout.prev();
+						// layout.getPrev();
+						navigate(this.up('panel'), 'prev', Ext.getCmp('move-prev'), Ext.getCmp('move-next'));
+					},
+					disabled: true
+				},'->',{
+					id: 'move-next',
+					text: '>',
+					handler: function() {
+						// navigate(btn.up('panel'), 'next');
+						// var layout = Ext.getCmp('card').getLayout();
+						// layout.next();
+						// layout.getNext();
+						navigate(this.up('panel'), 'next', Ext.getCmp('move-prev'), Ext.getCmp('move-next'));
+					},
+				}],
+				items: [{
+			        id: 'card-0',
+			        html: '<h1>Welcome to the Wizard!</h1><p>Step 1 of 3</p>'
+			    },{
+			        id: 'card-1',
+			        html: '<p>Step 2 of 3</p>'
+			    },{
+			        id: 'card-2',
+			        html: '<h1>Congratulations!</h1><p>Step 3 of 3 - Complete</p>'
+			    },{
+			        id: 'card-3',
+			        html: '<h1>Congratulations!</h1>'
+			    }],
+		    renderTo: Ext.getBody()
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>v-for</title>
+	<style type="text/css">
+		.expand-transition {
+			transition: all 2s ease;
+			height: 20px;
+			overflow: hidden;
+		}
+
+		.expand-enter, .expand-leave {
+			height: 0;
+			padding: 0 10px;
+			opacity: 0;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<ul id='vfor'>
+		<li v-for='item in items' track-by='uid'>
+			{{item.uid + ' ' +item.msg}}
+		</li>
+	</ul>
+	
+	<div id='app'> a={{ a | toNum }} b={{ b | toNum }} <input v-if='show' transition='expand' v-model='b' /><button v-on:click='handleClick'>toggle</button><my-cmp :word='2' ></my-cmp></div>
+
+	<div id='add'></div>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#vfor',
+			data: {
+				items: [
+					{msg: 'hahah', uid:'0'},
+					{msg: 'heiheih', uid:'1'},
+					{msg: 'bibibi', uid:'2'}
+				]
+			}
+		});
+		// setTimeout(function() {
+		// 	vm.items.push({msg: '666', uid:'3'});
+		// }, 1000);
+		
+		Vue.filter('toNum', function(value) {
+			if(!value) {
+				return 0;
+			} else {
+				return value;
+			}
+		});
+
+		// var myCmp = Vue.extend({
+		// 	template: '<h1>你好世界</h1>'
+		// })
+		// Vue.component('my-cmp', myCmp);
+
+		Vue.component('my-cmp', {
+			template: '<h1>{{ word }}<my-cmpp word-load="3"></my-cmpp></h1>',
+			data: function() {
+				return {a: 1};	// 因为如果直接用对象的话所以my-cmp实例都会共享这一个对象，el同理
+			},
+			props: ['word'],
+			components: {
+				'my-cmpp': {
+					template: '<h1>{{ wordLoad }}</h1>',
+					props: ['wordLoad']
+				}
+			}
+		});
+
+		var v = new Vue({
+			el: '#app',
+			data: {
+				a: 1,
+				show: false,
+			},
+			methods: {
+				handleClick: function() {
+					this.show = !this.show;
+				}
+			},
+			computed: {
+				b: {
+					get: function() {
+						return parseInt(this.a)+1;
+					}, 
+					set: function(newB) {
+						this.a = parseInt(newB) - 1;
+					}
+				}
+			}
+		});
+
+		new Vue({
+			el: '#add',
+			template: '<h2>~~~~</h2>'
+		});
+	</script>
+</body>
+</html>

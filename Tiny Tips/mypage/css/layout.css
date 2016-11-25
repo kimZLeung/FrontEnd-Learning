@@ -1,0 +1,668 @@
+body {
+  max-width: 1500px;
+  min-width: 900px;
+  margin: 0px 4.5%;
+  min-height: 1000px;
+  background-image: url(../image/7d270ffc49024735fd5d119fdea5585b6adefd331d9ac-7pPpAG_fw658.jpg);
+  background-position: center;
+  position: relative;
+}
+
+body>header {
+	margin: auto;
+	margin-top: 120px;
+	width: 92%;
+	height: 100px;
+	background-image: url(../image/1f1a9c46acd4c56335a87529d3b777b2c44b90c4c415f-qj06cn_fw658.jpg);
+	background-position: center;
+	position: relative;
+}
+
+button, input[type='button'] {
+	cursor: pointer;
+}
+
+aside {
+	margin: 20px 3.8%;
+  display: inline-block;
+  width: 200px;
+  position: relative;
+}
+
+aside nav ul {
+	display: inline-block;
+	margin-top: 100px;
+	position: relative;
+	left: 13%;
+}
+
+aside nav ul a {
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+
+aside nav ul li:after {
+	content: '>';
+}
+
+.listStyle {
+	transform:scale(1.2);
+	text-align: center;
+  margin: 10px 0px;
+  padding: 13px;
+  border-radius: 2px;
+  transition:all 0.2s;
+}
+
+.oldListStyle {
+	transform:scale(1);
+	text-align: center;
+  margin: 10px 0px;
+  padding: 13px;
+  border-radius: 2px;
+  transition:all 0.2s;
+}
+
+section {
+	margin: -5px;
+	position: absolute;
+	width: 101%;
+	height: 101%;
+	overflow: auto;
+	transition:all 1s;
+}
+
+#colunm {
+	width: 50px;
+	height: 700px;
+	position: absolute;
+	background-image: url(../image/20160529204014.png);
+	background-position: center;
+	border-radius: 5px;
+	left: 30%;
+	background-size: contain;
+}
+
+#battery {
+	float: right;
+	width: 18%;
+}
+
+#user {
+	margin-left: 230px;
+	padding-top: 30px;
+	margin-bottom: 10px;
+}
+
+#sign {
+	margin: 0;
+	margin-left: 5%;
+}
+
+#container {
+	position: relative;
+	margin-top: 20px;
+	/*perspective:8000px;*/
+}
+
+#to3d {
+	width: 60%;
+	height: 690px;
+	position: absolute;
+	margin-bottom: 50px;
+	left: 31%;
+	top: 20px;
+	transform-style:preserve-3d;
+}
+
+#home {
+	transform:rotateX(0deg) rotateY(0deg) translateZ(370px);
+}
+
+#word {
+	transform:rotateX(0deg) rotateY(90deg) translateZ(370px);
+}
+
+#img {
+	transform:rotateX(0deg) rotateY(180deg) translateZ(370px);
+}
+
+#message {
+  transform:rotateX(0deg) rotateY(270deg) translateZ(370px);
+}
+
+#music {
+	transform:rotateX(0deg) rotateY(0deg) translateZ(350px);
+}
+
+#personal {
+	transform:rotateX(0deg) rotateY(90deg) translateZ(350px);
+}
+
+#headpic {
+	width: 160px; 
+	height: 160px;
+	position: absolute;
+	top: -95%;
+	left: 4%;
+	border-radius: 10px;
+}
+
+div#animationer {
+	width: 60%;
+	height: 75%;
+	margin: 2%;
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+}
+
+#animationer img {
+	position: absolute;
+	width: 90px;
+	height: 90px;
+}
+
+#center img {
+	position: absolute;
+	height: 70px;
+	width: 70px;
+}
+
+#face1 {
+	left: 10%;
+	top: 5%;
+	transform: rotateZ(-15deg);
+}
+
+#face2 {
+	left: 70%;
+	top: 15%;
+	transform: rotateZ(30deg);
+}
+
+#face3 {
+	left: 10%;
+	top: 70%;
+	transform: rotateZ(-30deg);
+}
+
+#face4 {
+	left: 70%;
+	top: 80%;
+	transform: rotateZ(20deg);
+}
+
+#center {
+	position: absolute;
+	left: 41%;
+	top: 45%;
+	width: 0;
+	height: 0;
+}
+
+#animationer p {
+	position: absolute;
+}
+
+#welcome {
+	left: 35%;
+	top: 45%;
+}
+
+#enter {
+	left: 45%;
+	top: 45%;
+	transform:rotateZ(45deg);
+}
+
+#myPage {
+	left: 55%;
+	top: 45%;
+}
+
+#home article {
+	width: 30%;
+	height: 35%;
+	overflow: auto;
+	position: absolute;
+}
+
+#home article header {
+	padding: 3%;
+}
+
+#home article table td {
+	width: 50%;
+	padding-top: 10px;
+}
+
+#home article li {
+	margin: 10px 10px;
+}
+
+#personalData {
+	top: 18%;
+	right: 5%;
+}
+
+#personalWord {
+	top: 58%;
+	right: 5%;
+}
+
+#personalWord ul {
+	list-style-type: lower-roman;
+}
+
+#word>header,#img>header,#message>header,#home>header,#music>header,#personal>header {
+	margin-top: 0;
+  height: 110px;
+}
+
+#word>header p,#img>header p,#message>header p,#home>header p,#music>header p,#personal>header p {
+	padding: 25px;
+	margin: 0;
+}
+
+#word>form {
+	display: none;
+	overflow: hidden;
+	animation:showform 0.5s 1;
+}
+
+@keyframes showform {
+	0% {width: 10px; height: 5px; margin-left: 700px;}
+	100% {width: 700px; height: 164.6px; margin-left: 0px;}
+}
+
+#word>button {
+	position: absolute;
+	padding: 5px;
+	top: 21%;
+	right: 4%;
+	border: none;
+}
+
+#word fieldset {
+	margin: 20px;
+}
+
+#word form textarea {
+	height: 30px;
+	width: 430px;
+	resize: none;
+	transition:all 0.5s;
+}
+
+#but {
+	width: 13%;
+	height: 35px;
+	position: absolute;
+	top: 0;
+	right: 2%;
+}
+
+
+#word article {
+	padding: 10px;
+	margin: 50px 50px;
+	animation:articlefall 0.5s 1 ease-in;
+	word-wrap:break-word;
+}
+
+@keyframes articlefall {
+	0% {transform:scaleY(0.5) scaleX(0.8);margin-top: 38px;}
+	33% {transform:scaleY(1.2) scaleX(1.07);margin-top: 38px;}
+	66% {transform:scaleY(1) scaleX(1);margin-top: 38px;}
+	100% {transfrm:scaleY(1) scaleX(1);}
+}
+
+#word>p {
+	padding: 5px;
+	display: inline-block;
+	margin-left: 38px;
+	margin-bottom: 0;
+}
+
+#word nav ul {
+	padding: 5px;
+	margin: 0 10px;
+	border-radius: 20px;
+}
+
+#word ul li {
+	margin-top: 20px;
+}
+
+#word ul li span {
+	float: right;
+	margin-right: 2%;
+}
+
+#word ul li a {
+	margin-left: 50px;
+}
+ 
+form div {
+	margin-top: 10px;
+	margin-left: 100px;
+	position: relative;
+}
+
+#word form label {
+	position: absolute;
+	left: -9%;
+}
+
+#img>button {
+	display: block;
+	margin-left: 3%;
+	margin-top: 3%;
+	padding: 10px;
+	border: none;
+}
+
+#picture {
+	position: absolute;
+	left: 25%;
+	top: 20%;
+	width: 50%;
+	height: 50%;
+}
+
+#perShow {
+	position: absolute;
+	left: 10%;
+	bottom: 10%;
+	width: 80%;
+	height: 16%;
+	overflow: hidden;
+}
+
+#perShow>#picHideA img, #perShow>#picHideB img {
+	width: 12%;
+	height: 80%;
+	margin-top: 1.5%;
+	margin-left: 3.5%;
+	transition:all 0.3s
+}
+
+#perShow>#picHideA {
+	position: relative;
+	width: 150%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+}
+
+#perShow>#picHideB {
+	position: relative;
+	width: 150%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	display: none;
+}
+
+#last {
+	position: absolute;
+	left: 3%;
+	top: 74%;
+	height: 16%;
+	width: 40px;
+	border: none;
+}
+
+#next {
+	position: absolute;
+	right: 3%;
+	top: 74%;
+	height: 16%;
+	width: 40px;
+	border: none;
+}
+
+#quoteHider {
+	margin: 2%;
+	height: 20px;
+	overflow: hidden;
+}
+
+#quoteHolder {
+	padding: 1px;
+	height: 20px;
+	position: relative;
+	left: 20%;
+}
+
+blockquote.leaveNote {
+	color: white;
+	padding: 1px;
+	margin: 0 6%;
+}
+
+#message form textarea {
+	height: 100px;
+	width: 80%;
+	transition:all 1s;
+	resize: none;
+}
+
+#message form {
+	margin-top: 50px;
+	margin-left: 100px;
+	position: relative;
+}
+
+.labelStyle {
+	padding: 10px;
+	position: absolute;
+	top: -38%;
+	left: -13%;
+}
+
+.oldLabelStyle {
+	padding: 10px;
+	position: absolute;
+	top: -38%;
+	left: -13%;
+}
+
+#sButton {
+	width: 13%;
+	height: 30%;
+	position: absolute;
+	right: 6%;
+	top: 0%;
+}
+
+#messageHolder {
+	border: 1px solid transparent;
+	width: 70%;
+	margin: auto;
+	margin-top: 10px;
+}
+
+#message div article {
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid transparent;
+	margin-top: 10px;
+	position: relative;
+	animation:fall 0.6s 1 ease-in;
+	word-wrap: break-word;
+}
+
+@keyframes fall {
+	0% {margin-top: -80px;}
+	86% {margin-top: 10px;}
+	93% {margin-top: 3px;}
+	100% {margin-top: 10px;}
+}
+
+#messageHolder article a {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#messageHolder article img {
+	width: 55px;
+	height: 50px;
+	position: absolute;
+	left: -16%;
+	top: 8%;
+}
+
+#messageHolder article div {
+	border: 15px solid;
+	border-color: transparent #1DC31D transparent transparent;
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 10%;
+	left: -6%;
+}
+
+#player {
+	width: 60%;
+	position: absolute; 
+	top: 30%;
+	left: 30%;
+}
+
+#music nav {   
+	padding: 2%;
+	margin: 0 5%;
+}
+
+#music nav ul li {
+	margin:10px;
+	margin-right: 200px;
+	padding: 0 20px;
+	border-radius: 5px;
+}
+
+#playList {
+	height: 45px;
+	width: 22%;
+	background-color: black;
+	margin: 0;
+	margin-top: 9%;
+	margin-left: 5%;
+	display: inline-block;
+	padding: 10px;	
+}
+
+#songName {
+	width: 160px;
+	height: 4%;
+	position: absolute;
+	left: 30%;
+	top: 25.5%;
+	overflow: hidden;
+	margin: 0;
+}
+
+#musicBar1 {
+	margin-top: 100px;
+	height: 15px;
+	width: 200px;
+}
+
+#musicBar2 {
+	width: 180px;
+	height: 15px;
+}
+
+#musicBar3 {
+	height: 15px;
+	width: 250px;
+}
+
+#musicBar4 {
+	width: 160px;
+	height: 15px;
+}
+
+#musicBar5 {
+	height: 15px;
+	width: 136px;
+}
+
+#personal aside {
+	height: 75%;
+	width: 21%;
+	position: relative;
+}
+
+#personal aside img {
+	width: 80%;
+	position: absolute;
+	left: 10%;
+	top: 5%;
+}
+
+#personal article {
+	float: right;
+	margin-top: 3%;
+	margin-right: 5%;
+	height: 75%;
+	width: 65%;
+	position: relative;
+}
+
+#personal article header {
+	padding: 3%;
+}
+
+#personal table {
+	width: 100%;
+}
+
+#personal table tr td{
+	width: 50%;
+	height: 50px;
+}
+
+#toRewrite {
+	float: right;
+}
+
+#personal form button {
+	position: absolute;
+	width: 20%;
+	height: 6%;
+	right: 5%;
+	bottom: 5%;
+}
+
+#data,#rewrite {
+	animation:formappear 0.6s 1 ease-in;
+}
+
+@keyframes formappear {
+	0% {margin-right: -80%}
+	70% {margin-right: 5%; transform:rotateZ(0deg);}
+	72% {margin-right: 5%; transform:rotateZ(-2deg);}
+	100% {margin-right: 5%}
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 10%;
+	overflow: hidden;
+}
+
+footer h2 {
+	position: relative;
+}
+
+#design {
+	left: 0;
+	top: 0;
+}

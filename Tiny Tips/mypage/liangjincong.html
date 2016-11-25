@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8' />
+	<title>kimZ</title>   
+	<link rel='stylesheet' type='text/css' href='css/color.css' /><!--这是css文件-->
+	<link rel='stylesheet' type='text/css' href='css/layout.css' />
+	<link rel='stylesheet' type='text/css' href='css/typography.css' />
+</head>
+<body>
+	<header id='bodyheader'>  <!--就是header-->
+		<img src='image/IMG_3304.JPG' id='headpic' />  <!--作为头像的图片-->
+    <img src='image/high_battery.jpg' id='battery' />
+		<h1 id='user'>kimzZZZ</h1>                    <!--用户名-->
+		<p id='sign'>————此处应有至理名言</p> 
+	</header>
+	<div id='container'>   <!--一个框着边栏和主体内容的容器-->
+    <aside>
+			<div id='colunm'></div>  <!--边栏后面的一根柱子-->
+			<nav>
+		  	<ul>
+			  	<a href='#' id='aHome'><li class='listStyle'>主页</li></a>
+			  	<a href='#' id='aWord'><li class='oldListStyle'>文字</li></a>
+			  	<a href='#' id='aImg'><li class='oldListStyle'>图库</li></a>   <!--边栏点击图标可切换界面-->
+			  	<a href='#' id='aMessage'><li class='oldListStyle'>留言板</li></a>
+			  	<a href='#' id='aMusic'><li class='oldListStyle'>音乐</li></a>
+			 	  <a href='#' id='aPersonal'><li class='oldListStyle'>个人档</li></a>
+		 	 </ul>
+	 	 </nav>
+		</aside>
+		<div id='to3d'>   <!--装着6个主体界面的容器,preserve-3d-->
+			<section id='home'>  <!--第一个部分主页-->
+        <header>
+          <p>主页</p>
+        </header>
+        <div id='animationer'>
+          <img src='image/IMG_3312.JPG' id='face1' />
+          <img src='image/IMG_3313.JPG' id='face2' />   <!--主页动画界面的4幅图片-->
+          <img src='image/IMG_3314.JPG' id='face3' />
+          <img src='image/IMG_3315.JPG' id='face4' />
+          <div id='center'>
+            <img src='image/a51c7b3fa9685ea7357c383e6f31f8ffa050fb3140dc-UITEGk_fw658.jpg' id='icon1' />
+            <img src='image/a51c7b3fa9685ea7357c383e6f31f8ffa050fb3140dc-UITEGk_fw658.jpg' id='icon2' />
+            <img src='image/a51c7b3fa9685ea7357c383e6f31f8ffa050fb3140dc-UITEGk_fw658.jpg' id='icon3' />
+          </div>                  <!--三个旋转的箭头-->
+          <p id='welcome'>欢迎</p>
+          <p id='enter'>进入</p>    <!--从天而降的字-->
+          <p id='myPage'>kimZ的主页</p>
+        </div>
+        <article id='personalData'>   <!--主页的右栏，右栏的上部分是个人信息-->
+          <header>个人信息</header>
+          <table>
+            <tr>
+              <td>姓名:</td>              
+              <td>kimZ</td>
+            </tr>
+            <tr>
+              <td>性别:</td>
+              <td>男</td>
+            </tr>
+            <tr>
+              <td>年龄:</td>
+              <td>19</td>
+            </tr>
+            <tr>
+              <td>学校:</td>
+              <td>宇宙工业大学</td>
+            </tr>
+          </table>
+        </article>
+        <article id='personalWord'>
+          <header>我的日志</header>   <!--主页的右栏的下部分，是我的日志的题目预览-->
+          <ul>
+            <li>记录</li>
+            <li>还有12天</li>
+            <li>！！！</li>
+          </ul>
+        </article>
+      </section>
+      <!--第二部分，我的日志-->
+    	<section id='word'>
+    		<header>
+    			<p>日志</p>  <!--头部-->
+    		</header>
+        <button>写日志</button>
+    		<form action='#' method='post'>      <!--可以实现写日志的表单-->
+          <fieldset>
+            <legend>自己写写?</legend>
+              <div>
+              <label>题目:</label>
+              <input type='text' placeholder='title' />
+              </div>
+              <div>
+                <label>正文:</label>
+                <textarea rows='10' cols='80' placeholder='正文'></textarea>
+                <input type='button' value='提交' id='but' />
+              </div>
+          </fieldset>
+    		</form>
+        <p>我的日志</p> <!--我的日志的题目列表，点击题目可预览对应日志-->
+        <nav>
+          <ul>
+            <li><a href="#">记录</a><span>Wed May 25 2016</span></li>
+            <li><a href="#">还有12天</a><span>Wed May 25 2016</span></li>
+            <li><a href="#">！！！</a><span>Wed May 25 2016</span></li>
+          </ul>
+        </nav>
+    		<article>  <!--一些日志-->
+    			<header>记录</header>
+    			<p>Wed May 25 2016</p>
+    			三年级时，我还是一个胆小如鼠的小女孩，上课从来不敢回答老师提出的问题，生怕回答错了老师会批评我。就一直没有这个勇气来回答老师提出的问题。学校举办的活动我也没勇气参加。
+        </article>
+    		<article>
+    			<header>还有12天</header>
+    			<p>Wed May 25 2016</p>
+    			o...好紧张好紧张好紧张
+        </article>
+    		<article>
+          <header>！！！</header>
+          <p>Wed May 25 2016</p>
+          简单来说，只要html代码中出现以上两句之一，元素的display显示类型就会自动变为以 display:inline-block（块状元素）的方式显示，当然就可以设置元素的 width 和 height 了，且默认宽度不占满父元素
+        </article>
+    	</section>
+      <!--第三部分，图库部分-->
+    	<section id='img'>
+        <header>
+          <p>图库</p>
+        </header>
+        <button>图库一</button>  <!--切换图库的按钮-->
+        <button>图库二</button>
+        <form>
+          <input type='button' value='<' id='last' /><!--实现图片左右移动的按钮-->
+          <input type='button' value='>' id='next' />
+        </form>
+        <div id='perShow'>
+          <div id='picHideA'>  <!--图库A-->
+            <a href='image/0acb08aebc09c641d5fdb6f5ef49331ab0bf907fa0d2-RSfTd5_fw658.jpg'><img src='image/0acb08aebc09c641d5fdb6f5ef49331ab0bf907fa0d2-RSfTd5_fw658.jpg' /></a>
+            <a href='image/9d1f16441ad46c2e3761e3847661eee9a6ae3a3b6ea2-0zSqYj_fw658.jpg'><img src='image/9d1f16441ad46c2e3761e3847661eee9a6ae3a3b6ea2-0zSqYj_fw658.jpg' /></a>
+            <a href='image/b3d00e1e7f2a3b55952215703376cdfede2a3b3214da8-UNvfhr_fw658.jpg'><img src='image/b3d00e1e7f2a3b55952215703376cdfede2a3b3214da8-UNvfhr_fw658.jpg' /></a>
+            <a href='image/c8cbac41a5bbb452f404b7db3e6abcaafac381048660c-QVJBZs_fw658.jpg'><img src='image/c8cbac41a5bbb452f404b7db3e6abcaafac381048660c-QVJBZs_fw658.jpg' /></a>
+            <a href='image/bab3509509e66a6402cfca2dcf257f6c771d86551889c-Y1DEor_fw658.jpg'><img src="image/bab3509509e66a6402cfca2dcf257f6c771d86551889c-Y1DEor_fw658.jpg" /></a>
+            <a href='image/43823ba4gw1eucg6vq5itj21hc0u0dtd.jpg'><img src='image/43823ba4gw1eucg6vq5itj21hc0u0dtd.jpg' /></a>
+          </div>
+          <div id='picHideB'> <!--图库B-->
+            <a href='image/IMG_3312.JPG'><img src='image/IMG_3312.JPG' /></a>
+            <a href='image/IMG_3313.JPG'><img src='image/IMG_3313.JPG' /></a>
+            <a href='image/IMG_3314.JPG'><img src='image/IMG_3314.JPG' /></a>
+            <a href='image/IMG_3315.JPG'><img src='image/IMG_3315.JPG' /></a>
+            <a href='image/IMG_3304.JPG'><img src='image/IMG_3304.JPG' /></a>
+          </div>
+        </div>        
+      </section>
+      <!--第四部分，留言板-->
+  		<section id='message'>
+        <header>
+          <p>留言板</p>
+        </header>
+        <div id='quoteHider'>
+          <div id='quoteHolder'>
+            <blockquote class='leaveNote'>
+              留言请注意言辞,大家共创和谐世界
+            </blockquote>
+            <blockquote class='leaveNote'>
+              听说今年的高考作文挺坑的
+            </blockquote>
+            <blockquote class='leaveNote'>
+              嗯...请注意文明留言...
+            </blockquote>
+            <blockquote class='leaveNote'>
+              可以...很强势...
+            </blockquote>
+          </div>
+        </div>
+        <form action='#' method='post'>  <!--实现简单留言的表单-->
+          <label class='oldLabelStyle'>留言板:</label>
+          <textarea rows='10' cols='80' placeholder='留下你想说的话'></textarea>
+          <input type='button' value='提交' id='sButton' />
+       </form>
+       <div id='messageHolder'></div> <!--放入留言的容器-->
+      </section>
+      <!--第五部分，音乐-->
+  		<section id='music'>
+        <header>
+          <p>音乐</p>
+        </header>
+        <p id='songName'>Forgettable</p> <!--装着歌名的p元素-->
+        <audio src='music/Project 46,Olivia - Forgettable.mp3' id='player' controls='controls' >您的浏览器不支持音乐的播放</audio>
+        <p id='playList'>播放列表</p> <!--播放音乐的列表，按歌名可播放-->
+        <nav>
+          <ul>
+            <li>
+              <a href='music/徐佳莹 - 失落沙洲.mp3' title='失落沙洲'>徐佳莹 - 失落沙洲</a>
+            </li>
+            <li>
+              <a href='music/Rachel Platten - Fight Song.mp3' title='Fight Song'>Rachel Platten - Fight Song</a>
+            </li>
+            <li>
+              <a href='music/Project 46,Olivia - Forgettable.mp3' title='Forgettable'>Project 46,Olivia - Forgettable</a>
+            </li>
+          </ul>
+        </nav>
+        <div id='musicBar1'></div>
+        <div id='musicBar2'></div>  <!--音乐播放时会伸缩小装饰-->
+        <div id='musicBar3'></div>
+        <div id='musicBar4'></div>
+        <div id='musicBar5'></div>
+      </section>
+      <!--第六部分，个人资料-->
+  		<section id='personal'>
+        <header>
+          <p>个人档</p>
+        </header>
+        <aside><img src="image/IMG_3304.JPG" /></aside>
+        <article id='data'>
+          <header>基本资料<a href='#rewrite' id='toRewrite'>修改</a></header>
+          <table> <!--显示资料的一个框-->
+            <tr>
+              <td>姓名:</td>
+              <td>kimZ</td>
+            </tr>
+            <tr>
+              <td>性别:</td>
+              <td>男</td>
+            </tr>
+            <tr>
+              <td>年龄:</td>
+              <td>19</td>
+            </tr>
+            <tr>
+              <td>学校:</td>
+              <td>宇宙工业大学</td>
+            </tr>
+            <tr>
+              <td>生日:</td>
+              <td>1996-11-02</td>
+            </tr>
+            <tr>
+              <td>现居地:</td>
+              <td>广东 广州</td>
+            </tr>
+          </table>
+        </article>
+        <article id='rewrite'> <!--修改资料的一个框-->
+          <header>修改资料</header>
+          <form action='#' method='post'>
+            <table>
+              <tr>
+                <td><label for='setName'>姓名:</label></td>
+                <td><input type='text' id='setName' /></td>
+              </tr>
+              <tr>
+                <td><label for='setSex'>性别:</label></td>
+                <td>
+                  <select id='setSex'>
+                    <option value='男'>男</option>
+                    <option value='女'>女</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><label for='setAge'>年龄:</label></td>
+                <td><input type='number' id='setAge' max='100' min='0' /></td>
+              </tr>
+              <tr>
+              <td><label for='setSchool'>学校:</label></td>
+              <td>
+                <input type='text' list='schList' id='setSchool' />
+                <datalist id='schList'>
+                  <option label='中大' value='中山大学' />
+                  <option label='华南理工' value='华南理工大学' />
+                  <option label='广外' value='广东外语外贸大学' />
+                  <option label='广工' value='广东工业大学' />
+                  <option label='华师' value='华南师范大学' />
+                </datalist>
+              </td>
+              </tr>
+              <tr>
+                <td><label for='setBirth'>生日:</label></td>
+                <td><input type='date' id='setBirth' /></td>
+              </tr>
+              <tr>
+                <td><label for='setPlace'>现居地:</label></td>
+                <td>
+                  <input type='text' list='placeList' id='setPlace' />
+                  <datalist id='placeList'>
+                    <option label='广东' value='广东' />
+                    <option label='广西' value='广西' />
+                    <option label='湖南' value='湖南' />
+                    <option label='湖北' value='湖北' />
+                    <option label='胡建' value='福建' />
+                  </datalist>
+                </td>
+              </tr>
+            </table>
+            <button>确认</button>
+          </form>
+        </article>
+      </section>
+		</div>
+  </div>
+  <footer><h2 id='design'>页面设计者:梁锦聪</h2><h2 id='fight'>代码做得不好~我会加油的</h2></footer>
+	<script type='text/javascript' src='js/addLoadEvent.js'></script>
+  <script type='text/javascript' src='js/home.js'></script>
+  <script type='text/javascript' src='js/wholePart.js'></script>
+	<script type='text/javascript' src='js/word.js'></script>
+  <script type='text/javascript' src='js/picStyle.js'></script>
+  <script type='text/javascript' src='js/message.js'></script>
+  <script type='text/javascript' src='js/music.js'></script>
+  <script type='text/javascript' src='js/personal.js'></script>
+</body>
+</html>

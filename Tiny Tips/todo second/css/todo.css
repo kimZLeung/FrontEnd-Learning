@@ -1,0 +1,184 @@
+* {
+	font-family: '微软雅黑';
+}
+
+
+body {
+	background-color: rgba(0, 0, 1, 0.87);
+	min-width: 800px;
+	min-height: 600px;
+	position: relative;
+	padding: 1px;
+}
+
+#main {
+	overflow: hidden;
+	border-radius: 10%;
+	background-color: white;
+	margin: auto;
+	margin-top: 35px;
+	width: 75%;
+	min-height: 200px;
+	text-align: center;
+	transition: all 0.5s;
+	/*padding: 1px;*/
+	animation: show 0.5s 1;
+}
+
+header {
+	font-size: 3.8em;
+	font-weight: bold;
+	color: rgb(24, 95, 27);
+	margin: 30px 0px;
+}
+
+
+@keyframes show {
+	0% {margin-top: 0px;opacity: 0;}
+	100% {margin-top: 35px;opacity: 1;}
+}
+
+#wel {
+	font-size: 1.2em;
+	margin-left: 3%;
+	margin-top: 15px;
+	color: white;
+	animation: showL 0.5s 1;
+}
+
+@keyframes showL {
+	0% {margin-left: -3%;opacity: 0;}
+	100% {margin-left: 3%;opacity: 1;}
+}
+
+body>button {
+	width: 80px;
+	height: 50px;
+	position: absolute;
+	font-size: 1.3em;
+	top: 0%;
+	right: 2%;
+	animation: showR 0.5s 1;
+	background-color: rgb(24, 95, 27);
+	color: white;
+	border-radius: 15%;
+	border-color: rgb(24, 95, 27);
+}
+
+@keyframes showR {
+	0% {right: 0%;opacity: 0;}
+	100% {right: 2%;opacity: 1;}
+}
+
+body>div>button {
+	width: 100px;
+	height: 35px;
+	font-size: 1em;
+	overflow: hidden;
+	margin: 10px;
+	margin-bottom: 30px;
+	border-radius: 10%;
+	background-color: rgb(24, 95, 27);
+	border-color: rgb(24, 95, 27);
+	color: white;
+}
+
+#word {
+	margin: 10px 1px 1px 1px;
+	border: 1px solid rgb(24, 95, 27);
+	padding: 1px 10px;
+	height:50px;
+	font-size:1.8em;
+}
+
+div>ul {
+	overflow: hidden;
+	list-style: none;
+	width: 490px;
+	margin: auto;
+	text-align: left;
+	padding: 1px;
+}
+
+div>ul>li {
+	margin:10px 0px;
+	background-color:white;
+	color: rgba(0, 0, 1, 0.87);
+	padding: 3px;
+	overflow: hidden;
+	font-size: 1.2em;
+	transition: all 0.3s;
+	animation: slideShow 0.3s 1;
+	position: relative;
+}
+
+@keyframes slideShow {
+	0% {margin-top: -10px;}
+	100% {margin-top: 10px;}
+}
+
+li>label {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	border-radius: 50%;
+	background-color: white;
+	color: white;
+	font-size: 2em;
+	transition: all 0.5s;
+	transform: scale(2) rotateZ(-180deg);
+	top: 50%;
+	margin-top: -21px;
+}
+
+
+li>[type=checkbox] {
+	display: none;
+}
+
+li>button {
+	position: absolute;
+	top: 30%;
+	right: 0%;
+	width: 40px;
+}
+
+li:hover>button {
+	display: inline-block;
+}
+
+li [type=text] {
+	width: 387px;
+	height: 31px;
+	font-size: 1.2em;
+}
+
+li>div{
+	margin:0 10%;
+	font-size: 1.2em;
+	word-wrap: break-word;
+	border-bottom: 1px dashed rgba(0, 0, 1, 0.87);
+}
+
+.comple {
+	opacity: 0.5;
+	text-decoration: line-through;
+}
+
+.imcom {
+	opacity: 1.0;
+}
+
+.display {
+	display: none;
+}
+
+.displays {
+	display: block;
+}
+
+.shortHeight {
+	margin: 0px;
+	padding: 0px;
+	height: 0px;
+}

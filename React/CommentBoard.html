@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CommentBoard</title>
+	<style type="text/css">
+		.commentTitle {
+			background: #6f926f;
+			margin: 5px;
+			padding: 20px;
+			color: white;
+		}
+		.commentBox {
+			border: 5px dashed #6f926f;
+		}
+		.commentList {
+			margin: 5px 10px;
+		}
+		.comment {
+			margin: 10px;
+			padding: 5px 20px;
+		}
+		.commentForm {
+			margin: 30px;
+		}
+		.comment:nth-child(2n+1) {
+			background: #437c80;
+			color: white;
+		}
+		.comment:nth-child(2n) {
+			background: #068478;
+			color: white;
+		}
+	</style>
+	<script type="text/javascript" src="build/react.js"></script>
+	<script type="text/javascript" src="build/react-dom.js"></script>
+	<script type="text/javascript" src="build/jquery.min.js"></script>
+	<script type="text/javascript" src="build/browser.min.js"></script>
+</head>
+<body>
+	<div id='ex'></div>
+	<script type="text/babel">
+		var data = [];
+		var startPoint = 0;
+		var d = 2;
+		(function start() {
+			if(localStorage.getItem('myData') && localStorage.getItem('myData') != '[]') {
+				data = JSON.parse(localStorage.getItem('myData'));
+			}
+			else {
+				data = [
+					{id: 1, author: "Pete Hunt", text: "This is one comment"},
+					{id: 2, author: "Jordan Walke", text: "This is *another* comment"}
+				];
+			}
+			startPoint = data[data.length-1].id+1;
+		})();
+		
+		var CommentBox = React.createClass({
+			// goMove: function() {
+			// 	console.log(this.refs.lis);
+			// 	this.refs.lis.props.style.top = '100px';
+			// 	console.log('hhh');
+			// },
+			getInitialState: function() {
+				return {data: data};
+			},
+			returnText: function(a,t,v2,v1) {
+				data.push({id:startPoint,author:a,text:t})
+				localStorage.setItem('myData',JSON.stringify(data));
+				this.setState({data: data});
+				v2.value = '';
+				v1.value = '';
+				startPoint++;
+			},
+			dele: function(key) {
+				for(var i = 0; i<data.length; i++) {
+					if(data[i].id == key) {
+						data.splice(i,1);
+					}
+				}
+				this.setState({data: data});
+				localStorage.setItem('myData',JSON.stringify(data));
+			},
+			edi: function(key,a,t) {
+				console.log(key);
+				for(var i = 0; i<data.length; i++) {
+					if(data[i].id == key) {
+						data.splice(i,1);
+						var o = i
+					}
+				}
+				data.splice(o,0,{id:key, author:a, text:t});
+				this.setState({data: data});
+				localStorage.setItem('myData',JSON.stringify(data));
+			},
+			render: function() {
+				return (
+						<div className="commentBox" ref="comBox" style={{position:'relative'}}>
+							<h1 className='commentTitle'>评论区</h1>
+							<CommentList data={this.state.data} dele={this.dele} edi={this.edi} />
+							<CommentForm te={this.returnText} />
+						</div>
+					);
+			}
+		});
+		var CommentList = React.createClass({
+			// componentDidUpdate: function(prevProps, prevState) {
+			// 	this.props.gom();
+			// 	console.log('d')
+			// },
+			render: function() {
+				var self = this.props;
+				var commentNode = this.props.data.map(function(comment) {
+					return (
+							<Comment author={comment.author} flag={comment.id} key={comment.id} dele={self.dele} edi={self.edi}>
+								{comment.text}
+							</Comment>
+
+						);
+				}); 
+				return (
+					<div className="commentList" ref='list'>
+						{commentNode}
+					</div>
+					);
+			}
+		});
+		var CommentForm = React.createClass({
+			componentDidUpdate: function(prevProps, prevState) {
+				if(this.refs.for.style.marginTop == '30px') {
+					this.refs.for.style.marginTop = '5px';
+				}
+				else {
+					this.refs.for.style.marginTop = '30px';
+				}
+			},
+			getInitialState: function() {
+				return {author:'', myTextInput:''};
+			},
+			handleChangeA: function(e) {
+				this.setState({author: e.target.value});
+				if(e.target.style.borderColor == 'green') {
+					e.target.style.borderRadius = 'blue';
+				}
+				else {
+					e.target.style.borderColor = 'green';
+				}
+			},
+			handleChangeT: function(e) {
+				this.setState({myTextInput: e.target.value});
+				if(e.target.style.borderColor == 'blue') {
+					e.target.style.borderColor = 'green';
+				}
+				else {
+					e.target.style.borderColor = 'blue';
+				}
+			},
+			render: function() {
+				return (
+					<div className="commentForm" ref='for' >
+						<div dangerouslySetInnerHTML={{__html:'<h1>写评论谢谢</h1>'}} />
+						<label>author: </label>
+						<input type='text' ref='aut' size='20' value={this.state.author} onChange={this.handleChangeA}  maxlength='20' />
+						<br /><br />
+						<label>text: </label>
+						<input type='text' ref='mti' size='40' value={this.state.myTextInput} onChange={this.handleChangeT} maxlength='80' />
+						<button type='button' onClick={this.handleSet}>重置</button>
+						<button type='button' onClick={this.handleSave}>提交</button>
+					</div>
+					);
+			},
+			handleSet: function() {
+				this.setState({author:'',myTextInput:''});
+			},
+			handleSave: function() {
+				this.props.te(this.refs.aut.value, this.refs.mti.value, this.refs.mti, this.refs.aut);
+				this.setState({author:'',myTextInput:''});
+			}
+		});
+		var Comment = React.createClass({
+			del: function() {
+				this.props.dele(this.props.flag);
+			},
+			edi: function() {
+				this.props.edi(this.props.flag, this.refs.setAut.value, this.refs.setTex.value);
+				this.refs.setAut.style.visibility = 'hidden';
+				this.refs.setTex.style.visibility = 'hidden';
+				this.refs.yes.style.visibility = 'hidden';
+				this.refs.no.style.visibility = 'hidden';
+				this.refs.setAut.value = '';
+				this.refs.setTex.value = '';
+			},
+			hide: function() {
+				this.refs.setAut.style.visibility = 'hidden';
+				this.refs.setTex.style.visibility = 'hidden';
+				this.refs.yes.style.visibility = 'hidden';
+				this.refs.no.style.visibility = 'hidden';
+				this.refs.setAut.value = '';
+				this.refs.setTex.value = '';
+			},
+			show: function() {
+				this.refs.setAut.style.visibility = 'visible';
+				this.refs.setTex.style.visibility = 'visible';
+				this.refs.yes.style.visibility = 'visible';
+				this.refs.no.style.visibility = 'visible';
+			},
+			rawMarkup: function() {
+				return this.props.children;
+			},
+			render: function() {
+				return (
+						<div className="comment">
+							<h1 className="comentAuthor">
+								{this.props.author}
+								<input type='text' ref='setAut' style={{visibility:'hidden'}} />
+							</h1>
+							<h3>{this.rawMarkup()}<input type='text' ref='setTex' style={{visibility:'hidden'}} /></h3>
+							<button onClick={this.del}>X</button>
+							<button onClick={this.show}>编辑</button>
+							<button onClick={this.hide} style={{visibility:'hidden'}} ref='no'>取消</button>
+							<button onClick={this.edi} style={{visibility:'hidden'}} ref='yes'>确定</button>
+							<hr />
+						</div>
+					);
+			}
+		});
+		ReactDOM.render(
+			<CommentBox />,
+			document.getElementById('ex')
+		);
+	</script>
+</body>
+</html>

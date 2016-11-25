@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-slot</title>
+	<script type="text/javascript" src='js/vue.js'></script>
+	<style type="text/css">
+		.fade-transition {
+		  transition: opacity .6s;
+		}
+		.fade-enter, .fade-leave {
+		  opacity: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id='app'>
+<!-- 		<papa>
+			<h1 slot='hah'>balabalabala</h1>
+			<h1>bib</h1>
+		</papa> -->
+		<btn v-on:click='handleClick'></btn>
+		<component :is='currentView' transition="fade" transition-mode="out-in">
+			<!-- show this way -->
+		</component>
+		<btn></btn>
+		<haha><papa></papa></haha>
+	</div>
+
+	<script>
+		Vue.component('papa', {
+			template: '<h1>halo World<slot></slot>halo vue<slot name="hah"></slot></h1>',
+		});
+
+		var a = Vue.extend({
+			template: '<h1>haha</h1><ul><li>啊哈哈哈哈哈哈哈</li><li>啊哈哈哈哈哈哈哈哈哈哈</li><li>= =</li><slot></slot></ul>'
+		});
+
+		var b = Vue.extend({
+			template: '<h1>papa</h1>'
+		});
+
+		var c = Vue.extend({
+			template: '<h1>heihei</h1>'
+		});
+
+		var changeBtn = Vue.extend({
+			template: '<button v-on:click="handleClicks">changeBtn</button>',
+			methods: {
+				handleClicks: function() {
+					alert('haha')
+				}
+			}
+		});
+
+		new Vue({
+			el:'#app',
+			data: {
+				currentView: 'haha',
+				arr: ['haha','paipai','heihei']
+			},
+			components: {
+				haha: a,
+				paipai: b,
+				heihei: c,
+				btn: changeBtn
+			},
+			methods: {
+				handleClick: function() {
+					var flag = this.currentView
+					for(var i = 0; i<this.arr.length; i++) {
+						if(flag == this.arr[i]) {
+							if(i != 2) {
+								this.currentView = this.arr[i+1];
+								break;
+							}
+							else {
+								this.currentView = this.arr[0];
+							}
+						}
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>

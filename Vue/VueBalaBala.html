@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VueDemo</title>
+	<script src="js/vue.js"></script>
+	<style>
+		.searchText {
+			size: 30;
+			font-size: 1.5em;
+		}
+		.btn {
+			font-size: 1.5em;
+		}
+		.list {
+			font-size: 2em;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<search>
+			<!-- <content :msg="msg"></content> -->
+		</search>
+	</div>
+	<script>
+		Vue.component('search', {
+			template: '<input type="text" v-model="msg" class="searchText"><button class="btn" @click="handleSearch">Search</button><ul class="list"><li v-for="item in items | filterByMsg msg">{{item.res}}</li></ul>',
+			data: function() {
+				return { 
+					msg: '',
+					items: [{res:"haha"},{res:"papa"},{res:"hehei"},{res:"bibi"}]
+				};
+			},
+			methods: {
+				handleSearch: function() {
+					console.log(this.msg);
+					// console.log(this.msg)
+				}
+			}
+		});
+
+		Vue.filter('filterByMsg', function(value, msg) {
+			if(msg) {
+				value = value.filter(function(item) {
+					if(item.res.indexOf(msg) != -1) {
+						return item
+					}
+				});
+				return value
+			}		
+			else 
+				return value;
+		});
+
+		// Vue.component('content', {
+		// 	template: '<ul class="list"><li v-for="item in items">{{item}}</li></ul>',
+		// 	events: {
+		// 		boom: function(msg) {
+		// 			alert(this.items);
+		// 			console.log(this.msg);
+		// 		}
+		// 	},
+		// 	props: ['msg'],
+		// 	data: function() {
+		// 		var arr = ["haha","papa","hehei","bibi"];
+		// 		arr = arr.filter(function(item) {
+		// 			if(item.indexOf(this.msg) != -1) {
+		// 				return item;
+		// 			}
+		// 		})
+		// 		return {
+		// 			items: arr
+		// 		}
+		// 	}
+		// 	// computed: {
+		// 	// 	items: {
+		// 	// 		get: function() {
+		// 	// 			var arr = ["haha","papa","hehei","bibi"];
+		// 	// 			// if(fetch) {
+		// 	// 			// 	fetch('items.json').then(function(res) {
+		// 	// 			// 		return res.json();
+		// 	// 			// 	}).then(function(res) {
+		// 	// 			// 		arr = res;
+		// 	// 			// 		arr = arr.filter(function(item) {
+		// 	// 			// 			return item.indexOf(this.msg);
+		// 	// 			// 		})
+		// 	// 			// 		return res;
+		// 	// 			// 	});
+		// 	// 			// }
+		// 	// 			arr = arr.filter(function(item) {
+		// 	// 				if(item.indexOf(this.msg) != -1) {
+		// 	// 					return item;
+		// 	// 				}
+		// 	// 			});
+		// 	// 			return arr;
+		// 	// 		}
+		// 	// 	}
+		// 	// }
+		// });
+
+		new Vue({
+			el: '#app' 
+		});
+	</script>
+</body>
+</html>

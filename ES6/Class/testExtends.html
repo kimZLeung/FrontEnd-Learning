@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>testExtends</title>
+</head>
+<body>
+	<script>
+		class papa {
+			constructor(x) {
+				this.x = x;
+				this.getX = this.getX.bind(this);
+			}
+
+			getX() {
+				return this.x;
+			}
+
+			// setX = (x)=>{
+			// 	this.x = x;
+			// }
+		}
+
+		class sub extends papa {
+			constructor(x, z) {
+				super(x);
+				this.z = z;
+			}
+		}
+
+	</script>
+</body>
+</html>

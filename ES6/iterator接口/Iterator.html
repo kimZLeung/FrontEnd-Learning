@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Iterator</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var arr = [1, 2, 3];
+		var itor = arr[Symbol.iterator]();
+		console.log(itor.next());
+		console.log(itor.next());
+		console.log(itor.next());
+		console.log(itor.next());		//原生的iterator接口
+
+
+		/**
+		 * 自己实现的iterator接口
+		 * @param  {[all]} val [传入构造函数的val]
+		 * @return {[obj]}     [对象]
+		 */
+		function obj(val) {
+			this.value = val;
+			this.next = null;
+		}
+
+		obj.prototype[Symbol.iterator] = function() {
+			var iterator = {
+				next: next
+			}
+
+			var current = this;
+
+			function next() {
+				if(current) {
+					var value = current.value;
+					current = current.next;
+					return {
+						done: false,
+						value: value
+					};
+				}
+				else {
+					return {
+						done: true
+					};
+				}
+			}
+			return iterator;
+		}
+
+		var a = new obj(1);
+		var b = new obj(2);
+		var c = new obj(3);
+		a.next = b;
+		b.next = c;
+
+		var aitor = a[Symbol.iterator]();
+		// console.log(aitor);
+		console.log(aitor.next());
+		console.log(aitor.next());
+		console.log(aitor.next());
+		console.log(aitor.next());
+		console.log(aitor.next());
+		console.log(aitor.next());
+
+		/**
+		 * [在对象上实现数组的iterator接口，就可以调用for...of方法]
+		 * @type {Object}
+		 */
+		let iterable = {
+		  0: 'a',
+		  1: 'b',
+		  2: 'c',
+		  length: 3,
+		  [Symbol.iterator]: Array.prototype[Symbol.iterator]
+		};
+		for (let item of iterable) {
+		  console.log(item); // 'a', 'b', 'c'
+		}
+
+		/**
+		 * [Symbol.iterator方法的最简单实现,generator函数]
+		 * @yield {[type]} [description]
+		 */
+		var myIterable = {};
+
+		myIterable[Symbol.iterator] = function* () {
+			yield 1;
+			yield [2, 3];
+			yield 4;
+		};
+		let g = myIterable[Symbol.iterator]();
+		// myIterable.next();
+		// console.log(g[Symbol.iterator]); 
+		for(let i of myIterable) {
+			console.log(i);
+		}
+		// 上面这个for...of循环等于（===）下面这个,因为g对象里也有[Symbol.iterator]属性
+			// for(let i of g) {
+			// 	console.log(i);
+			// }
+		// 重点：
+		// console.log(g === g[Symbol.iterator]());	//true
+		// console.log([...myIterable]);
+
+
+
+	</script>
+</body>
+</html>

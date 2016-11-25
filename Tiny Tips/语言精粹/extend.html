@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>extend</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 写构造函数,为对象原型增加方法
+		 */
+		var cat = function() {
+			this.say = 'miao~';
+		}
+		cat.prototype.getSay = function() {
+			console.log(this.say);
+		}
+		cat.prototype.setSay = function(saying) {
+			this.say = saying;
+		}
+		var woo = new cat();
+		woo.getSay();
+		woo.setSay('fuck');
+		woo.getSay();
+		console.log(woo.constructor);
+		
+		/**
+		 * 原型继承,先写一个作为原型的对象
+		 */
+		var origin = {
+			name: 'haha',
+			age: 1,
+			getAge: function() {
+				console.log(this.age || '');
+			}
+		};
+		var myCat = Object.create(origin);
+		myCat.getAge();
+		myCat.name = 'bibi';
+		console.log(myCat);
+		console.log(myCat.constructor.prototype);
+		console.log(myCat.name);
+		
+		/**
+		 * 函数化继承,可以私有化变量属性,暴露特权方法
+		 */
+		var mammal = function(spec) {
+			var that = {};
+			that.getName = function() {
+				console.log(spec.name);
+			};
+			return that;
+		}
+		var cat = function(spec) {
+			var that = mammal(spec);
+			/**
+			 * 给that添加别的方法,操作that的属性
+			 */
+			return that;
+		}
+		//可以给子对象访问到父对象的方法和属性,然后自己确认要暴露的特权方法
+		
+		/**
+		 * method方法,在调用该方法的对象的原型上加这个方法
+		 */
+		Function.prototype.method = function(name, func) {
+			this.prototype[name] = func;
+			return this;
+		};
+		
+		/**
+		 * superior方法,可以用于访问父类方法
+		 */
+		Object.method('superior', function(name) {
+			var that = this;
+			var method = that[name];
+			return function() {
+				return method.apply(that, arguments);
+			};
+		});
+
+		var coolCat = function(spec) {
+			var that = cat(spec);
+			var super_get_name = that.superior('get_name');
+			that.get_name = function(n) {
+				return super_get_name() + 'baby';
+			};
+			return that;
+		};
+	</script>
+</body>
+</html>

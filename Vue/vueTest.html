@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VueDemo</title>
+	<script src="js/vue.js"></script>
+	<style>
+		.searchText {
+			size: 30;
+			font-size: 1.5em;
+		}
+		.btn {
+			font-size: 1.5em;
+		}
+		.list {
+			font-size: 2em;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<search>
+			<!-- <content :msg="msg"></content> -->
+		</search>
+	</div>
+	<script>
+		Vue.component('search', {
+			template: '<input type="text" v-model="msg" class="searchText"><button class="btn" @click="handleSearch">Search</button><content></content>',
+			data: function() {
+				return { 
+					msg: '',
+				};
+			},
+			methods: {
+				handleSearch: function() {
+					console.log(this.msg);
+					// console.log(this.msg)
+				}
+			},
+			watch: {
+				msg: function() {
+					this.$broadcast('msgChange', this.msg);
+				}
+			}
+		});
+
+		Vue.filter('filterByMsg', function(value, msg) {
+			if(msg) {
+				value = value.filter(function(item) {
+					if(item.indexOf(msg) != -1) {
+						return item
+					}
+				});
+				return value
+			}		
+			else 
+				return value;
+		});
+
+		Vue.component('content', {
+			template: '<ul class="list"><li v-for="item in arr">{{item}}</li></ul>',
+			// events: {
+			// 	boom: function(msg) {
+			// 		alert(this.items);
+			// 		console.log(this.msg);
+			// 	}
+			// },
+			// props: ['msg'],
+			data: function() {
+				return { arr:['haha','papa','pipi','bibi'] };
+			},
+			events: {
+				msgChange: function(msg) {
+					if(msg) {
+						this.arr = this.arr.filter(function(item) {
+							if(item.indexOf(msg) != -1) {
+								return item
+							}
+						});
+					}
+					else this.arr = ['haha','papa','pipi','bibi']
+				}
+			}
+			// computed: {
+			// 	items: {
+			// 		get: function() {
+			// 			if(this.msg) {
+			// 				var items;
+			// 				// alert(this.msg)
+			// 				this.arr = this.arr.filter(function(item) {
+			// 					// alert(item)
+			// 					if(item.indexOf(this.msg) != -1) {
+			// 						return item;
+			// 					}
+			// 				});	
+			// 			}
+			// 			return items;
+			// 		}
+			// 	}
+			// }
+			// watch: {
+			// 	msg: function() {
+			// 		console.log(this.msg);
+			// 		if(this.msg) {
+			// 			this.arr = this.arr.filter(function(it) {
+			// 				if(~~(it.indexOf(this.msg))) {
+			// 					console.log(it)
+			// 					return it
+			// 				}
+			// 			})
+			// 		}
+			// 		else {
+			// 			this.arr = ['haha','papa','pipi','bibi']
+			// 		}
+			// 	}
+			// }
+		});
+
+		new Vue({
+			el: '#app' 
+		});
+	</script>
+</body>
+</html>

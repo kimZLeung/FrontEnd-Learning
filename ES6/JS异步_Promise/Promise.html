@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Promise</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function say(word) {
+			return new Promise(function(resolve, reject) {
+				if(word) {
+					resolve(word);
+				}
+				else {
+					reject();
+				}
+			});
+		}
+		say('hello').then(function(word) {
+			return (word + ' world');
+		})
+		.then(function(word) {
+			alert(word);
+		});
+		// var p = new Promise(function(resolve, reject) {
+		// 	resolve();
+		// });
+		// console.log(p.then(function(){
+		// 	console.log('gg');
+		// }).then(function() {
+		// 	console.log('aa');
+		// }, function() {
+		// 	console.log('bb');
+		// }));
+		var p = new Promise(function(resolve, reject) {
+			resolve();
+			// reject();
+		});
+		console.log(p.then(function(){
+			console.log('ff');
+		})
+		.then(function(){
+			console.log('gg');
+		}));
+		console.log(p);
+	</script>
+</body>
+</html>

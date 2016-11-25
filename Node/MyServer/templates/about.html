@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>About</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<h1>About My NodeServer</h1>
+	<article>这是自己弄的一个小Server的Demo</article>
+	<a href="javascript:void(0)" id='i' class='issue'>Issue</a>
+	<script>
+		document.getElementById('i').onclick = function() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/getSomething', true);
+			xhr.onload = function(e) {
+				alert('OK' + this.responseText);
+			}
+			xhr.send();
+		}
+	</script>
+</body>
+</html>
