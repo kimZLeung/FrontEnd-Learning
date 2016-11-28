@@ -1,13 +1,21 @@
 var net = require('net');
 
-net.createServer(function(conn) {
+var socket = net.createServer(function(conn) {
+
+
 	conn.on('data', function(data) {
-		conn.write([
-			'HTTP/1.1 200 OK',
-			'Content-Type: text/plain',
-			'Content-Length: 11',
-			'',
-			'Hello World'
-		].join('\n'))
+		// if(data) {
+			conn.write([
+				data,
+				'鸡年大吉',
+				'Hello World'
+			].join('\n'))
+		// }
 	})
-}).listen(6060);
+	conn.on('end', function() {					// 监听断开连接的事件 ， 关闭TCP服务器
+		console.log('socket中断');
+		socket.close();
+	})
+}).listen(6060, function() {
+	console.log('server is listening port 6060');
+});

@@ -13,7 +13,7 @@
   "scripts": {
     "add": "git add .",
     "commit": "git commit -m ",
-    "hadCommit": "git commit -m '来自kimz爸爸的爱'",
+    "hadCommit": "git commit -m 'learning-node'",
     "push": "git push",
     "go": "npm run add && npm run hadCommit && npm run push",
     "confirm": "npm run add && npm run commit -- ",

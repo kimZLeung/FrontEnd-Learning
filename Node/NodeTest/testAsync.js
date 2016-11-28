@@ -52,9 +52,8 @@ http.createServer(function(request, response) {
 })
 
 
-/*
-	全局捕获异常
- */
+/* 全局捕获异常 */
+
 process.on('uncaughtException', function (err) {
     console.log('Error: %s', err.message);
 });
