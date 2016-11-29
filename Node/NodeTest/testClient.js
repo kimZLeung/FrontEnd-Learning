@@ -1,5 +1,7 @@
 var net = require('net');
 
+var time;
+
 var client = net.connect({port: 6060}, function() {
   // for(var i = 0; i<8; i++) {
   //   client.write(i.toString());
@@ -21,13 +23,24 @@ client.on('connect', function() {
   console.log('鸡年准备就绪!');
 })
 
+client.on('error', function(error) {
+  console.log('EEEEExpection' + '\n' + error)
+  client.end()
+  // clearTimeout(time)
+})
+
 function goSock(client, max, index) {
-  if(index < max) {
-    setTimeout(function() {       // 感觉是底层做的优化减少请求数量，不设定时器第二次会1234567一起返回来
-      client.write(index.toString());
-      return goSock(client, max, ++index)
-    }, 1000);
+  if(client) {
+    if(index < max) {
+      time = setTimeout(function() {       // 感觉是底层做的优化减少请求数量，不设定时器第二次会1234567一起返回来
+        client.write(index.toString())
+        return goSock(client, max, ++index)
+      }, 1000)
+    } else {
+      return client.end()        // 满了8次返回end断开socket的连接
+    }
   } else {
-    return client.end();        // 满了8次返回end断开socket的连接
+    console.log('服务器祝你鸡年大吉')
+    return client.end()
   }
 }
