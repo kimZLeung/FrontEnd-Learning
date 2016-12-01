@@ -26,7 +26,7 @@ client.on('connect', function() {
 client.on('error', function(error) {
   console.log('EEEEExpection' + '\n' + error)
   client.end()
-  // clearTimeout(time)
+  clearTimeout(time)
 })
 
 function goSock(client, max, index) {
