@@ -50,6 +50,7 @@
 - 正常来说应该尽可能地减少state 
 - “ think about the minimal possible representation of its state！！~！！”
 - 不应该使用state ： 可通过state本身的属性计算出的数据，本身的props的属性，从props中来的数据(与props相关的)
+- do you know？ setState是一个异步执行的过程噢
 
 
 ----------
