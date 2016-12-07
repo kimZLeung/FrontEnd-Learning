@@ -1,0 +1,17 @@
+{
+  "name": "mongo",
+  "version": "1.0.0",
+  "description": "db",
+  "main": "index.js",
+  "scripts": {
+    "test": "db"
+  },
+  "keywords": [
+    "db"
+  ],
+  "author": "kimz",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^2.2.12"
+  }
+}
