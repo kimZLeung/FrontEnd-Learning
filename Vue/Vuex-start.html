@@ -30,26 +30,26 @@
     })
 
     var counter = {
-      template: '<div>{{ count }}</div><button v-on:click="handleJia">+</button>',
-      computed: {
-        count: function() {
-          return this.$store.getters.getC;
-        }
-      },
-      // computed: mapState([
-      //   'count'
-      // ]),
-      methods: {
-        handleJia: function() {
-          this.$store.commit({
-            type: 'increment',
-            n: 2
-          })
-        }
-        // mapMutations([
-        //   'increment',
-        // ])
-      }
+      template: '<div>{{ count }}</div><button v-on:click="increment">+</button>',
+      // computed: {
+      //   count: function() {
+      //     return this.$store.getters.getC;
+      //   }
+      // },
+      computed: Vuex.mapState([
+        'count'
+      ]),
+      // methods: {
+      //   increment: function() {
+      //     this.$store.commit({
+      //       type: 'increment',
+      //       n: 2
+      //     })
+      //   }
+      // }
+      methods: Vuex.mapMutations([
+        'increment'
+      ])
     }
 
     new Vue({
