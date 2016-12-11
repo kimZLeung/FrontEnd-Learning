@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vuex-study</title>
+</head>
+<body>
+  <div id="app"><counter></counter></div>
+  <script type="text/javascript" src='js/vue.js'></script>
+  <script src="https://cdn.bootcss.com/vuex/2.0.0/vuex.js"></script>
+  <script type="text/javascript">
+    // Vue.use(Vuex);
+
+    var store = new Vuex.Store({
+      state: {
+        count: 0
+      },
+      mutations: {
+        increment: function(state, num) {
+          console.log(num.n)
+          var n = num.n? num.n: 1;
+          state.count += n
+        }
+      },
+      getters: {
+        getC: function(state) {
+          return state.count;
+        }
+      }
+    })
+
+    var counter = {
+      template: '<div>{{ count }}</div><button v-on:click="handleJia">+</button>',
+      computed: {
+        count: function() {
+          return this.$store.getters.getC;
+        }
+      },
+      // computed: mapState([
+      //   'count'
+      // ]),
+      methods: {
+        handleJia: function() {
+          this.$store.commit({
+            type: 'increment',
+            n: 2
+          })
+        }
+        // mapMutations([
+        //   'increment',
+        // ])
+      }
+    }
+
+    new Vue({
+      el: '#app',
+      store: store,
+      components: { counter },
+    })
+  </script>
+</body>
+</html>

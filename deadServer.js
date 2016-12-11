@@ -22,17 +22,17 @@ http.createServer(function(request, response) {
 	fs.stat(filePath, function(err, stat) {
 		if(err) {	// 找不到文件
 			switch(reUrl) {		// 判断是否为请求接口
-				case '/getSomething': 
+				case '/getSomething':
 					response.writeHead(200);
 					response.end('~haha');
 					break;
-				default: 
+				default:
 					console.log('404', request.url);
 					response.writeHead(404, {'Content-Type': 'text/html'});
 					response.end('<h1>404</h1> <h1>Not Found</h1>');
 					break;
 			}
-			
+
 		} else {	// 判断是否为目录
 			if(stat.isDirectory()) {
 				var indexPath = path.join(filePath, '/index.html');
@@ -56,5 +56,5 @@ http.createServer(function(request, response) {
 		}
 	});
 }).listen(808, function() {		// 监听808端口（不要问为什么是808我也不知道）
-	console.log('server is running on http://127.0.0.1:808/');
+	console.log('server is running on http://127.0.0.1:808/ || localhost:808');
 });		// 成功后调用回调函数命令行打印地址信息
