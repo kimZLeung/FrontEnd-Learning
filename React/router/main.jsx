@@ -94,9 +94,22 @@ class Test extends React.Component {
 // }
 
 var Login = React.createClass({
-	mixins: [Lifecycle],
+	// mixins: [Lifecycle],
 
-	routerWillLeave(next) {
+	// 设定contextTypes来通过context对象访问router，并通过router在本组件上挂载Leave的Hook
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
+
+	componentDidMount() {
+		// console.log(this.context.route)
+		console.log(this.context.router)
+		this.context.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
+	},
+
+	routerWillLeave(nextLocation) {
+		console.log(nextLocation)
+		console.log(this.context.route)
 		if(this.input.value != 123) {
 			alert('密码错误')
 			return false
