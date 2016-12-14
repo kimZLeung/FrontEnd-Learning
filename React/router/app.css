@@ -1,0 +1,24 @@
+.title {
+	font-size: 3em;
+	color: red;
+}
+
+.list {
+	list-style: none;
+	font-size: 2em;
+	text-decoration: none;
+	font-color: black;
+}
+
+.para {
+	transition: all 1s;
+}
+
+.para:hover {
+	transform: scale(2,2) translateX(800px);
+}
+
+.text {
+	font-size: 2em;
+	padding-left: 10px;
+}
