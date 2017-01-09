@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "testt",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "kimz",
+  "license": "ISC",
+  "devDependencies": {
+    "should": "^11.1.2"
+  }
+}
