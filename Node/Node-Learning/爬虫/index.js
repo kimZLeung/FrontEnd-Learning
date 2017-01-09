@@ -2,10 +2,12 @@ var express = require('express');
 var cheerio = require('cheerio');
 var superagent = require('superagent');
 var eventproxy = require('eventproxy');
+var async = require('async');
 var url = require('url');
 
 var app = express();
 var myUrl = 'http://cnodejs.org'
+var ep = new eventproxy();
 
 app.get('/', function(req, res, next) {
 	superagent.get(myUrl)
@@ -14,39 +16,41 @@ app.get('/', function(req, res, next) {
 			return next(err);
 		}
 		var $ = cheerio.load(data.text);
-		var item = [];
-		// var topicUrl = [];
+		// var item = [];
+		var topicUrl = [];
 		$('#topic_list .topic_title').each(function(index, ele) {
 			var $ele = $(ele);
-			item.push({
-				title: $ele.attr('title'),
-				href: $ele.attr('href')
-			});
-			// topicUrl.push(url.resolve(myUrl, $ele.attr('href')));
+			// item.push({
+			// 	title: $ele.attr('title'),
+			// 	href: $ele.attr('href')
+			// });
+			topicUrl.push(url.resolve(myUrl, $ele.attr('href')));
 		});
 
 		/**
 		 * 本来是用eventproxy来控制并发
-		 * 但是他那边服务器503
+		 * 但是他那边服务器503    2017年1月8日
 		 * 一直报错...
+		 *
+		 * 增加了async用来限制并发量之后请求成功了   2017年1月9日
 		 */
 		// var ep = new eventproxy();
-		// var body = [];
+		var body = [];
 
-		// ep.after('getComment', topicUrl.length, function(topic) {
-		// 	body = topic.map(function(bd) {
-		// 		var tpUrl = bd.thisUrl;
-		// 		var tpbody = bd.data;
-		// 		var $ = cheerio.load(tpbody)
+		ep.after('getComment', topicUrl.length, function(topic) {
+			body = topic.map(function(bd) {
+				var tpUrl = bd.thisUrl;
+				var tpbody = bd.data;
+				var $ = cheerio.load(tpbody)
 
-		// 		return {
-		// 			title: $('.topic_full_title').text().trim(),
-		// 			href: tpUrl,
-		// 			comment: $('.reply_content').eq(0).text().trim()
-		// 		}
-		// 	})
-		// 	res.send(translateToHtml(body))
-		// })
+				return {
+					title: $('.topic_full_title').text().trim(),
+					href: tpUrl,
+					comment: $('.reply_content').eq(0).text().trim()
+				}
+			})
+			res.send(translateToHtml(body))
+		})
 
 		// topicUrl.forEach(function(tp) {
 		// 	superagent.get(tp)
@@ -62,7 +66,20 @@ app.get('/', function(req, res, next) {
 		// 	})
 		// })
 
-		res.end(translateToHtml(item));
+		async.mapLimit(topicUrl, 5, function(href, callback) {
+			superagent.get(href)
+			.end(function(err, dt) {
+				ep.emit('getComment', {
+					thisUrl: href, 	// closure
+					data: dt.text
+				})
+				callback()
+			})
+		}, function() {
+			console.log('ok')
+		})
+
+		// res.end(translateToHtml(item));
 	})
 })
 
@@ -76,9 +93,9 @@ function translateToHtml(data) {
 		html += '<ul>';
 		data.map(function(dt) {
 			if(dt.comment)
-				html += '<li><a style="text-decoration:none;color:black" href=' + myUrl + dt.href + '><h4>' + dt.title + '</h4></a><h5>' + dt.comment + '</h5></li>'
+				html += '<li><a style="text-decoration:none;color:black" href=' + dt.href + '><h3>' + dt.title + '</h3></a><h5>我是评论君:' + dt.comment + '</h5></li>'
 			else {
-				html += '<li><a style="text-decoration:none;color:black" href=' + myUrl + dt.href + '><h4>' + dt.title + '</h4></a><h5>' + '哈哈' + '</h5></li>'
+				html += '<li><a style="text-decoration:none;color:black" href=' + dt.href + '><h3>' + dt.title + '</h3></a><h5>没有评论呢</h5></li>'
 			}
 		})
 		html += '</ul>'
