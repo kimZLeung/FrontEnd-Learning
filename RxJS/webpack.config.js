@@ -1,6 +1,7 @@
 var webpack = require("webpack")
 
-module.exports = {
+
+var config = {
 	entry: [
 		"webpack/hot/dev-server",
 		"webpack-dev-server/client?http://localhost:8080",
@@ -24,4 +25,8 @@ module.exports = {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin()
 	]
-};
+}
+
+// if()
+
+module.exports = config

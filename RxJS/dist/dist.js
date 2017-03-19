@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d318d8eed5c5e1d4bfc2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4fec36c6af7d9c7c0fc7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -8480,7 +8480,7 @@
 
 	var c = document.querySelector('#app');
 
-	// console.log(c)
+	console.log();
 	// console.log(rx)
 
 	var ctx = c.getContext('2d');
@@ -8497,8 +8497,7 @@
 	var upAndDown$ = up$.merge(down$);
 
 	var move$ = Rx.Observable.fromEvent(c, 'mousemove').map(function (e) {
-	  console.log(e);
-	  return { x: e.screenX, y: e.screenY };
+	  return { x: e.offsetX, y: e.offsetY };
 	}).bufferCount(2, 1);
 
 	upAndDown$.switchMap(function (action) {
@@ -8513,6 +8512,13 @@
 	  ctx.moveTo(first.x, first.y);
 	  ctx.lineTo(sec.x, sec.y);
 	  ctx.stroke();
+	}
+
+	window.addEventListener("resize", resizeCanvas, false);
+
+	function resizeCanvas() {
+	  c.width = window.innerWidth / 2;
+	  c.height = window.innerHeight / 2;
 	}
 
 /***/ },

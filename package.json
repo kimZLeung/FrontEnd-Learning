@@ -6,7 +6,7 @@
   "scripts": {
     "add": "git add .",
     "commit": "git commit -m ",
-    "hadCommit": "git commit -m 'project'",
+    "hadCommit": "git commit -m 'Rx'",
     "push": "git push",
     "go": "npm run add && npm run hadCommit && npm run push",
     "confirm": "npm run add && npm run commit -- ",
