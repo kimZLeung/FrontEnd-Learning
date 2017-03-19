@@ -8,7 +8,8 @@ module.exports = {
 	],
 	output: {
 		path: './dist',
-		filename: 'dist.js'
+		filename: 'dist.js',
+		publicPath: 'dist/'	// 不设publicPath 热替换生成的新的JS文件无法替换上去
 	},
 	module: {
 		loaders: [{

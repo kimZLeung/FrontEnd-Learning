@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "59e42cd0d1136533cde4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d318d8eed5c5e1d4bfc2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -570,7 +570,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "dist/";
 
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
@@ -8474,11 +8474,46 @@
 
 	'use strict';
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	var rx = __webpack_require__(79);
 
 	var c = document.querySelector('#app');
 
-	console.log(c);
+	// console.log(c)
+	// console.log(rx)
+
+	var ctx = c.getContext('2d');
+
+	ctx.beginPath();
+
+	var down$ = Rx.Observable.fromEvent(c, 'mousedown').map(function () {
+	  return 'down';
+	});
+	var up$ = Rx.Observable.fromEvent(c, 'mouseup').map(function () {
+	  return 'up';
+	});
+
+	var upAndDown$ = up$.merge(down$);
+
+	var move$ = Rx.Observable.fromEvent(c, 'mousemove').map(function (e) {
+	  console.log(e);
+	  return { x: e.screenX, y: e.screenY };
+	}).bufferCount(2, 1);
+
+	upAndDown$.switchMap(function (action) {
+	  return action === 'down' ? move$ : Rx.Observable.empty();
+	}).subscribe(draw);
+
+	function draw(_ref) {
+	  var _ref2 = _slicedToArray(_ref, 2),
+	      first = _ref2[0],
+	      sec = _ref2[1];
+
+	  ctx.moveTo(first.x, first.y);
+	  ctx.lineTo(sec.x, sec.y);
+	  ctx.stroke();
+	}
 
 /***/ },
 /* 79 */
