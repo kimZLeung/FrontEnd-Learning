@@ -18,11 +18,6 @@
                //此处如果需要某XX模块，可以引入
                var xx=require('XX');
             });
-            
-            
-            作者：giscafer
-            链接：http://www.zhihu.com/question/20576942/answer/58094030
-            来源：知乎。
 
 
 ----------
