@@ -2,9 +2,6 @@ var rx = require('rx')
 
 var c = document.querySelector('#app')
 
-console.log()
-// console.log(rx)
-
 const ctx = c.getContext('2d')
 
 ctx.beginPath()
