@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Fetch CNode</title>
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+
+		button {
+			cursor: pointer;
+			width: 100px;
+			height: 50px;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+		}
+
+		#mask {
+			background-color: black;
+			opacity: 0.6;
+			width: 100%;
+			height: 100%;
+			display: none;
+			position: relative;
+			margin: 0;
+		}
+
+		#mask::after {
+			content: 'Loading...';
+			position: absolute;
+			width: 100px;
+			height: 50px;
+			font-size: 1.2em;
+			color: white;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			margin: auto;
+		}
+	</style>
+</head>
+<body>
+	<button id="btn">Click to Fetch</button>
+	<div id="mask"></div>
+	<script>
+		var btn = document.getElementById('btn')
+		var mask = document.getElementById('mask')
+		btn.onclick = function() {
+			if(fetch) {
+				showLoading()
+				fetch('/goFetch')
+					.then(function(res) {
+						return res.text()
+					})
+					.then(function(data){
+						hideLoading()
+						document.body.innerHTML = data
+					})
+			} else {
+				alert('Im CNode')
+			}
+		}
+
+		function showLoading() {
+			mask.style.display = 'inline-block'
+			btn.style.display = 'none'
+		}
+
+		function hideLoading() {	
+			mask.style.display = 'none'
+		}
+	</script>
+</body>
+</html>

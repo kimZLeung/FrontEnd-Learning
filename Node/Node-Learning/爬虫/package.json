@@ -4,7 +4,7 @@
   "description": "no",
   "main": "index.js",
   "scripts": {
-    "start": "node ./test"
+    "start": "node ./index"
   },
   "keywords": [
     "pc"

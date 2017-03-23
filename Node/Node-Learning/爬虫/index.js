@@ -9,7 +9,9 @@ var app = express();
 var myUrl = 'http://cnodejs.org'
 var ep = new eventproxy();
 
-app.get('/', function(req, res, next) {
+app.use(express.static('app'))
+
+app.get('/goFetch', function(req, res, next) {
 	superagent.get(myUrl)
 	.end(function(err, data) {
 		if(err) {
