@@ -22,6 +22,12 @@ var config = {
 			}
 		}]
 	},
+	// devServer: {
+ //        historyApiFallback: true,
+ //        hot: false,
+ //        inline: true,
+ //        grogress: true
+ //    },
 	plugins: [
 		new webpack.HotModuleReplacementPlugin()
 	]
