@@ -36,9 +36,9 @@
 ## Subscribe
 `subscribe`是一个订阅流的方法，这个方法可以传入三个参数，分别是三个函数`onNext`、`onError`、`onCompleted`
 
-- `onNext`是在`Observer`调用`onNext()`方法时会调用，一般在事件触发时就会调用（所以我们处理事件时`subscribe`只传的那一个回调其实是`onNext`函数）。如果是自己`create`的`Observer`可以调用`onNext`方法去启动`onNext`回调
+- `onNext`是在`Observable`调用`onNext()`方法时会调用，一般在事件触发时就会调用（所以我们处理事件时`subscribe`只传的那一个回调其实是`onNext`函数）。如果是自己`create`的`Observer`可以调用`Observable`的`onNext`方法去启动`onNext`回调
 - `onError`方法...就跟`Promise`那个差不多，抛出错误时调用
-- `onCompleted`方法，如果是自己`create`的`Observer`的话可以用`onCompleted`方法结束这个`Observer`并调用这个回调函数
+- `onCompleted`方法，如果是自己`create`的`Observable`的话可以用`Observer`的`onCompleted`方法结束这个`Observable`并调用这个回调函数
 
 ``` javascript
 rx.Observable.create(function(observer) {
@@ -58,7 +58,7 @@ rx.Observable.create(function(observer) {
 })
 ```
 
-> `subscribe`方法返回一个对象，调用该对象上的`dispose`方法可以取消订阅
+> `subscribe`方法返回一个`observer`对象，调用该对象上的`dispose`方法可以取消订阅
 
 ---
 ## 热Observables和冷Observables
@@ -236,3 +236,83 @@ Rx.Observable.interval(1000)
 - 我们可以看到`bufferCount`可以多传一个`skip`，来决定这一次`buffer`和下一次`buffer`的跨度（数据量的跨度）
 - 而`bufferWithTime`也可以传一个`timeShift`，也是决定了两次`buffer`之间的时间跨度（时间的跨度）
 - `buffer`可以多传一个`bufferOpening`，事实上也是决定两次的`buffer`之间的跨度而已（时间的跨度）
+
+---
+## 万能转接口 -> Subject
+> 官方文档上说：`Subject`既是`Observer`也是`Observable`，它可以被多个`Observer`订阅，也可以订阅多个`Observable`。所以基础的`Subject`的作用就是 -> 转接器！它可以把一个单路`Observable`转换为多路相同的数据，分发给不同的订阅者
+### such as
+``` javascript
+var Sub = new Rx.Subject()
+var source = Rx.Observable.interval(1000)
+
+// 用Subject作为观察者订阅数据源，然后再通过Subject的特性↓↓↓
+source.subscribe(Sub)
+
+// Subject可以给不同的观察者订阅，达到将单路数据推送转换成多路数据推送
+Sub.subscribe(function () {
+  console.log('haha')
+})
+
+Sub.subscribe(function () {
+  console.log('hehe')
+})
+```
+
+---
+## Different Type of Subject
+- `BehaviorSubject`它总是保存最近向数据消费者发送的值，当一个`Observer`订阅后，它会即刻从`BehaviorSubject`收到“最新的值”(subscribe之后会立刻触发一次当前订阅者的next)
+``` javascript
+var subject = new Rx.BehaviorSubject(0 /* 初始值 */);
+
+subject.subscribe({
+  next: (v) => console.log('observerA: ' + v)
+});
+
+subject.next(1);
+subject.next(2);
+
+subject.subscribe({
+  next: (v) => console.log('observerB: ' + v)
+});
+
+subject.next(3);
+
+// console
+observerA: 0
+observerA: 1
+observerA: 2
+observerB: 2
+observerA: 3
+observerB: 3
+```
+- `ReplaySubject`通过`ReplaySubject`可以向新的订阅者推送旧数值，就像一个录像机`ReplaySubject`可以记录`Observable`的一部分状态
+``` javascript
+var subject = new Rx.ReplaySubject(3 /* 回放数量 */);
+
+subject.subscribe({
+  next: (v) => console.log('observerA: ' + v)
+});
+
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
+
+subject.subscribe({
+  next: (v) => console.log('observerB: ' + v)
+});
+
+subject.next(5);
+
+// console
+observerA: 1
+observerA: 2
+observerA: 3
+observerA: 4
+observerB: 2
+observerB: 3
+observerB: 4
+observerA: 5
+observerB: 5
+```
+- `AsyncSubject`是`Subject`的另外一个衍生类，`Observable`仅会在执行完成后，推送执行环境中的最后一个值。
