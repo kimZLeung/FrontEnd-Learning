@@ -264,18 +264,18 @@ Sub.subscribe(function () {
 ``` javascript
 var subject = new Rx.BehaviorSubject(0 /* 初始值 */);
 
-subject.subscribe({
-  next: (v) => console.log('observerA: ' + v)
+subject.subscribe(function(v) {
+	console.log('observerA: ' + v)
 });
 
-subject.next(1);
-subject.next(2);
+subject.onNext(1);
+subject.onNext(2);
 
-subject.subscribe({
-  next: (v) => console.log('observerB: ' + v)
+subject.subscribe(function(v) {
+	console.log('observerB: ' + v)
 });
 
-subject.next(3);
+subject.onNext(3);
 
 // console
 observerA: 0
@@ -289,20 +289,20 @@ observerB: 3
 ``` javascript
 var subject = new Rx.ReplaySubject(3 /* 回放数量 */);
 
-subject.subscribe({
-  next: (v) => console.log('observerA: ' + v)
+subject.subscribe(function(v) {
+	console.log('observerA: ' + v)
 });
 
-subject.next(1);
-subject.next(2);
-subject.next(3);
-subject.next(4);
+subject.onNext(1);
+subject.onNext(2);
+subject.onNext(3);
+subject.onNext(4);
 
-subject.subscribe({
-  next: (v) => console.log('observerB: ' + v)
+subject.subscribe(function(v) {
+	console.log('observerB: ' + v)
 });
 
-subject.next(5);
+subject.onNext(5);
 
 // console
 observerA: 1
