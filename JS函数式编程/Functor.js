@@ -10,7 +10,7 @@ Container.prototype.map = function(fn) {
 	return Container.of(fn(this._value))
 }
 
-var c = Container.of(2)
+var c = Container.of(2)	
 
 console.log(
 	c.map(function(data) {
