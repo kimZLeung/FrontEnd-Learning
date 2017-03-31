@@ -179,7 +179,7 @@ new jPromise(function(resolve, reject) {
 	}
 	
 ```
-> 导致了，我调用then方法之后返回的Promise直接就会调用自己的resolve，所以第二个then会马上执行，而不是等到前面的状态改变再执行，既然找到原因，我们换一种方式~...官方的执顺序应该是利用前一个函数得到结果的契机`resolve`后一个`Promise`
+> 导致了，我调用then方法之后返回的Promise直接就会调用自己的resolve，所以第二个then会马上执行，而不是等到前面的状态改变再执行，既然找到原因，我们换一种方式~...执行顺序应该是利用前一个函数得到结果的契机`resolve`后一个`Promise`
 
 ``` javascript
 // 我把resolve的触发放到了前一个Promise的resolve里面
