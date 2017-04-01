@@ -85,11 +85,14 @@ jPromise.prototype.then = function(resolve, reject) {
 	if(typeof reject === 'function') {
 		this.rejQueue.push(reject)
 	}
-	if(this.state === RESOLVE) {
-		reAsync(that, RESOLVE)
-	} else if(this.state === REJECT) {
-		reAsync(that, REJECT)
-	}
+	/**
+	 * we dont need to do this 2017.4.1 but today is Aprilfools' Day~
+	 */
+	// if(this.state === RESOLVE) {
+	// 	reAsync(that, RESOLVE)
+	// } else if(this.state === REJECT) {
+	// 	reAsync(that, REJECT)
+	// }
 
 	if(this.context) {
 		if(this.context.state === RESOLVE) {
