@@ -32,6 +32,13 @@ jPromise.prototype.resolve = function(data) {
 	if(data) {
 		this.newRes.resolve = data
 	}
+	if(this.parent && this.parent.state === PENDING) {
+		this.parent.state = RESOLVE
+		this.parent.cache = this.newRes
+		if(this.next && this.next.state === PENDING) {
+			this.next.resolve()
+		}
+	}
 	if(this.resQueue.length) {
 		handler = this.resQueue.shit()
 		if(typeof handler === 'function') {
@@ -39,7 +46,17 @@ jPromise.prototype.resolve = function(data) {
 				this.cache.resolve = handler(this.newRes.resolve)
 				// 作Promise兼容
 				if(isThenable(this.cache.resolve)) {
-		          this.cache.resolve = this.cache.resolve.newRes.resolve
+					if(this.cache.resolve.newRes.resolve) {
+						this.cache.resolve = this.cache.resolve.newRes.resolve
+					} else {
+						// 如果Promise里面包含有异步操作的情况
+						this.state = PENDING
+						this.cache.resolve.next = this.next
+						this.cache.resolve.parent = this
+						this.next = null
+					}
+					// this.state = PENDING
+		        	// this.cache.resolve = this.cache.resolve.newRes.resolve
 		        }
 			} else if(!isEmptyObject(this.context)) {
 				this.cache.resolve = handler(this.context.cache.resolve)
@@ -48,6 +65,7 @@ jPromise.prototype.resolve = function(data) {
 		          this.cache.resolve = this.cache.resolve.newRes.resolve
 		        }
 			}
+
 			if(this.next && this.next.state === PENDING) {
 				this.next.resolve()
 			}
@@ -85,22 +103,23 @@ jPromise.prototype.then = function(resolve, reject) {
 	if(typeof reject === 'function') {
 		this.rejQueue.push(reject)
 	}
+	
+	if(this.state === RESOLVE) {
+		reAsync(that, RESOLVE)
+	} else if(this.state === REJECT) {
+		reAsync(that, REJECT)
+	}
+
 	/**
 	 * we dont need to do this 2017.4.1 but today is Aprilfools' Day~
 	 */
-	// if(this.state === RESOLVE) {
-	// 	reAsync(that, RESOLVE)
-	// } else if(this.state === REJECT) {
-	// 	reAsync(that, REJECT)
+	// if(this.context) {
+	// 	if(this.context.state === RESOLVE) {
+	// 		reAsync(that, RESOLVE)
+	// 	} else if(this.context.state === REJECT) {
+	// 		reAsync(that, REJECT)
+	// 	}
 	// }
-
-	if(this.context) {
-		if(this.context.state === RESOLVE) {
-			reAsync(that, RESOLVE)
-		} else if(this.context.state === REJECT) {
-			reAsync(that, REJECT)
-		}
-	}
 
 	var next = new jPromise()
 	next.context = this

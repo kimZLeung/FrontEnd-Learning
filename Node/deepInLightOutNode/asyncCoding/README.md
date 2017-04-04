@@ -226,23 +226,28 @@ jPromise.prototype.resolve = function(data) {
 	}
 }
 ```
-> 作出了以上修改之后，链子就不会断掉了，但是当第一个`Promise`里面不是异步执行`resolve`的时候，在第二处`resolve`的时候还没调用第二个`then`方法，所以也无法读取`this.next`还是会断掉...（因为第一个`Promise`里面的函数是同步执行的，所以会出现这种情况
+> 作出了以上修改之后，链子就不会断掉了，但是当第一个`Promise`里面不是异步执行`resolve`的时候，在第二处`resolve`的时候还没调用第二个`then`方法，所以也无法读取`this.next`还是会断掉...（第一个`Promise`里面的函数是同步执行的，而`then`方法里面的函数是异步执行的，所以我给`then`函数里面的方法进行了一层封装
 
 ``` javascript
-// 于是我对then方法进行了修改，判断了一下前一个Promise的状态
+function reAsync(ctx, type) {
+	if(type === RESOLVE) {
+		setTimeout(function() {
+			ctx.resolve()
+		}, 0)
+	} else {
+		setTimeout(function() {
+			ctx.reject()
+		}, 0)
+	}
+}
+
 jPromise.prototype.then = function(resolve, reject) {
 	// ...some
 	
-	if(this.context) {
-		if(this.context.state === RESOLVE) {
-			setTimeout(function() {
-				that.resolve()
-			}, 0)
-		} else if(this.context.state === REJECT) {
-			setTimeout(function() {
-				that.reject()
-			}, 0)
-		}
+	if(this.state === RESOLVE) {
+		reAsync(that, RESOLVE)
+	} else if(this.state === REJECT) {
+		reAsync(that, REJECT)
 	}
 	// some...
 }
@@ -259,7 +264,59 @@ jPromise.prototype.resolve = function(data) {
 	}
 }
 ```
-> 检测到返回`Promise`就解构其结果
+
+> 检测到返回`Promise`就解构其结果，可是这样简单的兼容并不能满足`Promise`里面放异步操作的结果（而且`Promise`最大的特征就是异步操作的链式调用），所以我们应该对`Promise`里面是否进行了异步操作作出判断，并且当我们的`Promise`里面包含异步操作的时候作出适当的处理
+
+``` javascript
+jPromise.prototype.resolve = function(data) {
+	this.state = RESOLVE
+	var handler = null
+	if(data) {
+		this.newRes.resolve = data
+	}
+	// 新增部分 用于解决`Promise`里面包含异步操作的情况
+	if(this.parent && this.parent.state === PENDING) {
+		this.parent.state = RESOLVE
+		this.parent.cache = this.newRes
+		if(this.next && this.next.state === PENDING) {
+			this.next.resolve()
+		}
+	}
+	// 新增部分 end
+	if(this.resQueue.length) {
+		handler = this.resQueue.shit()
+		if(typeof handler === 'function') {
+			if(!isEmptyObject(this.newRes)) {
+				this.cache.resolve = handler(this.newRes.resolve)
+				// 作Promise兼容
+				if(isThenable(this.cache.resolve)) {
+					if(this.cache.resolve.newRes.resolve) {
+						this.cache.resolve = this.cache.resolve.newRes.resolve
+					} else {
+						// 如果Promise里面包含有异步操作的情况
+						this.state = PENDING
+						this.cache.resolve.next = this.next
+						this.cache.resolve.parent = this
+						this.next = null
+					}
+					// this.state = PENDING
+		        	// this.cache.resolve = this.cache.resolve.newRes.resolve
+		        }
+			} else if(!isEmptyObject(this.context)) {
+				this.cache.resolve = handler(this.context.cache.resolve)
+				// 作Promise兼容
+				if(isThenable(this.cache.resolve)) {
+		          this.cache.resolve = this.cache.resolve.newRes.resolve
+		        }
+			}
+
+			if(this.next && this.next.state === PENDING) {
+				this.next.resolve()
+			}
+		}
+	}
+}
+```
 
 ---
 ### 这里是分分分分分割线

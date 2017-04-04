@@ -30,3 +30,17 @@ var jPromise = require('./justPromise').jPromise
 // }).then(function(res) {
 // 	console.log(res)
 // })
+
+
+new jPromise(function(resolve) {
+	resolve('123')
+}).then(function(data) {
+	console.log(data)
+	return new jPromise(function (resolve) {
+		setTimeout(function() {
+			resolve('100')
+		}, 1000)
+	})
+}).then(function(res) {
+	console.log(res)
+})
