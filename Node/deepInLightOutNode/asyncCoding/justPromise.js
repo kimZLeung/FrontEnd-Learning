@@ -62,7 +62,15 @@ jPromise.prototype.resolve = function(data) {
 				this.cache.resolve = handler(this.context.cache.resolve)
 				// 作Promise兼容
 				if(isThenable(this.cache.resolve)) {
-		          this.cache.resolve = this.cache.resolve.newRes.resolve
+					if(this.cache.resolve.newRes.resolve) {
+						this.cache.resolve = this.cache.resolve.newRes.resolve
+					} else {
+						// 如果Promise里面包含有异步操作的情况
+						this.state = PENDING
+						this.cache.resolve.next = this.next
+						this.cache.resolve.parent = this
+						this.next = null
+					}
 		        }
 			}
 
