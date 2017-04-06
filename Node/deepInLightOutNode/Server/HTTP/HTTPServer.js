@@ -1,10 +1,21 @@
 var http = require('http')
 
 http.createServer(function (req, res) {
-	req.on('data', function (data) {
-		res.writeHead(200)
-		res.end('<h1>haha</h1>')
-	})
+	console.log(req.method)
+
+	if(req.method === 'POST') {
+		var buffers = []
+		req.on('data', function (data) {
+			buffers.push(data)
+		}).on('end', function () {
+			var buffer = Buffer.concat(buffers)
+			var dataBody = buffer.toString('utf-8')
+			// TODO
+			res.writeHead(200)
+			res.end('HW')
+		})
+	}
+	
 	res.writeHead(200)
 	res.end('<h1>haha</h1>')
 }).listen(8080, function () {
