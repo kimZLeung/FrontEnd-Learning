@@ -7,7 +7,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: ['./src/index.js', config.dev.hotMiddlewareScript]
+    app: ['./src/index.js']
   },
   output: {
     path: config.dev.path,
