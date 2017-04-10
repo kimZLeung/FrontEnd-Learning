@@ -30,6 +30,28 @@ const hehe = () => {
 		)
 }
 
+class Alert extends React.Component {
+	constructor() {
+		super()
+		this.handleClick = this.handleClick.bind(this)
+	}
+
+	handleClick(e) {
+		
+	}
+
+	render() {
+		const { title, content } = this.props.match.params
+		return (
+			<div className="alertBox">
+				<h2>{ title }</h2>
+				<p>{ content }</p>
+				<button onclick="this.handleClick">cancel</button>
+			</div>
+		)
+	}
+}
+
 ReactDOM.render(
 	<Router>
 		<ul>
@@ -37,8 +59,9 @@ ReactDOM.render(
 		  <ListItemLink to="/somewhere-else"/>
 		  <Link to="/book"/* activeClassName="active" */>Book</Link>
 		  <br />
-		  <NavLink to="/haha" activeStyle={{color:'black'}}>haha</NavLink>
+		  <NavLink to="/alert/warning/haha" activeStyle={{color:'black'}}>haha</NavLink>
 		  <Route path="/book" component={book} />
+		  <Route path="/alert/:title/:content" component={Alert} />
 		  <Route path="/book" component={hehe} />
 		</ul>
 	</Router>,
