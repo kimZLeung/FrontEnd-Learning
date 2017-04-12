@@ -7,6 +7,7 @@
 ``` javascript
 // server.js
 
+// Router提供的方法，配合Router进行服务器端渲染
 match({ routes, location: req.url }, (err, redirectLocation, props) => {
 	// ...
 	const markup = renderToString(
@@ -26,6 +27,7 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 ``` javascript
 // server.js
 
+// Router提供的方法，配合Router进行服务器端渲染
   match({ history, routes: getRoutes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
 	const component = (
 	  <Provider store={store} key="provider">
@@ -53,7 +55,7 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 // ...
 ```
 
-> 两种方式的区别是前者使用了`express`的模板文件渲染机制把整个模板返回到前端，后者是直接使用字符串返回到前端的，两者都在服务端就把`store`加载完毕了。前者并没有使用字符串把`store`用字符串形式返回到前端并且没有保存到全局，不过前者也在`client.js`里面重新构造了属于前端组件的`store`，其实这样的做法应该并不能把服务器端计算好的`store`顺利返回给前端，但是反正这个`store`也是个空对象。后者把构造好的`store`通过一些方式保存在前端的全局对象中，当整个字符串返回到前端的时候，会调用在入口文件`Client.js`里面的函数，再对这个首页渲染的组件灌入从`window`拿出来的计算好的`store`再渲染一次。
+> 两种方式的区别是前者使用了`express`的模板文件渲染机制把整个模板返回到前端，后者是直接使用字符串返回到前端的，两者都在服务端就把`store`加载完毕了。前者并没有使用字符串把`store`用字符串形式返回到前端并且没有保存到全局，不过前者也在`client.js`里面重新构造了属于前端组件的`store`，其实这样的做法应该并不能把服务器端计算好的`store`顺利返回给前端。可以把`state`保存起来，以另一个参数传入`index.ejs`里面，这样前端就可以访问到服务器端生成好的`state`了。但是反正这里这个`store`也是个空对象。后者把构造好的`store`通过一些方式保存在前端的全局对象中，当整个字符串返回到前端的时候，会调用在入口文件`Client.js`里面的函数，再对这个首页渲染的组件灌入从`window`拿出来的计算好的`store`再渲染一次。
 
 ---
 ## 异步的情况
@@ -68,3 +70,9 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 - 前端和服务端代码同构，服务端也可以引用构造`Store`的方法。代码复用的提升。
 - 首页渲染速度的提升。
 - 加快首页渲染的速度，配合了搜索引擎SEO，便于搜索引擎爬到页面的信息
+
+---
+## 好吧其实我有个疑问
+> 为什么server端渲染过一次，client里面不是也会渲染一次吗？
+
+原来`React`的`render`方式实现了一些黑魔法，它会检测之前是否已经有服务器端渲染好的模板，如果有，则只会为这份模板添加事件，若有`store`（应用了`Redux`），则为组件注入`store`。
