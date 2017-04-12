@@ -61,3 +61,10 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 > 当存在`store`需要有异步的数据的时候，就无法直接在服务端`renderToString`了，因为这是一个同步方法。并不会等待`store`的计算完毕。
 
 所以我们可以引入一个库`redux-aysnc-connect`。这个库里面封装了一个`loadOnServer`的方法，可以用于服务器端的异步渲染。
+
+---
+## 服务端渲染的优势
+
+- 前端和服务端代码同构，服务端也可以引用构造`Store`的方法。代码复用的提升。
+- 首页渲染速度的提升。
+- 加快首页渲染的速度，配合了搜索引擎SEO，便于搜索引擎爬到页面的信息
