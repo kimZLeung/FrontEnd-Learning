@@ -10,8 +10,7 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { browserHistory } from 'react-router'
 
 const initialState = window.__INITIAL_STATE__
-// const store = configureStore(initialState)
-const store = configureStore()
+const store = configureStore(initialState)
 
 ReactDOM.render(
 	<Provider store={ store }>

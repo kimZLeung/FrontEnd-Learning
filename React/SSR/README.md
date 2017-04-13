@@ -87,4 +87,25 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 
 折腾了一轮，原来`output`里面的`publicPath`除了配合`url-loader`可以修改引用文件路径之外，弄热替换的时候将它指向项目的生成的`bundle`的目录那里，通过这个属性来告诉热加载模块去哪加载，才能启动对应的热替换QAQ
 
-还有一点挺可怕的是，我发现`webpack`的`output`里面的`path`里面使用绝对路径时，直接用`/`这样指向的是硬盘的根目录而不是项目的根目录，需要使用`path.resolve(__dirname, 'dist')`这样的方式来指向项目里的dist的目录，而`publicPath`可以直接用`/`指向项目根目录，
+还有一点挺可怕的是，我发现`webpack`的`output`里面的`path`里面使用绝对路径时，直接用`/`这样指向的是硬盘的根目录而不是项目的根目录，需要使用`path.resolve(__dirname, 'dist')`这样的方式来指向项目里的dist的目录，而`publicPath`可以直接用`/`指向项目根目录。
+
+---
+## 一直无法使用`babel-node`
+> 在本地安装了`babel-cli`之后，满心欢喜地给`package.json`的`script`加上一个`babel-node server/server`的命令。然后`npm start`了半天硬是没把server跑起来。心好累QAQ。
+
+为什么如此呢，我`google`找了很久，有安装过`node-jsx`尝试过，不过也没有用。后来我找了找杰斌大大的代码看了下。咦？我貌似为了试一下`webpack2`的`rules`。所以把`babel`的`preset`用`options`的形式写到了`webpack`的配置里面。那我抽出来写个`babelrc`试下。
+
+> 结果果然要在项目根目录下面配置一个`babelrc`才能启动配合`babel-node`启动带有`ES6`语法的服务器。
+
+---
+## conclusion
+
+> 其实服务器端渲染说难不难。
+
+> 最初可以说是起源于`react-dom`的`renderToString`方法，使得React的组件可以在服务器端得以渲染为字符串，并整份返回到前端，提高了首屏渲染DOM结构的速度。对哈，使用`express`的模板文件返回也可以哟
+
+> 后来项目会融入`React-Router`，加入router之后，在服务器端就不能渲染了吗？并不是。router的库提供了`match`方法和`<RouterContext>`组件，方便我们在服务器端便渲染好对应路由的DOM结构，并整份返回。
+
+> 再后来项目里面融入了`Redux`，那我们就选择在服务器端计算出初始的`Store`，并且把初始的`State`通过一些方式，在DOM结构里面赋值给window的全局属性，所以前端可以直接拿到初始的`State`进行渲染。记得在服务器端也要用`<Provider>`把要渲染的东西包住啊
+
+### 无论是前面的组件在服务器端进行渲染，还是`Router`的使用`match`配合`<RouterContext>`，甚至是`redux`的预先计算`Store`，都是服务端和客户端代码同构的体现。跑同一份代码，会提高代码复用。这是比首屏渲染更加重要的优势

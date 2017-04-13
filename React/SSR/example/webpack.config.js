@@ -12,19 +12,16 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	module: {
-		rules: [{
+		loaders: [{
 			test: /\.jsx?$/,
-			use: [{
-				loader: 'babel-loader',
-				options: {
-					presets: ['es2015', 'react', 'stage-0']
-				}
-			}],
-			exclude: /node_modules/
+			loaders: ['react-hot-loader', 'babel-loader'],
+			exclude: /node_module/
 		}]
 	},
 	devServer: {
 		hot: true,
+		inline: true,
+		historyApiFallback: true,
 		publicPath: '/dist'
 	},
 	plugins: [

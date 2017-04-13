@@ -2,7 +2,7 @@ import express from 'express'
 import http from 'http'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { match, RoutingContext } from 'react-router'
+import { match, RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 import configureStore from '../app/store/configureStore.js'
 import { routes } from '../app/route.js'
@@ -19,16 +19,16 @@ app.get('*', (req, res) => {
 		} else if(redirectLocation) {
 			res.redirect(302, redirectLocation.pathname, redirectLocation.search)
 		} else if(props) {
-			const Sstore = configureStore()
+			const setStore = configureStore()
 
 			const makeup = renderToString(
-				<Provider store={ Sstore }>
-					<RoutingContext { ...props } />
+				<Provider store={ setStore }>
+					<RouterContext { ...props } />
 				</Provider>
 			)
 	
 			res.status(200)
-			res.end(renderFullPage(makeup, Sstore.getState()))
+			res.end(renderFullPage(makeup, setStore.getState()))
 		} else {
 			res.status(404).end('404 Not Found')
 		}
