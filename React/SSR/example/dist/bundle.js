@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ed60d0ac11be46a99703"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3ed76dce5a13525b7b44"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotMainModule = true; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -953,6 +953,7 @@ var Infor = function Infor(_ref) {
 	var counter = _ref.counter,
 	    dispatch = _ref.dispatch;
 
+	console.log('hahahaaa');
 	var action = (0, _redux.bindActionCreators)(actions, dispatch);
 	return _react2.default.createElement(
 		'div',
@@ -964,14 +965,14 @@ var Infor = function Infor(_ref) {
 		),
 		_react2.default.createElement(
 			'button',
-			{ onclick: function onclick() {
+			{ onClick: function onClick(e) {
 					action.add(2);
 				} },
 			'+'
 		),
 		_react2.default.createElement(
 			'button',
-			{ onclick: function onclick() {
+			{ onClick: function onClick(e) {
 					action.reduce(2);
 				} },
 			'-'

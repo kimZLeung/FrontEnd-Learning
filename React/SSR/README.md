@@ -85,4 +85,6 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 ## 补充
 > 用`webpack-dev-server`做懒人热替换调试的时候，我把`output`的`path`设置成了`path.resolve(__dirname, 'dist')`，生成的`bundle.js`并不在项目的根目录。于是我发现热替换用不了了。
 
-折腾了一轮，原来`output`里面的`publicPath`除了配合`url-loader`可以修改引用文件路径之外，弄热替换的时候将它指向项目的入口文件的目录那里，才能启动对应的热替换QAQ
+折腾了一轮，原来`output`里面的`publicPath`除了配合`url-loader`可以修改引用文件路径之外，弄热替换的时候将它指向项目的生成的`bundle`的目录那里，通过这个属性来告诉热加载模块去哪加载，才能启动对应的热替换QAQ
+
+还有一点挺可怕的是，我发现`webpack`的`output`里面的`path`里面使用绝对路径时，直接用`/`这样指向的是硬盘的根目录而不是项目的根目录，需要使用`path.resolve(__dirname, 'dist')`这样的方式来指向项目里的dist的目录，而`publicPath`可以直接用`/`指向项目根目录，
