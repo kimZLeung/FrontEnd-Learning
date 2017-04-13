@@ -80,3 +80,9 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 > 为什么server端渲染过一次，client里面不是也会渲染一次吗？
 
 原来`React`的`render`方式实现了一些黑魔法，它会检测之前是否已经有服务器端渲染好的模板，如果有，则只会为这份模板添加事件，若有`store`（应用了`Redux`），则为组件注入`store`。
+
+---
+## 补充
+> 用`webpack-dev-server`做懒人热替换调试的时候，我把`output`的`path`设置成了`path.resolve(__dirname, 'dist')`，生成的`bundle.js`并不在项目的根目录。于是我发现热替换用不了了。
+
+折腾了一轮，原来`output`里面的`publicPath`除了配合`url-loader`可以修改引用文件路径之外，弄热替换的时候将它指向项目的入口文件的目录那里，才能启动对应的热替换QAQ

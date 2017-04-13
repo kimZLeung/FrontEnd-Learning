@@ -8,25 +8,27 @@ import configureStore from '../app/store/configureStore.js'
 import { routes } from '../app/route.js'
 import renderFullPage from '../app/helper/renderFullPage.js'
 
-
 const app = express()
 
+app.use(express.static('dist'))
+
 app.get('*', (req, res) => {
-	match({ routes, location: req.url }, (err, redirectLocation, props) => {
+	match({ routes: routes(), location: req.url }, (err, redirectLocation, props) => {
 		if(err) {
 			res.status(500).send(err.message)
 		} else if(redirectLocation) {
 			res.redirect(302, redirectLocation.pathname, redirectLocation.search)
 		} else if(props) {
-			const store = configureStore()
+			const Sstore = configureStore()
+
 			const makeup = renderToString(
-				<Provider store={ store }>
+				<Provider store={ Sstore }>
 					<RoutingContext { ...props } />
 				</Provider>
 			)
 	
 			res.status(200)
-			res.end(renderFullPage(makeup, store.getState()))
+			res.end(renderFullPage(makeup, Sstore.getState()))
 		} else {
 			res.status(404).end('404 Not Found')
 		}
