@@ -10409,10 +10409,16 @@ var Alert = function (_React$Component) {
 	function Alert() {
 		_classCallCheck(this, Alert);
 
-		return _possibleConstructorReturn(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).call(this));
+		var _this = _possibleConstructorReturn(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).call(this));
+
+		_this.handleClick = _this.handleClick.bind(_this);
+		return _this;
 	}
 
 	_createClass(Alert, [{
+		key: 'handleClick',
+		value: function handleClick(e) {}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _props$match$params = this.props.match.params,
@@ -10431,6 +10437,11 @@ var Alert = function (_React$Component) {
 					'p',
 					null,
 					content
+				),
+				_react2.default.createElement(
+					'button',
+					{ onclick: 'this.handleClick' },
+					'cancel'
 				)
 			);
 		}
@@ -10439,13 +10450,25 @@ var Alert = function (_React$Component) {
 	return Alert;
 }(_react2.default.Component);
 
+var Lala = function Lala() {
+	return _react2.default.createElement(
+		'div',
+		null,
+		_react2.default.createElement(
+			'h1',
+			null,
+			'Im Lala~'
+		)
+	);
+};
+
 _reactDom2.default.render(_react2.default.createElement(
 	_reactRouterDom.BrowserRouter,
 	null,
 	_react2.default.createElement(
 		'ul',
 		null,
-		_react2.default.createElement(ListItemLink, { to: '/somewhere' }),
+		_react2.default.createElement(ListItemLink, { to: '/', component: Lala }),
 		_react2.default.createElement(ListItemLink, { to: '/somewhere-else' }),
 		_react2.default.createElement(
 			_reactRouterDom.Link,

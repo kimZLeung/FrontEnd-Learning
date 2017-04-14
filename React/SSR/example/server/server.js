@@ -10,6 +10,7 @@ import renderFullPage from '../app/helper/renderFullPage.js'
 
 const app = express()
 
+/* 托管bundle.js让返回的模板可以直接访问到bundle */
 app.use(express.static('dist'))
 
 app.get('*', (req, res) => {

@@ -2,7 +2,6 @@ var webpack = require('webpack')
 var path = require('path')
 
 var outputPath = path.join(__dirname, '/dist')
-var hehe = path.resolve(__dirname, 'dist')
 
 module.exports = {
 	entry: './app/client.js',
