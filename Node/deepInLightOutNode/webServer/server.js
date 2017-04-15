@@ -22,7 +22,7 @@ http.createServer(function (req, res) {
 			var buffer = Buffer.concat(buffers)
 			var dataBody = buffer.toString('utf-8')
 			res.writeHead(200)
-			routerHandler.scanRoute(pathName, req, res)
+			routerHandler.scanRoute(pathName, req, res, dataBody)
 			res.end('HW')
 		})
 	} else {
