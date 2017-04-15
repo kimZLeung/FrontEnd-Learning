@@ -41,8 +41,7 @@ var routerHandler = function() {
 			var setArray = pathArray.slice(2)
 			return setArray.join('/')
 		},
-		scanRoute: function(pathName, req, res, data) {
-			data ? req.param = data : ''
+		scanRoute: function(pathName, req, res) {
 			for(var i = 0; i < router.length; i++) {
 				var route = router[i]
 				if(pathName === route[0]) {
