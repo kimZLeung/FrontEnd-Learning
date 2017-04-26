@@ -24,7 +24,7 @@ A.extend = A.fn.extend = function() {
   var i = 1,
       len = arguments.length,
       target = arguments[0],
-      j;
+      j
 
   if(i == len) {
     target = this
@@ -42,4 +42,4 @@ var demo = A('app')
 demo.extend({
   haha: 'qwertyuwero'
 })
-console.log(demo.haha)
+console.log(demo.size())
