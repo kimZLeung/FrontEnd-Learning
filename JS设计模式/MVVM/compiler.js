@@ -1,6 +1,10 @@
 function Compiler(dom, vm) {
   this.dom = document.querySelector(dom) || null
   this.vm = vm
+
+  // this.scan(this.dom)
+  // return
+
   var data = this.toFragment()
   if(data.res) {
     this.scan(data.node)
@@ -105,34 +109,42 @@ Compiler.prototype.method = {
     this.bind(node, vm, val, 'model')
 
     var self = this
-    var oldVal = self.getVal(vm, val)
+    var oldVal = self.getVal(vm, val).value
     node.addEventListener('input', function(e) {
       var newVal = e.target.value
       if(oldVal == newVal) {
         return
       }
       self.setVal(vm, val, newVal)
-      val = newVal
+      oldVal = newVal
     }, false)
   },
   class: function(node, vm, val) {
     this.bind(node, vm, val, 'class')
   },
   bind: function(node, vm, val, method) {
-    refresher[method] && refresher[method](node, this.getVal(vm, val))
+    var value = this.getVal(vm, val)
+    refresher[method] && refresher[method](node, value.value)
 
     // new updater 进行节点数据绑定，把对应的更新方法加到数据劫持的回调函数之中
-
+    new Updater(val, value.value, function(newVal, oldVal) {
+      refresher[method](node, newVal, oldVal)
+    }, vm).addDep(value.dep)
   },
   getVal: function(vm, val) {
     var dataList = val.split('.')
     var value = vm
-    dataList.forEach(function(data) {
-      console.log(data == 'haha')
-      console.log(data)
+    var dep = null
+    dataList.forEach(function(data, i) {
+      if(i == dataList.length - 1) {
+        dep = value['__' + data]
+      }
       value = value[data]
     })
-    return value
+    return {
+      value: value,
+      dep: dep
+    }
   },
   setVal: function(vm, val, newVal) {
     var dataList = val.split('.')
@@ -149,7 +161,6 @@ Compiler.prototype.method = {
 
 var refresher = {
   text: function(node, val) {
-    console.log(node, val)
     node.textContent = typeof val == 'undefined' ? '' : val
   },
   html: function(node, val) {

@@ -8,9 +8,8 @@
 </head>
 <body>
   <div id="app">
-    <div v-text="haha"></div>
-    <div v-text="haha"></div>
     <input type="text" v-model="haha" />
+    <div v-text="haha"></div>
     <div v-html="haha"></div>
     <div>{{ haha }}</div>
   </div>
@@ -19,9 +18,18 @@
   <script src="../updater.js" charset="utf-8"></script>
   <script src="../viewModal.js" charset="utf-8"></script>
   <script type="text/javascript">
-    new Compiler('#app' , {
-      haha: 'hallo world'
+
+    // var vm = {
+    //   haha: 'halo world'
+    // }
+    // new Compiler('#app' , vm)
+    var mvvm = new vm({
+      dom: '#app',
+      data: {
+        haha: 'halo world'
+      }
     })
+
   </script>
 </body>
 </html>
