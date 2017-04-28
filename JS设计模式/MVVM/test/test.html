@@ -13,16 +13,12 @@
     <div v-html="haha"></div>
     <div>{{ haha }}</div>
   </div>
-  <script src="../compiler.js" charset="utf-8"></script>
-  <script src="../observer.js" charset="utf-8"></script>
-  <script src="../updater.js" charset="utf-8"></script>
-  <script src="../viewModal.js" charset="utf-8"></script>
+  <script src="../src/compiler.js" charset="utf-8"></script>
+  <script src="../src/observer.js" charset="utf-8"></script>
+  <script src="../src/updater.js" charset="utf-8"></script>
+  <script src="../src/viewModal.js" charset="utf-8"></script>
   <script type="text/javascript">
 
-    // var vm = {
-    //   haha: 'halo world'
-    // }
-    // new Compiler('#app' , vm)
     var mvvm = new vm({
       dom: '#app',
       data: {
