@@ -8,9 +8,12 @@
 </head>
 <body>
   <div id="app">
-    <input type="text" v-model="haha" />
+    <input type="text" v-model="hehe.en" />
     <div v-text="haha"></div>
     <div v-html="haha"></div>
+    <div>
+      <div v-text="hehe.en"></div>
+    </div>
     <div>{{ haha }}</div>
   </div>
   <script src="../src/compiler.js" charset="utf-8"></script>
@@ -22,7 +25,10 @@
     var mvvm = new vm({
       dom: '#app',
       data: {
-        haha: 'halo world'
+        haha: 'halo world',
+        hehe: {
+          en: '123'
+        }
       }
     })
 

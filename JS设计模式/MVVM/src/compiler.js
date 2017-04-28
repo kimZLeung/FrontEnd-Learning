@@ -110,7 +110,7 @@ Compiler.prototype.method = {
 
     var self = this
     var oldVal = self.getVal(vm, val).value
-    node.addEventListener('input', function(e) {
+    node.addEventListener('keyup', function(e) {
       var newVal = e.target.value
       if(oldVal == newVal) {
         return
