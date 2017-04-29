@@ -3,7 +3,8 @@ function vm(option) {
   var data = option.data
   var dom = option.dom
   new Observer(data)
-  new Compiler(dom, data)
+  // 可能会进行重新渲染来重新push dep队列的事件
+  this._compiler = new Compiler(dom, data)
 }
 
 vm.prototype.setData = function(path, newData) {
