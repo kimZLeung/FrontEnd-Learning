@@ -23,12 +23,19 @@
 		<search>
 			<!-- <content :msg="msg"></content> -->
 		</search>
+		<!-- <ya></ya> -->
 	</div>
 	<script>
+		Vue.component('ya', {
+			render: function(createElement) {
+				return createElement('h1', 'Halo World')
+			}
+		})
+
 		Vue.component('search', {
 			template: '<input type="text" v-model="msg" class="searchText"><button class="btn" @click="handleSearch">Search</button><content></content>',
 			data: function() {
-				return { 
+				return {
 					msg: '',
 				};
 			},
@@ -53,8 +60,8 @@
 					}
 				});
 				return value
-			}		
-			else 
+			}
+			else
 				return value;
 		});
 
@@ -93,7 +100,7 @@
 			// 					if(item.indexOf(this.msg) != -1) {
 			// 						return item;
 			// 					}
-			// 				});	
+			// 				});
 			// 			}
 			// 			return items;
 			// 		}
@@ -118,7 +125,7 @@
 		});
 
 		new Vue({
-			el: '#app' 
+			el: '#app'
 		});
 	</script>
 </body>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-event</title>
+  <!-- 这个Vue版本太旧不支持render属性 -->
+	<script src='js/vue.js'></script>
+</head>
+<body>
+	<!-- 子组件模板 -->
+	<div id="app"><ya>halo world</ya></div>
+
+	<script type="text/javascript">
+  Vue.component('ya', {
+    functional: true,
+    render: function(createElement, context) {
+      console.log(context)
+      return createElement('h1', context.data, context.children)
+    }
+  })
+
+    new Vue({
+      el: '#app'
+    })
+	</script>
+</body>
+</html>
