@@ -14,10 +14,19 @@ var config = {
 		path: outputPath,
 		filename: '[name].js'
 	},
+	resolve: {
+	  alias: {
+	    vue: 'vue/dist/vue.js'
+	  }
+	},
 	module: {
 		loaders: [{
 			test: /\.js$/,
 			loaders: ['babel-loader'],
+			exclude: /node_modules/
+		}, {
+			test: /\.vue$/,
+			loaders: ['vue-loader'],
 			exclude: /node_modules/
 		}]
 	},
@@ -27,8 +36,7 @@ var config = {
 }
 
 /* 可以用 mergeEntry 增加入口文件 */
-mergeEntry(config, 'test', './webApp/src/test.js')
-mergeEntry(config, 'ask', './webApp/src/ask.js')
+mergeEntry(config, 'test', './webApp/src/test/test.js')
 
 if(now === 'dev') {
 	config.output.publicPath = '/webApp/dist'

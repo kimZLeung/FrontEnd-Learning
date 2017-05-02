@@ -19,6 +19,7 @@ server.get('/', function(req, res) {
         res.status(500).send('Server Error')
       } else {
         res.send(template.replace('<div id="app"></div>', app))
+        // res.send('123')
       }
     }
   )
