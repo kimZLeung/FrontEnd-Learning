@@ -1,9 +1,8 @@
 import haha from './tes.js'
 import Halo from './components/halo.vue'
 import Vue from 'vue'
+var env = require('../../../env.js').env
 
-const liang = 'kimz'
-console.log(liang)
 console.log('hahaha')
 haha()
 
@@ -14,6 +13,8 @@ new Vue({
 })
 
 // webpack热替换，捕获替换事件
-if(module.hot) {
-  module.hot.accept()
+if(env() === 'dev') {
+  if(module.hot) {
+    module.hot.accept()
+  }
 }

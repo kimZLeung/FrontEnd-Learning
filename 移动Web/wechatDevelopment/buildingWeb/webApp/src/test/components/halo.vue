@@ -42,7 +42,7 @@
   export default {
     data: function() {
       return {
-        msg: '33'
+        msg: '233'
       }
     }
   }

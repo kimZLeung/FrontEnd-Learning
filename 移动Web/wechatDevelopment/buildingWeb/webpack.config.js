@@ -42,6 +42,12 @@ mergeEntry(config, 'test', './webApp/src/test/test.js')
 if(now === 'dev') {
 	config.output.publicPath = '/webApp/dist'
 	config.devServer = {
+		// historyApiFallback: {
+		// 	rewrites: [{
+		// 		from: /^\//, to: '/webApp/test.html'
+		// 	}]
+		// 	index: '/webApp/test.html'
+		// },
 		hot: true,
 		inline: true,
 		port: 8080,
