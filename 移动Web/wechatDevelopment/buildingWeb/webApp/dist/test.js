@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5214a7a8d5e694185fb1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8be91afea43ea8336d0f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -716,7 +716,7 @@ exports = module.exports = __webpack_require__(8)(undefined);
 
 
 // module
-exports.push([module.i, "\nh1[data-v-59c8962a] {\n  color: red;\n  text-align: center\n}\n", ""]);
+exports.push([module.i, "\nh1[data-v-d0d07850] {\n  color: red;\n  text-align: center\n}\n", ""]);
 
 // exports
 
@@ -10551,11 +10551,11 @@ var Component = __webpack_require__(9)(
   /* styles */
   injectStyle,
   /* scopeId */
-  "data-v-59c8962a",
+  "data-v-d0d07850",
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "E:\\myGit\\weChatHole\\webApp\\src\\test\\components\\halo.vue"
+Component.options.__file = "E:\\myGit\\FrontEnd-Learning\\移动Web\\wechatDevelopment\\buildingWeb\\webApp\\src\\test\\components\\halo.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] halo.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -10566,9 +10566,9 @@ if (true) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-59c8962a", Component.options)
+    hotAPI.createRecord("data-v-d0d07850", Component.options)
   } else {
-    hotAPI.reload("data-v-59c8962a", Component.options)
+    hotAPI.reload("data-v-d0d07850", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -10912,7 +10912,7 @@ module.exports.render._withStripped = true
 if (true) {
   module.hot.accept()
   if (module.hot.data) {
-     __webpack_require__(2).rerender("data-v-59c8962a", module.exports)
+     __webpack_require__(2).rerender("data-v-d0d07850", module.exports)
   }
 }
 
@@ -10927,7 +10927,7 @@ var content = __webpack_require__(0);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(12)("486a5afb", content, false);
+var update = __webpack_require__(12)("56184dac", content, false);
 // Hot Module Replacement
 if(true) {
  // When the styles change, update the <style> tags
