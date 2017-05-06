@@ -134,6 +134,7 @@ render((
 				<Route path='intro' component={Intro} />
 				<Route path='todo' component={Loo} />
 			</Route>
+			<Route path='/app' component={About} />
 		</Router>
 	</div>
 ), document.getElementById('App'));

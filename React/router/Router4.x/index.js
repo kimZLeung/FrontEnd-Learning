@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-  NavLink
+  NavLink,
+  Switch
 } from 'react-router-dom'
 
 console.log(React)
@@ -30,14 +31,31 @@ const hehe = () => {
 		)
 }
 
+function dear(Target) {
+  // target.dear = '666'
+  return class extends React.Component {
+    constructor(props) {
+      super(props)
+      this.dear = '123'
+      console.log(this)
+    }
+
+    render() {
+      return <Target {...this.props} dear={this.dear} />
+    }
+  }
+}
+
+@dear
 class Alert extends React.Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 		this.handleClick = this.handleClick.bind(this)
+    console.log(this)
 	}
 
 	handleClick(e) {
-		
+    console.log(this.props.dear)
 	}
 
 	render() {
@@ -58,22 +76,24 @@ const Lala = () => {
 			<h1>Im Lala~</h1>
 		</div>
 	)
-	
+
 }
 
 ReactDOM.render(
 	<Router>
-		<ul>
-		  <ListItemLink to="/"/>
-		  <ListItemLink to="/somewhere-else"/>
-		  <Link to="/book"/* activeClassName="active" */>Book</Link>
-		  <br />
-		  <NavLink to="/alert/warning/haha" activeStyle={{color:'black'}}>haha</NavLink>
-		  <Route path="/alert" component={Lala} />
-		  <Route path="/book" component={book} />
-		  <Route path="/alert/:title/:content" component={Alert} />
-		  <Route path="/book" component={hehe} />
-		</ul>
+    <div>
+      <ListItemLink to="/"/>
+      <ListItemLink to="/somewhere-else"/>
+      <Link to="/book"/* activeClassName="active" */>Book</Link>
+      <br />
+      <NavLink to="/alert/warning/haha" activeStyle={{color:'black'}}>haha</NavLink>
+  		<Switch>
+        <Route path="/alert/warning/haha" component={Alert} />
+  		  <Route path="/alert" component={Lala} />
+  		  <Route path="/book" component={book} />
+  		  <Route path="/book" component={hehe} />
+  		</Switch>
+    </div>
 	</Router>,
 	document.getElementById('App')
 )

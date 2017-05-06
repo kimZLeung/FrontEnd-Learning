@@ -16,7 +16,8 @@ module.exports = {
 			use: [{
 				loader: 'babel-loader',
 				options: {
-					presets: ['es2015', 'react', 'stage-0'] // 可以把ES6和JSX语法转换过来
+					presets: ['es2015', 'react', 'stage-0'], // 可以把ES6和JSX语法转换过来
+					plugins: ['transform-decorators-legacy']
 				}
 			}],
 			exclude: /node_modules/
