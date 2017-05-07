@@ -65,6 +65,8 @@ class Alert extends React.Component {
 				<h2>{ title }</h2>
 				<p>{ content }</p>
 				<button onClick={this.handleClick}>cancel</button>
+        <Route path="/alert/warning/haha/yiyi" component={book} />
+        <Route path="/alert/warning/haha/hehe" component={hehe} />
 			</div>
 		)
 	}
@@ -86,7 +88,9 @@ ReactDOM.render(
       <ListItemLink to="/somewhere-else"/>
       <Link to="/book"/* activeClassName="active" */>Book</Link>
       <br />
-      <NavLink to="/alert/warning/haha" activeStyle={{color:'black'}}>haha</NavLink>
+      <NavLink to="/alert/warning/haha/yiyi" activeStyle={{color:'black'}}>haha</NavLink>
+      <br />
+      <NavLink to="/alert/warning/haha/hehe" activeStyle={{color:'black'}}>hehe</NavLink>
   		<Switch>
         <Route path="/alert/warning/haha" component={Alert} />
   		  <Route path="/alert" component={Lala} />
