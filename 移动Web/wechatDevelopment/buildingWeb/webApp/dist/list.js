@@ -448,7 +448,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "title": _vm.haha
     }
-  })], 1)
+  }), _vm._v(" "), _vm._l((_vm.itemList), function(item) {
+    return _c('item', {
+      attrs: {
+        "data": item
+      }
+    })
+  })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

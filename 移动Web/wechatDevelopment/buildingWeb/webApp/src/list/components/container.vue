@@ -34,8 +34,8 @@
       .then(function(res) {
         if(res.data) {
           console.log(res.data)
-          // var data = JSON.parse(res.data)
-          var data = res.data
+          var data = JSON.parse(res.data)
+          // var data = res.data
           wx.config({
             debug: true,
             appId: data.appId,

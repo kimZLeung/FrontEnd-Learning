@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "dev": "cross-env NODE_ENV=dev webpack-dev-server",
-    "start": "cross-env NODE_ENV=prod npm run build && cross-env NODE_ENV=prod babel-node server/server"
+    "dev": "cross-env NODE_ENV=dev node server/dev-server.js",
+    "start": "cross-env NODE_ENV=prod npm run build && babel-node server/server"
   },
   "author": "kimz",
   "license": "ISC",
@@ -24,8 +24,7 @@
     "vue-template-compiler": "^2.3.1",
     "webpack": "^2.3.3",
     "webpack-dev-middleware": "^1.10.2",
-    "webpack-dev-server": "^2.4.2",
-    "webpack-hot-middleware": "^2.18.0"
+    "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "express": "^4.15.2",

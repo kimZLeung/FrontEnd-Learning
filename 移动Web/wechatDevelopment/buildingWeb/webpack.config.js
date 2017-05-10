@@ -3,13 +3,14 @@ var mergeEntry = require('./webApp/util/mergeEntry.js').mergeEntry
 var path = require('path')
 // var HtmlWebpackPlugin = require('html-webpack-plugin')
 var outputPath = path.resolve(__dirname, 'webApp/dist')
+var configData = require('./config')
 
 var config = {
 	entry: {
 
 	},
 	output: {
-		path: outputPath,
+		path: configData.path,
 		filename: '[name].js',
 		chunkFilename: '[name].chunk.js'
 	},
@@ -56,16 +57,16 @@ mergeEntry(config, 'list', ['./webApp/src/list/index.js'])
 
 if(process.env.NODE_ENV === 'dev') {
 	config.devtool = 'inline-source-map'
-	config.output.publicPath = '/webApp/dist'
-	config.devServer = {
-		port: 80,
-		inline: true,
-		hot: true,
-		publicPath: config.output.publicPath
-	};
-	// for(var i in config.entry) {
-	// 	config.entry[i].unshift('webpack-hot-middleware/client')
-	// }
+	config.output.publicPath = configData.publicPath;
+	for(var i in config.entry) {
+		config.entry[i].unshift('webpack/hot/dev-server', 'webpack-dev-server/client?' + configData.host + ':' + configData.port)
+	}
+	// config.devServer = {
+	// 	port: 80,
+	// 	inline: true,
+	// 	hot: true,
+	// 	publicPath: config.output.publicPath
+	// };
 	// config.output.path = '/'
 	// config.output.publicPath = '/';
 	(config.plugins || []).push(new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin())

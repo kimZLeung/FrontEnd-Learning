@@ -3,23 +3,12 @@ var http = require('http')
 var sign = require('./mockSign')
 var webpack = require('webpack')
 var base = require('../webpack.config.js')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var webpackHotMiddleware = require('webpack-hot-middleware')
 
 var app = express()
 var server = http.createServer(app)
 
-if(process.env.NODE_ENV == 'dev') {
-	// var compiler = webpack(base)
-	//
-	// app.use(webpackDevMiddleware(compiler, {
-	// 	publicPath: base.output.publicPath,
-	// 	noInfo: true
-	// }))
-	// app.use(webpackHotMiddleware(compiler))
-} else {
-	app.use('/webApp', express.static('webApp'))
-}
+
+app.use('/webApp', express.static('webApp'))
 
 
 
