@@ -1,15 +1,14 @@
-import $ from 'jq'
+import axios from 'axios'
 
 const weFetch = (option) => {
-  return $.ajax({
-    url: option.url,
-    type: option.type || 'GET',
-    data: option.data || {},
+  var instance = axios.create({
+    baseURL: option.url,
+    timeout: 30000
   })
-}
-
-weFetch.setType = (type) => {
-  this.contentType = type || 'text/plain'
+  return instance({
+    method: option.type,
+    data: option.data || undefined
+  })
 }
 
 export default weFetch

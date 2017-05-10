@@ -1,10 +1,8 @@
 var webpack = require('webpack')
-var env = require('./env.js').env
 var mergeEntry = require('./webApp/util/mergeEntry.js').mergeEntry
 var path = require('path')
+// var HtmlWebpackPlugin = require('html-webpack-plugin')
 var outputPath = path.resolve(__dirname, 'webApp/dist')
-
-var now = env()
 
 var config = {
 	entry: {
@@ -12,13 +10,11 @@ var config = {
 	},
 	output: {
 		path: outputPath,
-		filename: '[name].js'
+		filename: '[name].js',
+		chunkFilename: '[name].chunk.js'
 	},
 	resolve: {
 		extensions: ['.js', '.vue'],
-	  alias: {
-	    vue: 'vue/dist/vue.js'
-	  }
 	},
 	module: {
 		loaders: [{
@@ -31,29 +27,50 @@ var config = {
 			exclude: /node_modules/
 		}]
 	},
-	externals: {
-		'jq': 'jQuery'
-	}
+	plugins: [
+		new webpack.DefinePlugin({
+      'process.env': {
+				NODE_ENV: JSON.stringify(process.env.NODE_ENV || '"dev"')
+			}
+    }),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			minChunks: function(data) {
+				var res = data.resource
+				return res && res.indexOf('node_modules') >= 0 && /\.js$/.test(res)
+			}
+		}),
+		// new HtmlWebpackPlugin({
+		// 	filename: 'list.html',
+		// 	template: 'dev.ejs',
+		// 	inject: true,
+		// 	chunks: ['list', 'vendor']
+		// }),
+		// 可以增加别的html
+	]
 }
 
-/* 可以用 mergeEntry 增加入口文件 */
-mergeEntry(config, 'test', './webApp/src/test/test.js')
 
-if(now === 'dev') {
+/* 可以用 mergeEntry 增加入口文件 ，开发模式merge对应模块的Entry */
+mergeEntry(config, 'list', ['./webApp/src/list/index.js'])
+
+if(process.env.NODE_ENV === 'dev') {
+	config.devtool = 'inline-source-map'
 	config.output.publicPath = '/webApp/dist'
 	config.devServer = {
-		// historyApiFallback: {
-		// 	rewrites: [{
-		// 		from: /^\//, to: '/webApp/test.html'
-		// 	}]
-		// 	index: '/webApp/test.html'
-		// },
-		hot: true,
+		port: 80,
 		inline: true,
-		port: 8080,
-		publicPath: '/webApp/dist'
-	}
-	config.plugins = [new webpack.HotModuleReplacementPlugin()]
+		hot: true,
+		publicPath: config.output.publicPath
+	};
+	// for(var i in config.entry) {
+	// 	config.entry[i].unshift('webpack-hot-middleware/client')
+	// }
+	// config.output.path = '/'
+	// config.output.publicPath = '/';
+	(config.plugins || []).push(new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin())
+} else {
+
 }
 
 module.exports = config
