@@ -1,8 +1,8 @@
 var webpack = require('webpack')
 var devServer = require('webpack-dev-server')
 var config = require('../webpack.config.js')
-var sign = require('./mockSign')
-
+var sign = require('./mockSign/index')
+var bodyParser = require('body-parser')
 
 var server = new devServer(webpack(config), {
   port: 80,
@@ -10,6 +10,9 @@ var server = new devServer(webpack(config), {
   inline: true,
   publicPath: config.output.publicPath
 })
+
+server.use(bodyParser.urlencoded({ extended: false }))
+server.use(bodyParser.json())
 
 server.use('/back', function(req, res) {
 	var param = req.query
@@ -19,9 +22,7 @@ server.use('/back', function(req, res) {
 	}
 })
 
-server.use('/sign', function(req, res) {
-  sign(req, res)
-})
+server.use('/sign', sign)
 
 server.listen(80, function() {
   console.log('server listening on 80')

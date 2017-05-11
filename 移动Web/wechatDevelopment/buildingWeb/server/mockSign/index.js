@@ -3,7 +3,7 @@ var ticket = require('./ticket')
 
 
 function getSign(req, res) {
-  if(ticket.ticket) {
+  if(ticket.ticket() && req.query.url) {
     var data = sign(ticket.ticket(), req.query.url)
     var finalData = {
       signature: data.signature,

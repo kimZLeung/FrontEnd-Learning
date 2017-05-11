@@ -7,7 +7,7 @@ var configData = require('./config')
 
 var config = {
 	entry: {
-
+		vendor: ['vue', 'axios']
 	},
 	output: {
 		path: configData.path,
@@ -16,6 +16,10 @@ var config = {
 	},
 	resolve: {
 		extensions: ['.js', '.vue'],
+		alias: {
+			'weFetch': path.resolve(__dirname, 'webApp/util/fetch.js'),
+			'wxApi': path.resolve(__dirname, 'webApp/util/wxApi.js')
+		}
 	},
 	module: {
 		loaders: [{
@@ -36,10 +40,10 @@ var config = {
     }),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
-			minChunks: function(data) {
-				var res = data.resource
-				return res && res.indexOf('node_modules') >= 0 && /\.js$/.test(res)
-			}
+		// 	minChunks: function(data) {
+		// 		var res = data.resource
+		// 		return res && res.indexOf('node_modules') >= 0 && /\.js$/.test(res)
+		// 	}
 		}),
 		// new HtmlWebpackPlugin({
 		// 	filename: 'list.html',
