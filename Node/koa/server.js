@@ -58,7 +58,7 @@ const logger = async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 }
 
-app.use(compose([haloW, logger]))
+app.use(compose([haloW, logger]));
 
 app.listen(8080, function (err) {
   console.log('server is listening on port 8080')
