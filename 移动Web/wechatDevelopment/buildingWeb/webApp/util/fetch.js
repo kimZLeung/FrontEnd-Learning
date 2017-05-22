@@ -6,7 +6,7 @@ const instance = axios.create({
   baseURL: '/'    // 用于本地调试
 })
 
-const dataList = ['post', 'put', 'PATCH']
+const methodList = ['post', 'put', 'PATCH']
 
 const weFetch = (option) => {
   if(!option.url) {
@@ -16,7 +16,7 @@ const weFetch = (option) => {
 
   let requestPromise
 
-  dataList.forEach((method) => {
+  methodList.forEach((method) => {
     if(option.type && option.type === method) {
       requestPromise = instance.request({
         url: option.url,

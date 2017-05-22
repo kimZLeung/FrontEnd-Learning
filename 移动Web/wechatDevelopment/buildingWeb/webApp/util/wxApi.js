@@ -1,7 +1,10 @@
 import weFetch from './fetch'
 import config from '../../config'
 
-const getWxApi = () => {
+const getWxApi = (apiList) => {
+
+  const finalList = Array.from(apiList ? new Set([...apiList, ...config.apiList]) : config.apiList)
+  
   weFetch({
     url: '/sign',
     data: {
@@ -17,7 +20,7 @@ const getWxApi = () => {
         timestamp: data.timestamp,
         nonceStr: data.nonceStr,
         signature: data.signature,
-        jsApiList: ['chooseImage']
+        jsApiList: finalList
       })
     }
   })

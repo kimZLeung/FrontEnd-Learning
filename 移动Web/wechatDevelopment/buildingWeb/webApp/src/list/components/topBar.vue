@@ -1,31 +1,56 @@
 <template>
   <div>
     <div class="topBar">
-      <span @click="handleTitle">{{ title }}</span>
-      <i @click="handleClick" class="weui-icon-search"></i>
+      <span class="title">{{ title }}</span>
     </div>
-    <transition name="fade">
-      <div class="weui-panel weui-panel_access inforBox" v-if="show">
-        sdfsadfasdfsadfasfdasfasdfasfasdfasdfsadfasfasdfsafsdfasdfsdafasfasfsadfasfds
-      </div>
-    </transition>
+    <div :class="barStyle" @click="handleClick">
+      <form class="weui-search-bar__form" ref="searchForm" @submit="handleSubmit">
+        <div class="weui-search-bar__box">
+          <i class="weui-icon-search"></i>
+          <input type="search" class="weui-search-bar__input" ref="searchInput" placeholder="搜索" @blur="handleBlur" required />
+          <a class="weui-icon-clear" id="searchClear" @click="clear"></a>
+        </div>
+        <label class="weui-search-bar__label searchText">
+          <i class="weui-icon-search"></i>
+          <span>搜索</span>
+        </label>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-
   export default {
     data() {
       return {
+        isSearching: false,
         show: false
+      }
+    },
+    computed: {
+      barStyle: function() {
+        return {
+          ['weui-search-bar']: true,
+          ['weui-search-bar_focusing']: this.isSearching
+        }
       }
     },
     methods: {
       handleClick(e) {
-        // $.alert(this.title)
+        this.isSearching = true
+        this.$refs.searchInput.focus()
+        this.$refs.searchForm.reset()
       },
-      handleTitle(e) {
-        this.show = !this.show
+      handleBlur(e) {
+        this.isSearching = false
+      },
+      clear(e) {
+        this.$refs.searchForm.reset()
+      },
+      handleSubmit(e) {
+        var e = e || window.event
+        e.preventDefault()
+        this.$emit('submit', this.$refs.searchInput.value)
       }
     },
     props: ['title']
@@ -36,26 +61,30 @@
   .topBar {
     width: 100%;
     height: 50px;
-    background-color: rgb(35, 145, 210);
+    background-color: rgb(47, 180, 53);
     color: white;
-    display: flex;
+    /*display: flex;*/
   }
 
-  span {
-    display: block;
-    text-align: center;
-    line-height: 50px;
-    flex: 1;
-    font-size: 1.3em;
-    transform: translateX(5%)
+  .title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: max-content;
+    height: min-content;
+    color: white;
+    font-size: 1.3rem;
   }
 
-  i {
+  /*.topSearch {
     flex: .11;
     color: white;
     line-height: 50px;
     font-size: 1.3em;
-  }
+  }*/
 
   .inforBox {
     word-warp: word-break;
@@ -65,11 +94,10 @@
     left: 10%;
   }
 
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s
+  .searchText {
+    transform-origin: 0px 0px 0px;
+    opacity: 1;
+    transform: scale(1, 1)
   }
 
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
 </style>

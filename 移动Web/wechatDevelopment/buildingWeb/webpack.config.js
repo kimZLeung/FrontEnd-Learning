@@ -21,6 +21,10 @@ var config = {
 			'wxApi': path.resolve(__dirname, 'webApp/util/wxApi.js')
 		}
 	},
+	externals: {
+		'weui': 'weui',
+		'wx': 'wx'
+	},
 	module: {
 		loaders: [{
 			test: /\.js$/,
@@ -29,6 +33,10 @@ var config = {
 		}, {
 			test: /\.vue$/,
 			loaders: ['vue-loader'],
+			exclude: /node_modules/
+		}, {
+			test: /\.css$/,
+			loaders: ['style-loader', 'css-loader'],
 			exclude: /node_modules/
 		}]
 	},
@@ -58,6 +66,8 @@ var config = {
 
 /* 可以用 mergeEntry 增加入口文件 ，开发模式merge对应模块的Entry */
 mergeEntry(config, 'list', ['./webApp/src/list/index.js'])
+mergeEntry(config, 'login', ['./webApp/src/user/login/index.js'])
+mergeEntry(config, 'register', ['./webApp/src/user/register/index.js'])
 
 if(process.env.NODE_ENV === 'dev') {
 	config.devtool = 'inline-source-map'
@@ -77,5 +87,6 @@ if(process.env.NODE_ENV === 'dev') {
 } else {
 
 }
+
 
 module.exports = config

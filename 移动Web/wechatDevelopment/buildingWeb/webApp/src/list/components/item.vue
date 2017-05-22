@@ -1,10 +1,19 @@
 <template>
-  <div class="item">
-    <img :alt="data" />
+  <div class="weui-panel__bd" :id="data">
+    <!-- <img :alt="data" />
     <div class="mainContent">
       <h3>{{ data }}</h3>
       <span>{{ data }}</span>
-    </div>
+    </div> -->
+    <a href="javascript: void(0)" class="weui-media-box weui-media-box_appmsg">
+      <div class="weui-media-box__hd">
+        <img src="#" class="weui-media-box__thumb" />
+      </div>
+      <div class="weui-media-box__bd">
+        <h4 class="weui-media-box__title">{{ data }}</h4>
+        <p class="weui-media-box__desc">{{ data }}</p>
+      </div>
+    </a>
   </div>
 </template>
 
@@ -15,34 +24,5 @@
 </script>
 
 <style scoped>
-  .item {
-    width: auto;
-    height: 120px;
-    background-color: white;
-    border: 1px solid rgb(206, 202, 202);
-    display: flex;
-  }
 
-  img {
-    flex: .38;
-    width: 100%;
-    height: 80%;
-    margin: auto 2%;
-  }
-
-  .mainContent {
-    flex: .62;
-    height: 80%;
-    margin: auto 2%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  h3 {
-    flex: .5
-  }
-
-  h4 {
-    flex: .5
-  }
 </style>

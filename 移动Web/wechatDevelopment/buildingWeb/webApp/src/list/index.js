@@ -1,10 +1,15 @@
-import container from './components/container.vue'
+// import container from './components/listContainer.vue'
 import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
 
 new Vue({
   el: '#app',
-  components: { container },
-  render: h => h(container)
+  router,
+  // components: { container },
+  // render: h => h(container)
+  components: { App },
+  render: h => h(App)
 })
 
 // webpack热替换，捕获替换事件
