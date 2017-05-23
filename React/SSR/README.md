@@ -36,7 +36,7 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 	);
 
 	res.status(200);
-	
+
 	res.send('<!doctype html>\n' +
 	  ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
 	});
@@ -107,5 +107,7 @@ match({ routes, location: req.url }, (err, redirectLocation, props) => {
 > 后来项目会融入`React-Router`，加入router之后，在服务器端就不能渲染了吗？并不是。router的库提供了`match`方法和`<RouterContext>`组件，方便我们在服务器端便渲染好对应路由的DOM结构，并整份返回。
 
 > 再后来项目里面融入了`Redux`，那我们就选择在服务器端计算出初始的`Store`，并且把初始的`State`通过一些方式，在DOM结构里面赋值给window的全局属性，所以前端可以直接拿到初始的`State`进行渲染。记得在服务器端也要用`<Provider>`把要渲染的东西包住啊
+
+> 还有一个要注意一下，无论是`React`还是`Vue`，在服务端和客户端可以复用组件的同时，被复用的组件的`life-hook`是不一样的，部分的`life-hook`只会在浏览器里执行，而且服务端的全局变量`global`和客户端的全局变量`window`和`document`等都不一样，需要引用全局变量上的属性的话，需要注意
 
 ### 无论是前面的组件在服务器端进行渲染，还是`Router`的使用`match`配合`<RouterContext>`，甚至是`redux`的预先计算`Store`，都是服务端和客户端代码同构的体现。跑同一份代码，会提高代码复用。这是比首屏渲染更加重要的优势

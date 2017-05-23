@@ -220,3 +220,5 @@ res.write(front)
 在最开始返回之前设定响应头，因为node原生提供的write方法默认的`Content-Type`是`text/plain`，所以我们的浏览器才会把返回的html字符串当成是文本渲染上去。
 
 > 但是我们在使用`renderToString`的时候并没有遇到这种情况，这是因为我们使用`renderToString`的时候，我们使用了express提供的`send`方法，这个方法是把返回的响应头设为了`Content-Type: text/html`，所以可以直接渲染。
+
+> 还有一个要注意一下，无论是`React`还是`Vue`，在服务端和客户端可以复用组件的同时，被复用的组件的`life-hook`是不一样的，部分的`life-hook`只会在浏览器里执行，而且服务端的全局变量`global`和客户端的全局变量`window`和`document`等都不一样，需要引用全局变量上的属性的话，需要注意
