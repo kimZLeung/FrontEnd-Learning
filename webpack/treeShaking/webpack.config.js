@@ -1,12 +1,13 @@
 var webpack = require('webpack')
 var path = require('path')
+var BabiliPlugin = require('babili-webpack-plugin')
 
 var outputPath = path.resolve(__dirname, 'dist/')
 
 module.exports = {
-  entry: './index.js',
+  entry: './dist/dist.js',
   output: {
-    filename: 'dist.js',
+    filename: 'final.js',
     path: outputPath
   },
   module: {
@@ -17,6 +18,7 @@ module.exports = {
     }]
   },
   plugins: [
+    // new BabiliPlugin(),
     new webpack.optimize.UglifyJsPlugin()
   ]
 }

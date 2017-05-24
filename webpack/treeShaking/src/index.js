@@ -1,2 +1,4 @@
-export old from './oldSub'
-export sub from './sub'
+import old from './oldSub'
+import sub from './sub'
+
+export { sub, old }

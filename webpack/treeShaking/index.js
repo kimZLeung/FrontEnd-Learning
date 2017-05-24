@@ -1,4 +1,4 @@
-import { sub, old } from './src'
+import { sub } from './src'
 
 // console.log(sub(), old())
 
