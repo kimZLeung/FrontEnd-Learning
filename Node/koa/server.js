@@ -6,6 +6,8 @@ const compose = require('koa-compose')
 const app = new koa()
 const router = new Router({ prefix: '/haha' })
 
+app.use(bodyParser())
+
 /**
  * [这一个路由捕获处理了/haha的请求]
  * 这是一种...Multiple middeware的方法
@@ -35,8 +37,6 @@ router.get(
     // await next()
   }
 )
-
-app.use(bodyParser())
 
 app.use(async (ctx, next) => {
   ctx.body = ctx.request.body
