@@ -7,12 +7,28 @@ const app = new koa()
 let api = new Router()
 
 api.get('/haha', async (ctx, next) => {
+	ctx.cookies.set(
+		'cid',
+		'halo word',
+		{
+			domain: 'localhost',
+			path: '/',
+			maxAge: 1 * 60 * 1000,
+			expires: new Date(),
+			httpOnly: false,
+			overwrite: false
+		}
+	)
 	ctx.body = 'haha'
 	// await next()
 })
 
 api.get('/hehe', async (ctx) => {
-	ctx.body = 'hehe'
+	if(ctx.cookies.get('cid')) {
+		ctx.body = ctx.cookies.get('cid')
+	} else {
+		ctx.body = 'hehe'
+	}
 })
 
 app.use(bodyParser())

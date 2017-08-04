@@ -123,7 +123,7 @@ Promise.resolve(async function() {
 
 ``` JavaScript
 // 第一种方式，建立一个 Router/ => api.js
-let api = new Router()
+let api = new Router()` 
 
 api.get('/haha', async (ctx, next) => {
   ctx.body = 'haha'
@@ -160,3 +160,81 @@ app.use(api.routes(), api.allowedMethods())
 ```
 
 这种方式比较好的是在建立路由的时候加上路径，不需要再新建一个Router对象来聚合管理路由，比较适用于比较小的路由处理
+
+---
+
+## body-parser
+
+> `POST`请求不需要监听`data`事件，经过`body-parser`处理后直接放在ctx.request.body里面
+
+---
+
+## 处理cookies
+
+可以直接在`ctx.cookies`那里访问到经过封装好的`cookies`处理对象。
+
+> 通过`ctx.cookies.get(name, [options])` 读取上下文请求中的cookie
+
+> 通过`ctx.cookies.set(name, value, [options])` 在上下文中写入cookie
+
+session暂时还不会处理。
+
+---
+
+## 连接MySQL
+
+`npm install --save mysql`
+
+可以通过使用`async`和`await`封装MySQL使用的接口，export出去方便使用
+
+``` JavaScript
+const mysql = require('mysql')
+
+// 创建数据库连接池
+const pool = mysql.createPool({
+  host     :  '127.0.0.1',
+  user     :  'root',
+  password :  '123456',
+  database :  'my_database'
+})
+
+// 封装数据库查询接口
+let query = function( sql, values ) {
+  return new Promise(( resolve, reject ) => {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        reject( err )
+      } else {
+        connection.query(sql, values, ( err, rows) => {
+          if ( err ) {
+            reject( err )
+          } else {
+            resolve( rows )
+          }
+          connection.release()
+        })
+      }
+    })
+  })
+}
+
+// 暴露数据库查询接口
+module.exports = { query }
+
+
+/**
+ * 使用方法
+ */
+const res = await query(sql_lang, key)
+
+```
+
+---
+
+## 文件上传
+
+使用busboy
+
+``` JavaScript
+npm install --save busboy
+```
