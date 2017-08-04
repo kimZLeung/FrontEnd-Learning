@@ -114,3 +114,49 @@ Promise.resolve(async function() {
   // 进行后续的handleResponse处理
 })
 ```
+
+---
+
+## Koa-Router
+
+`Koa-Router`加载路由到服务器上基本上有两种方式。
+
+``` JavaScript
+// 第一种方式，建立一个 Router/ => api.js
+let api = new Router()
+
+api.get('/haha', async (ctx, next) => {
+  ctx.body = 'haha'
+  // await next()
+})
+
+api.get('/hehe', async (ctx) => {
+  ctx.body = 'hehe'
+})
+
+// 然后聚合在一个 Router/ => index.js 文件里
+import api from './api'
+
+let allRouter = new Router()
+
+allRouter.use('/api', api.routes(), api.allowedMethods())
+// ...其他的一些路径处理
+
+
+// server.js
+app.use(router.routes(), router.allowedMethods())
+
+```
+
+这种方式，把所有的路径聚合到一个index.js文件里面，可以更清楚地看到路由。更适合比较多路由时候的路由处理
+
+
+``` JavaScript
+// 第二种方式，建立路由的时候加上prefix
+let api = new Router({ prefix: '/api' })
+
+// server.js里面
+app.use(api.routes(), api.allowedMethods())
+```
+
+这种方式比较好的是在建立路由的时候加上路径，不需要再新建一个Router对象来聚合管理路由，比较适用于比较小的路由处理
