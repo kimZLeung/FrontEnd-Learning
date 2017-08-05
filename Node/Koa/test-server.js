@@ -4,6 +4,9 @@ const bodyParser = require('koa-bodyparser')
 const compose = require('koa-compose')
 
 const app = new koa()
+
+app.use(bodyParser())
+
 let api = new Router()
 
 api.get('/haha', async (ctx, next) => {
@@ -31,7 +34,6 @@ api.get('/hehe', async (ctx) => {
 	}
 })
 
-app.use(bodyParser())
 
 let router = new Router()
 

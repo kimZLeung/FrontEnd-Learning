@@ -187,15 +187,17 @@ session暂时还不会处理。
 
 可以通过使用`async`和`await`封装MySQL使用的接口，export出去方便使用
 
+> 直接使用了数据库连接池，因为一般情况下对数据库的操作相对比较复杂，如果直接用会话操作的话，每次连接都需要配置参数，比较麻烦。
+
 ``` JavaScript
 const mysql = require('mysql')
 
 // 创建数据库连接池
 const pool = mysql.createPool({
-  host     :  '127.0.0.1',
-  user     :  'root',
-  password :  '123456',
-  database :  'my_database'
+  host     :  'XXX',
+  user     :  'XXX',
+  password :  'XXX',
+  database :  'XXX'
 })
 
 // 封装数据库查询接口
@@ -211,6 +213,7 @@ let query = function( sql, values ) {
           } else {
             resolve( rows )
           }
+          // 释放该连接
           connection.release()
         })
       }
@@ -229,6 +232,8 @@ const res = await query(sql_lang, key)
 
 ```
 
+`pool`还有一些事件可以使用，权当`pool`的钩子使用
+
 ---
 
 ## 文件上传
@@ -238,3 +243,13 @@ const res = await query(sql_lang, key)
 ``` JavaScript
 npm install --save busboy
 ```
+
+> `busboy` 模块是用来解析POST请求，node原生req中的文件流。
+
+使用`busboy.on('file', function(fieldname, file, filename, encoding, mimetype) { ... })`来监听文件接收解析的过程。从而控制文件的解析
+
+通过`busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated) { ... })`来监听请求发送的字段
+
+使用`busboy.on('finish', function() { ... })`来监听文件上传结束的事件
+
+完善好这些事件的处理之后，我们可以直接`req.pipe(busboy)`。即把请求的数据流`pipe`到`busboy`就可以直接处理文件的上传请求
