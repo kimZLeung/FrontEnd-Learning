@@ -13,6 +13,21 @@
 {{ mess }}
 <input type="text" [(ngModel)]="mess">
 <h1 (click)="onclick($event, mess)" >hahahaha</h1>
+<div [greet]="'halo Angular'"></div>
+<app-simple-form 
+  [message]="'app'" 
+  [name]="'simple form'" 
+  (update)="handleUpdate($event.text)">
+  <h1>halo</h1>
+</app-simple-form> 
+
+<!-- reactive form -->
+<app-reactive-form></app-reactive-form>
+
+<a routerLink="/form">toForm</a>
+<a routerLink="">back</a>
+<router-outlet></router-outlet>
+<!-- <ng-template #tpl>Hello, Semlinker!</ng-template> -->
 <!-- myself end -->
 <h2>Here are some links to help you start: </h2>
 <ul>

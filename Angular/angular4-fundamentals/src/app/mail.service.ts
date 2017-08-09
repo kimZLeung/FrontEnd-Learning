@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { list } from './list'
+import { Http } from '@angular/http';
 
 @Injectable()
 export class MailService {
 	
 	getMess () {
 		return '来消息了~'
+	}
+
+	getMessage () {
+
 	}
 
 	getArr () {
@@ -22,6 +27,6 @@ export class MailService {
 		return arr
 	}
 
-  constructor() { }
+  constructor(private http: Http) { }
 
 }

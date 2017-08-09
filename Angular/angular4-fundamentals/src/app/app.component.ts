@@ -7,7 +7,7 @@ import { list } from './list'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  {
 	
 	@Input() message: string
 	title: string
@@ -18,6 +18,12 @@ export class AppComponent {
 	onclick (e, val) {
 		console.log(e, val)
 		console.log(this.mess)
+	}
+
+	handleUpdate(text) {
+		if (text) {
+			console.log(text)
+		}
 	}
 
   constructor (private mail: MailService, @Inject('api') private apiUrl) {

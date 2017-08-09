@@ -1,0 +1,30 @@
+{{ name }}
+{{ message }}
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
+  <input 
+    #mytext="ngModel"
+    type="text"
+    name="myInput"
+    (keydown.enter)="update.emit({ text: mytext.value })"
+    required
+    [(ngModel)]="inputValue" />
+  <div *ngIf="mytext.errors?.required">这个表单需要输入</div>
+  <div *ngFor="let radio of radioList;">
+    <input 
+      [attr.id]="radio"
+      name="radio"
+      ngModel
+      required
+      [value]="radio"
+      type="radio" />
+    <label [attr.for]="radio">{{radio}}</label>
+  </div>
+  <select name="select" [ngModel]="radioList[0]">
+    <option
+      *ngFor="let radio of radioList;"
+      [value]="radio">
+        {{radio}}
+    </option>
+  </select>
+</form>
+<ng-template #tpl>123</ng-template>
