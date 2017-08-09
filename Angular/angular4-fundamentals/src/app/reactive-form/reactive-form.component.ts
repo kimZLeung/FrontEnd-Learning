@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 @Component({
   selector: 'app-reactive-form',
@@ -10,10 +10,13 @@ export class ReactiveFormComponent implements OnInit {
 
   signupForm: FormGroup; 
 
-  constructor() { 
+  constructor(private fb: FormBuilder) {
     this.signupForm = new FormGroup({
       userName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
+    // this.signupForm = fb.group({
+    //   userName: {value: 'semlinker', disabled: false}
+    // })
   }
 
   save () {

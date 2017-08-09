@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
+import 'rxjs/add/operator/map'
 
 @Component({
   selector: 'app-simple-form',
@@ -14,7 +16,7 @@ import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewContai
     }
   `]
 })
-export class SimpleFormComponent implements AfterViewInit {
+export class SimpleFormComponent implements AfterViewInit, OnInit {
 
   @Input() message: string
   @Input() name: string
@@ -22,6 +24,7 @@ export class SimpleFormComponent implements AfterViewInit {
   @ViewChild('tpl') tplRef: TemplateRef<any>
   inputValue: string = '哈哈'
   radioList = ['1', '2', '3']
+  username: string
 
 
   ngAfterViewInit() {
@@ -32,9 +35,18 @@ export class SimpleFormComponent implements AfterViewInit {
     console.log(val)
   }
 
-  constructor(private vcRef: ViewContainerRef) { }
+  constructor(private vcRef: ViewContainerRef, private route: ActivatedRoute) { 
+    // route.params.subscribe((params) => this.username = params.haha)
+  }
 
-  // ngOnInit() {
-  // }
+  ngOnInit() {
+    this.route.params
+      .map((res) => {
+        console.log(res)
+        return res
+      })
+      .subscribe((params) => this.username = params.haha)
+    // console.log(this.route.params)
+  }
 
 }

@@ -9,13 +9,14 @@ import { MailService } from './mail.service'
 /* components */
 import { AppComponent } from './app.component';
 import { SimpleFormComponent } from './simple-form/simple-form.component';
+import { ReactiveFormComponent } from './reactive-form/reactive-form.component'
 
 /* directive */
 import { GreetDirective } from './attribute-directives/greet.directive';
-import { ReactiveFormComponent } from './reactive-form/reactive-form.component'
 
 const ROUTES: Routes = [
-  { path: 'form', component: SimpleFormComponent  }
+  { path: 'form/:haha', component: SimpleFormComponent  },
+  { path: 'reactive', component: ReactiveFormComponent }
 ]
 
 @NgModule({
