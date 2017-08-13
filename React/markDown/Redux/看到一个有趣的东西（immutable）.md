@@ -21,13 +21,16 @@
 - 不要deepCopy也不需要deepCompare。
 - 只需要immutable。厉害了。
 - 不用看第二点
-- 因为在没有使用`immutable`这种数据结构优化之前，`React`通过使用自己的`diff`算法判断前后两次的虚拟`DOM`是否有发生变化从而更新渲染的。
-- 但是在引入`immutable`之后，因为对数据修改触发的虚拟`DOM`的修改会返回一个全新的虚拟`DOM`对象，所以判断只需要这样 ↓
+- 因为在没有使用`immutable`这种数据结构优化之前，`React`通过使用自己的`diff`算法判断前后两次的虚拟`DOM`是否有发生变化从而更新渲染的。并且，只要`state`有变动，就算数据没变过，也会执行`rerender`，所以这个时候我们就需要使用`shouldComponentUpdate`优化并减少渲染次数。
+- 在引入`immutable`之后，可以大大减少不必要的数据变动的渲染，在`state`使用了`immutable`之后，判断只需要这样 ↓
 
 ``` JavaScript
-// 不需要使用虚拟DOM算法
-if (preDOM !== curDOM) {
-  rerender()
+shouldComponentUpdate(nextProps, nextState) {
+  if (this.state !== nextState) {
+    return true
+  } else {
+    return false
+  }
 }
 ```
 
