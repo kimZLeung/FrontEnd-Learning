@@ -1,19 +1,23 @@
 # RxJS
 
 ---
+
 ## 如何理解RxJS
+
 > `Rx` = `Observables` + `LINQ` + `Schedulers` （我反正看不懂
 
 ### 其实就是异步的数据流
 
 ---
 ## 何为异步数据流
+
 - 页面上的一些点击事件，会在用户点击时异步触发
 - 一些异步的网络请求会在服务器响应时异步触发后续行为
 
 而`Rx`就为我们提供了一系列的工具来处理这些异步流。
 
 ---
+
 ## marble图
 
 ```
@@ -25,7 +29,9 @@
 这是一个典型的`Observable`的数据结构
 
 ---
+
 ## Observables
+
 `Observable`作为一个异步的数组，它就包含有一些数组的方法，也就是我们用来处理这些异步数据流的方法`operator`
 
 > `Observables`还有一个很棒的特性是实现链式调用 ---> 流，每次调用`operator`都会返回一个基于上一个`operator`的新的`Observables`
@@ -33,7 +39,9 @@
 我们可以订阅`subscribe`一个设定好的流`Observables`（无论是事件或是别的什么）来执行我们想要实现的行为
 
 ---
+
 ## Subscribe
+
 `subscribe`是一个订阅流的方法，这个方法可以传入三个参数，分别是三个函数`onNext`、`onError`、`onCompleted`
 
 - `onNext`是在`Observable`调用`onNext()`方法时会调用，一般在事件触发时就会调用（所以我们处理事件时`subscribe`只传的那一个回调其实是`onNext`函数）。如果是自己`create`的`Observer`可以调用`Observable`的`onNext`方法去启动`onNext`回调
@@ -61,11 +69,14 @@ rx.Observable.create(function(observer) {
 > `subscribe`方法返回一个`observer`对象，调用该对象上的`dispose`方法可以取消订阅
 
 ---
+
 ## 热Observables和冷Observables
+
 > 顾名思义，热`Observables`是类似事件一类的`Observable`，不会随着订阅而开始启动更新数据，而是每时每刻都在更新数据。
 然而冷`Observables`则只会在我们`subscribe`之后才会开始数据更新和推送，如我们自己用`interval`创建出来的`Observable`（interval创建出来的会在订阅后每**秒默认从1开始推送整数）
 
 我们也可以用`publish`方法把`Cold Observables`转换为`Hot Observables`
+
 ``` javascript
 var source = Rx.Observable.interval(1000);
 var hot = source.publish()	// 使用publish把流转换为Hot Observables
@@ -93,8 +104,11 @@ setTimeout(function () {
 ```
 
 ---
+
 ## 构建起事件的桥梁
+
 > 在`RxJS`中，我们可以使用`Rx.Observable.fromEvent(DOMElement, EventName)`来取得事件的`source`，然后调用各种方法来处理这个事件流，最后通过订阅来执行我们想要完成的操作。
+
 ``` javascript
 // 我们可以简单地这样使用
 var res = document.getElementById('result');
@@ -108,7 +122,9 @@ var subscription = Rx.Observable.fromEvent(document, 'mousemove')
 });
 // 当触发点击事件时会调用`subscribe`的`onNext`函数，会用`innerHTML`改变DOM内容
 ```
+
 会出现这样的封装
+
 ``` javascript
 Rx.dom = {};
 
@@ -135,7 +151,9 @@ events.split(' ').forEach(function (e) {
 > 关于事件我们还可以使用`Rx.Observable.fromEventPattern(addHandler, [removeHandler], [selector])`，没太懂，设置了之后会调用第一个`addHandler`里面的语句，`addHandler`和`removeHandler`有同一个参数，是最后一个`selector`函数
 
 ---
+
 ## Rx.Observable.fromCallback()和Rx.Observable.fromPromise()
+
 > 这两个方法可以分别把`Callback`函数和`Promise`对象转化为`Rx`的流，并且转化之后可以直接`subscribe`它，用`onNext`等方法处理他们`return`出来的值（或`resolve`出来的值）
 ``` javascript
 // 随便创建一个Promise对象
@@ -153,7 +171,9 @@ rx.Observable.fromPromise(pro)
 ```
 
 ---
+
 ## 处理流的一些API
+
 > 处理`Rx`的流的API有很多，`concat`，`merge`，`filter`... `Rx`的`Observable`目测其实是`Array`里衍化出来的奇行种吧...
 
 ### merge和concat
@@ -172,7 +192,9 @@ source1.merge(source2)
 ```
 
 ### buffer
+
 > buffer是一个十分重要的API，它给我们提高了缓存起状态和数据的机会，而不需要我们另外手动开拓一片空间储存用户的操作，并且为我们提供了阈值判断
+
 ``` javascript
 // 创造一个每1秒输出1个整数的流
 Rx.Observable.interval(1000)
@@ -214,6 +236,7 @@ Rx.Observable.interval(1000)
   // 输出..---[0, 1]--[2, 3]--[4, 5]--[6, 7]---|-->
 ```
 > `buffer(bufferOpenings, bufferClosingSelector )`还可以接受两个参数，第一个参数是一个`Observable`，会传入第二个函数作为第二个函数的参数。第一个参数为一个时间标记，当第一个`Observable`输出值的时候会触发第二个函数开始创建新的`Observable`，然后和第一种情况一样，当输出第一个值时会输出缓存的流（注意传入opening之后，开启缓存流的唯一入口只有opening）
+
 ``` javascript
 // 设定一个0.5秒输出一次的流
 var opening = Rx.Observable.interval(500)
@@ -233,12 +256,15 @@ Rx.Observable.interval(1000)
 ```
 
 ### 其实总结起来说，`buffer`这一类的`API`虽然多，而且传的参数也很多。但是用法基本上大同小异
+
 - 我们可以看到`bufferCount`可以多传一个`skip`，来决定这一次`buffer`和下一次`buffer`的跨度（数据量的跨度）
 - 而`bufferWithTime`也可以传一个`timeShift`，也是决定了两次`buffer`之间的时间跨度（时间的跨度）
 - `buffer`可以多传一个`bufferOpening`，事实上也是决定两次的`buffer`之间的跨度而已（时间的跨度）
 
 ---
+
 ## 万能转接口 -> Subject
+
 > 官方文档上说：`Subject`既是`Observer`也是`Observable`，它可以被多个`Observer`订阅，也可以订阅多个`Observable`。所以基础的`Subject`的作用就是 -> 转接器！它可以把一个单路`Observable`转换为多路相同的数据，分发给不同的订阅者
 ### such as
 ``` javascript
@@ -259,8 +285,11 @@ Sub.subscribe(function () {
 ```
 
 ---
+
 ## Different Type of Subject
+
 - `BehaviorSubject`它总是保存最近向数据消费者发送的值，当一个`Observer`订阅后，它会即刻从`BehaviorSubject`收到“最新的值”(subscribe之后会立刻触发一次当前订阅者的next)
+
 ``` javascript
 var subject = new Rx.BehaviorSubject(0 /* 初始值 */);
 
@@ -286,6 +315,7 @@ observerA: 3
 observerB: 3
 ```
 - `ReplaySubject`通过`ReplaySubject`可以向新的订阅者推送旧数值，就像一个录像机`ReplaySubject`可以记录`Observable`的一部分状态
+
 ``` javascript
 var subject = new Rx.ReplaySubject(3 /* 回放数量 */);
 
@@ -315,4 +345,5 @@ observerB: 4
 observerA: 5
 observerB: 5
 ```
+
 - `AsyncSubject`是`Subject`的另外一个衍生类，`Observable`仅会在执行完成后，推送执行环境中的最后一个值。
