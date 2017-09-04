@@ -20,6 +20,25 @@
 
 - 不要deepCopy也不需要deepCompare。
 - 只需要immutable。厉害了。
+- 不用看第二点
+- 因为在没有使用`immutable`这种数据结构优化之前，`React`通过使用自己的`diff`算法判断前后两次的虚拟`DOM`是否有发生变化从而更新渲染的。并且，只要`state`有变动，就算数据没变过，也会执行`rerender`，所以这个时候我们就需要使用`shouldComponentUpdate`优化并减少渲染次数。
+- 在引入`immutable`之后，可以大大减少不必要的数据变动的渲染，在`state`使用了`immutable`之后，判断只需要这样 ↓
+
+``` JavaScript
+shouldComponentUpdate(nextProps, nextState) {
+  if (this.state !== nextState) {
+    return true
+  } else {
+    return false
+  }
+}
+```
+
+虽然看起来每次进行修改会出创建出一个新的对象，这样的开销貌似比直接修改原对象会大很多。
+
+但是事实并非如此：上面也提到，虽然是新对象，但是没有被修改到的属性和分支其实仍然是原来的属性，并没有完全创建一个全新的对象。
+
+`immutable`配合`React`进行虚拟`DOM`的优化，会使`React`的组件更新渲染快上一个档次。
 
 
 > 其实Redux的纯函数返回新的store也跟这个immutable的数据结构有点相似。
