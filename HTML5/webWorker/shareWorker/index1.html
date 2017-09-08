@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index1</title>
+</head>
+<body>
+	<input type="text" id="first">
+	<input type="text" id="second">
+	<span class="res"></span>
+	<script type="text/javascript">
+		var f = document.querySelector('#first')
+		var s = document.querySelector('#second')
+
+		var res = document.querySelector('.res')
+
+		if (!!window.SharedWorker) {
+			var worker = new SharedWorker('shareWorker.js')
+
+			f.onchange = function() {
+				worker.port.postMessage([f.value, s.value])
+			}
+
+			s.onchange = function() {
+				worker.port.postMessage([f.value, s.value])
+			}
+
+			worker.port.onmessage = function(e) {
+				res.textContent = e.data			
+			}
+		}
+	</script>
+</body>
+</html>

@@ -4,7 +4,6 @@ function kimzPlugin(options) {
 
 // 在它的 prototype 上定义一个 apply 方法。
 kimzPlugin.prototype.apply = function(compiler) {
-  // 指定挂载的webpack事件钩子。
   var haha = this.haha
   compiler.plugin('emit', function(compilation, callback) {
     console.log("Plugin say: Bund1e Emit!!!" + haha)
