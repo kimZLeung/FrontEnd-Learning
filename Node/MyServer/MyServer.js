@@ -29,10 +29,10 @@ http.createServer(function(request, response) {
 				default: 
 					console.log('404', request.url);
 					response.writeHead(404, {'Content-Type': 'text/html'});
-					response.end('<h1>404</h1> <h1>Not Found</h1>');
+					// response.writeHead(404);
+					response.end('<html><head><title>404</title></head><body><h1>404</h1> <h1>Not Found</h1></body></html>');
 					break;
 			}
-			
 		} else {	// 判断是否为目录
 			if(stat.isDirectory()) {
 				var indexPath = path.join(filePath, '/index.html');
@@ -40,7 +40,7 @@ http.createServer(function(request, response) {
 					if(err) {
 						console.log('404', request.url);
 						response.writeHead(404, {'Content-Type': 'text/html'});
-						response.end('<h1>404</h1> <h1>Not Found</h1>');
+						response.end('<html><head><title>404</title></head><body><h1>404</h1> <h1>Not Found</h1></body></html>');
 					} else {
 						console.log('200', request.url);
 						response.writeHead(200);
