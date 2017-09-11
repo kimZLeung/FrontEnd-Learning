@@ -82,4 +82,5 @@ fs.readFile(__filename, () => {
 
 
 > 第一种情况：因为放在了主模块调用，然后由于`setTimeout`的时间下限设置的值限制为[1, 2147483647]，不在这个范围里的话，默认设置为1ms，所以`setTimeout(fn, 0)`相当于`setTimeout(fn, 1)`，接下来就是比拼机器性能的时候了，如果进程跑得够快，能在1ms里面就直接从timer，一直跑到check阶段（由于poll阶段的队列也没有东西执行，然后检测不到满足时间下限的timer，就直接进入check阶段了），就会先执行`setImmediate`
+
 > 第二种情况：因为这个IO是在poll阶段的队列里面做的。所以在进入poll阶段时没有检测到timer的设定，并且执行完队列的代码后，就直接进入check阶段，所以先执行`setImmediate`
