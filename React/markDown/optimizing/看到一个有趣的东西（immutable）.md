@@ -1,6 +1,28 @@
-﻿# 看到一个有趣的东西（immutable）
+﻿# immutable
 
-标签（空格分隔）： immutable
+---
+
+## PureComponent
+
+`React`官方提供的`PureComponent`用作优化不必要的DOM更新，`PureComponent`重写了Component的一个
+`shouldComponentUpdate`方法
+
+``` javascript
+shouldComponentUpdate(nextProps, nextState) {
+	if (this.props.color !== nextProps.color) {
+		return true;
+	}
+	if (this.state.count !== nextState.count) {
+		return true;
+	}
+	return false;
+}
+```
+
+使用类似的方法对组件的prop和state进行浅比较(具体比较方式不清楚)，如果没有变化则选择不重新渲染。
+
+由于使用浅比较的形式，所以我们可以通过`concat`，扩展运算符`...`，`Object.assign`这些函数来返回新的对象，从而修改之后触发更新。或者说：我们使用`immutable`数据类型来作为组件内的数据
+
 
 ---
 ## 初步认识一下
