@@ -19,7 +19,9 @@ new CopyWebpackPlugin([
 
 所以总结说`static`里面放不会变动的文件，`assets`里面放可能会变动的文件
 
-`static`内的文件需要使用根路径引用。用根路径引用的静态文件不会被`webpack`打包处理。在index.html内用标签引入。
+官方文档说`static`目录下面的文件需要用根路径去引用。并且不作为依赖被`webpack`打包。
+
+我觉得挺奇怪的。反正就是一个打包进去，一个不打包直接进行资源复制。
 
 ---
 
@@ -90,7 +92,7 @@ if (options.extract) {
     return ExtractTextPlugin.extract({
       use: loaders,
       fallback: 'vue-style-loader',
-      publicPath: '../../'    // 加上这句
+      publicPath: '../../'    // 加上这句，重写这个插件打包后的css文件中的url
     })
   } else {
     return ['vue-style-loader'].concat(loaders)
@@ -98,5 +100,6 @@ if (options.extract) {
 }
 ```
 
+但是我的分支并不会出现这样的情况
 
-但是不知道为何我的电脑是正常的。。。
+后来发现是因为配置文件里把`publicPath`设置成了'./'，这样做的话，`url-loader`拼接起来的路径就会成为相对路径，所以在css内引用字体就变成了那种奇怪的路径。
