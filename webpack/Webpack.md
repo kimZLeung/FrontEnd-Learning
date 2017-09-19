@@ -78,3 +78,16 @@
         $('xxoo').html('<h1>Hello 世界</h1>');
         
 - jq依旧会打包进去。
+
+---
+
+## 各种loaders
+
+- babel-loader: 用于`webapck`配合`babel`做各种工作，包括转化`JSX`语法，转化`ES6`语法等，可以配合`.babelrc`使用
+- css-loader: 用于加载`css`文件
+- style-loader: 用于把加载好的`css`代码转化成内联的样式，配合`css-loader`使用
+- sass-loader，less-loader: 用于将各种`scss`和`less`文件转化为`css`，可以配合`css-loader`和`style-loader`使用
+- vue-loader: `Vue`的loader，用于载入`.vue`的单文件组件
+- file-loader: 用于载入文件（图片，字体等）
+- url-loader: 和`file-loader`差不多，用于载入文件，但是可以设置limit值，小于limit的话该文件通过base64的格式进行内联
+- eslint-loader: 多数用于pre-loader（`enforce: 'pre'`），做为语法和代码格式的预检查。
