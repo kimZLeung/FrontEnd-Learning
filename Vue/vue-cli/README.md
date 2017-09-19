@@ -4,7 +4,7 @@
 
 ## 静态资源assets和static
 
-`assets`里面存放的文件会通过`webpack`进行依赖打包，而`static`里面的文件并不会进行依赖打包，仅仅是通过`webpackCopyPlugin`把它们复制到`/dist/static`里面
+`assets`里面存放的文件会通过`webpack`进行依赖打包，而`static`里面的文件并不会进行依赖打包，也就是说不会通过`webpack`的任何修改处理。仅仅是通过`webpackCopyPlugin`把它们复制到`/dist/static`里面
 
 ```
 // copy custom static assets
@@ -19,7 +19,7 @@ new CopyWebpackPlugin([
 
 所以总结说`static`里面放不会变动的文件，`assets`里面放可能会变动的文件
 
-`static`内的文件需要使用根路径引用。用根路径引用的静态文件不会被`webpack`打包处理。需要在html内用标签引入。
+`static`内的文件需要使用根路径引用。用根路径引用的静态文件不会被`webpack`打包处理。在index.html内用标签引入。
 
 ---
 
@@ -79,6 +79,8 @@ importAll(require.context('../components/', true, /\.jsx?$/))
 
 通过`npm run build`打包出来可以部署的文件时，我们发现`iconfont`字体无法引入，在控制台查看`network`的时候发现访问到的路径是`/static/css/static/font/...`这样的路径，不知道为什么会多了一层路径。
 
+可能是因为本来CSS文件里面引入的字体，已经通过`url-loader`对URL进行了替换，然后把字体打包输出，但是`ExtractTextPlugin`再把所有的CSS集合独立出一份CSS文件，然后通过这份CSS去访问字体就出现了这种叠加的路径。
+
 后来的解决方法是直接把css和font字体文件移到了`static`直接通过`link`标签引入，这样做不会通过`webpack`进行打包处理，而且在`static`中的文件会直接复制到`dist/static`中，所以直接这样打包，然后在`index.html`中用`link`标签引入，可以正常访问字体
 
 > 在网上看到有一个做法是可以给`ExtractTextPlugin`加`publicPath`
@@ -95,3 +97,6 @@ if (options.extract) {
   }
 }
 ```
+
+
+但是不知道为何我的电脑是正常的。。。
