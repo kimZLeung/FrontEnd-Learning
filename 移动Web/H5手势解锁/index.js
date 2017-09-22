@@ -3,6 +3,8 @@ const canvas = document.getElementsByTagName('canvas')[0]
 const width = 888
 canvas.width = canvas.height = width
 
+// console.log('haha')
+
 const ctx = canvas.getContext('2d')
 
 const drawCircle = (x, y, r) => {

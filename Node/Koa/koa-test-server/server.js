@@ -16,7 +16,8 @@ router.get(
   '/',
   async (ctx, next) => {
     console.log('dsadasd')
-    ctx.body = 'halo haha'
+    ctx.type = 'text/html'
+    ctx.body = '<h1>halo haha</h1>'
     await next()
   },
   async (ctx, next) => {
