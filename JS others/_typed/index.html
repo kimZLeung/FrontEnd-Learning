@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Typed-Test</title>
+	<link rel="stylesheet" type="text/css" href="src/_typed.css">
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		@keyframes float {
+			from { margin-top: 0px }
+			to { margin-top: 100px }
+		}
+	</style>
+</head>
+<body>
+	<div id="app2"></div>
+	<div id="app"></div>
+	<script src="src/jquery-3.2.1.min.js"></script>
+	<script src="src/_typed.js"></script>
+	<script>
+		var _typed2 = new _typed({
+			el: '#app2',
+			cursor: true,
+			isHtml: true,
+			tasks: [{
+				str: '<h4>= = hhhhhh</h4>',
+				end: function () {
+					$('#app2').css({
+						'transition': 'all .6s',
+						'background-color': '#141313',
+						'padding': '60px'
+					})
+					$('body').css({
+						'background-color': '#141313'
+					})
+				}
+			}, {
+				str: '<h4>呵呵</h4>',
+				end: function () {
+					$('#app2').css({
+						'color': 'white',
+						'font-size': '5em'
+					})
+				}
+			}],
+			time: 130
+		})
+
+		var _typed = new _typed({
+			el: '#app',
+			autoRun: true,
+			cursor: true,
+			isHtml: true,
+			tasks: [{
+				str: '<h2>这是一个小demo</h2>',
+				start: function () {
+					$('#app').css('transition', 'all .6s')
+				},
+				end: function () {
+					$('#app').css('background-color', '#141313')
+				}
+			}, {
+				str: '<h3>因为我需要更多的钩子函数</h3>',
+				start: function () {
+					$('#app').css('padding', '50px')
+				},
+				end: function () {
+					$('#app').css({
+						'border-radius': '2%/10%',
+						'color': 'white'
+					})
+				}
+			}, {
+				str: '<h4>所以模仿typed.js自己弄了一个</h4>',
+				start: function () {
+					$('#app').css('margin', '0px')
+				},
+				end: function () {
+					$('#app').css({
+						'margin': '100px',
+						'animation': 'float 2s infinite alternate'
+					})
+				}
+			}, {
+				str: '<h4>换一下字体</h4>',
+				end: function () {
+					$('body').css({
+						'font-family': 'YouYuan'
+					})
+				}
+			}, {
+				str: '<h4>居中一下</h4>',
+				end: function () {
+					$('#app').css({
+						'margin-left': '600px'
+					})
+				}
+			}, {
+				str: '<h4>弄错了不好意思</h4>',
+				end: function () {
+					$('#app').css({
+						'margin-left': '100px'
+					})
+				}
+			}, {
+				str: '<h4>再来一次!!!!!</h4>',
+				end: function () {
+					$('#app').css({
+						'text-align': 'center'
+					})
+				}
+			}, {
+				str: '<h4>等一下我卡住了，等我3秒钟</h4>',
+				end: function () {
+					_typed.holdOn(3000)
+				}
+			}, {
+				str: '<h4>好了，但是感觉有点挤...</h4>',
+				end: function () {
+					$('#app').children().css({
+						'transition': 'all .6s',
+						'margin': '30px 0'
+					})
+				}
+			}, {
+				str: '<h4>最近吃的多了，有点发胖</h4>',
+				end: function () {
+					$('#app').css({
+						'margin': '0'
+					})
+				}
+			}, {
+				str: '<h4>但是并不影响，因为黑色显瘦...</h4>',
+				end: function () {
+					$('#app').css({
+						'background-color': 'white',
+						'color': 'black'
+					})
+					_typed.holdOn(2000)
+				}
+			}, {
+				str: '<h4>哦...............</h4>',
+				end: function () {
+					$('#app').css({
+						'transform': 'translateX(100%)'
+					})
+					_typed2.start()
+				}
+			}],
+			time: 130
+		})
+	</script>
+</body>
+</html>
