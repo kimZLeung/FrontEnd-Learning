@@ -109,3 +109,31 @@
 另外：`webpack`的一个生成`html`的插件`HtmlWebpackPlugin`生成`html`的同时会自动插入生成的资源（JS，CSS），他们的补全路径默认是`output.publicPath`，所以官方推荐两处的`publicPath`配置的保持一致
 
 最后打包出来的JS，CSS，图片和字体等文件都是通过`output.path`和它自身的`filename`决定的，`output.publicPath`并不会影响打包构建的文件目录
+
+
+---
+
+## webpack HMR
+
+今晚再次总结一下`webpack`的HMR启用方式
+
+首先说一下`inline`和`hot`：`inline`本身就是用于整页刷新的，就是文件更新之后整个页面刷新。而`hot`参数是尝试性地进行HMR，就是很爽爽爽爽爽爽爽的无刷新页面更新，如果在`module`里面冒泡的热更新信号没有被处理，一直冒泡到入口文件也没有被处理的话，就会HMR失败。失败了之后，就整页刷新。所以我觉得`hot`其实已经包含了`inline`了，不过怎么用还是见仁见智。
+
+还有一个参数是`--hotOnly`，这个参数只进行HMR，失败了也不会刷新。反正失败了就是不理你。我用了一下感觉有点...hehe
+
+
+经过多次试验后来发现：
+
+- 最简单的方式就是`webpack-dev-server --inline --hot`加上`--hot`这个参数自动帮你在插件里加入`HotModuleReplacementPlugin`，十分轻松愉快。
+- 不写参数，直接在你的`config`文件里面的`plugins`数组加入棒棒的`HotModuleReplacementPlugin`，直接启用`hot`模式，然后直接`webapck-dev-server`（可是后来发现不做任何事情`webpack-dev-server`也默认启用了`inline`选项，这个插件反而有没有也一样，后来是通过加`hot`参数实现的HMR，可能是`webpack`的bug）
+- 不使用插件和参数，直接改写入口文件，比如：
+
+```
+entry: [
+    'webpack-dev-server/client?http://127.0.0.1:8080',  // 加入inline配置
+    'webpack/hot/only-dev-server',                      // 加入hot配置
+    './index.js'
+  ],
+```
+
+个人认为第三种方式有点...太过麻烦，不知道为什么我的`webpack-dev-server`默认会有`GET "http://localhost:8888/sockjs-node/info?t=1506348178939".`也就是默认开启了`inline`模式，而且我并不知道该如何关闭。
