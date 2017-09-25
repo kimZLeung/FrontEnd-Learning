@@ -61,7 +61,7 @@ _typed.prototype._next = function () {
 				this.prevNode = this.currentNode
 				this.currentNode = cc
 				this.parent.appendChild(this.currentNode)
-				this.currentNode.className = info.className
+				if (info.className) this.currentNode.className = info.className
 				// 创建或者移动光标
 				this._moveCursor(this.prevNode, this.currentNode)
 				// 重置光标引用
