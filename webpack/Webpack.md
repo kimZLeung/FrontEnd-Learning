@@ -125,8 +125,7 @@
 经过多次试验后来发现：
 
 - 最简单的方式就是`webpack-dev-server --inline --hot`加上`--hot`这个参数自动帮你在插件里加入`HotModuleReplacementPlugin`，十分轻松愉快。
-- 不写参数，直接在你的`config`文件里面的`plugins`数组加入棒棒的`HotModuleReplacementPlugin`，直接启用`hot`模式，然后直接`webapck-dev-server`（可是后来发现不做任何事情`webpack-dev-server`也默认启用了`inline`选项，这个插件反而有没有也一样，后来是通过加`hot`参数实现的HMR，可能是`webpack`的bug）
-- 不使用插件和参数，直接改写入口文件，比如：
+- (以前版本可行的做法)不写参数，直接在你的`config`文件里面的`plugins`数组加入棒棒的`HotModuleReplacementPlugin`，直接启用`hot`模式，不使用参数，直接改写入口文件，比如：然后直接`webapck-dev-server`
 
 ```
 entry: [
@@ -134,6 +133,53 @@ entry: [
     'webpack/hot/only-dev-server',                      // 加入hot配置
     './index.js'
   ],
+
+// 插件写上
+plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 ```
 
-个人认为第三种方式有点...太过麻烦，不知道为什么我的`webpack-dev-server`默认会有`GET "http://localhost:8888/sockjs-node/info?t=1506348178939".`也就是默认开启了`inline`模式，而且我并不知道该如何关闭。
+个人认为第二种方式有点...太过麻烦，而且`webpack-dev-server`现在的版本默认会有`GET "http://localhost:8888/sockjs-node/info?t=1506348178939".`也就是默认开启了`inline`模式。这样加入的话只会开启两个inline模式，也就是每次刷新文件都会有两次xhr请求，这样不好。
+
+而且最麻烦的是不知道为什么这样做无法启用HMR。（不过可能是我的问题）
+
+---
+
+## 使用webpack-dev-middleware和webpack-hot-middleware自己搭建热部署服务器
+
+如果说`webpack-dev-server`是别人封好的轮子，哇好麻烦好多坑，都不知道什么鬼操作。那我们可以自己凑一个热部署服务器。虽然没`webpack-dev-server`这么厉害
+
+之前我还在纠结这个`HotModuleReplacementPlugin`有什么用，感觉完全没用，因为用于`webpack-dev-server`的时候无法开启热部署。但是如果我们想使用这两个中间件来自己搭建热部署服务器的时候，我们同样需要使用这个插件进行配置
+
+```
+entry: ['webpack-hot-middleware/client', './index.js'],
+
+// ...
+
+plugins: [
+    new webpack.HotModuleReplacementPlugin()
+]
+```
+
+然后就是配合`express`使用
+
+- `webpack-dev-middleware`：进行打包后文件的托管返回
+- `webpack-hot-middleware`：配合上面的设置，开启HMR，尝试无刷新更新页面
+
+```
+var compiler = webpack(config)
+
+var app = express()
+
+var hot = hotMiddleware(compiler)
+
+app.use(devMiddleware(compiler, {
+    publicPath: '/'
+}))
+
+app.use(hot)
+```
+
+至于`koa2`如何使用，可以参考[这里](https://www.npmjs.com/package/koa-webpack-middleware)，做法和`express`差不多
+
