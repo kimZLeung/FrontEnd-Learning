@@ -61,6 +61,7 @@ _typed.prototype._next = function () {
 				this.prevNode = this.currentNode
 				this.currentNode = cc
 				this.parent.appendChild(this.currentNode)
+				this.currentNode.className = info.className
 				// 创建或者移动光标
 				this._moveCursor(this.prevNode, this.currentNode)
 				// 重置光标引用
@@ -160,11 +161,12 @@ _typed.prototype._moveCursor = function (prev, current) {
 
 _typed.prototype._htmlParser = function (op) {
 	var catchHtml = function (str) {
-		var list = /<(\w+)>(.+)<\/\1>/.exec(str)
-		if (list) {
+		var matchList = /<(\w+)\s?(?:class=\"(\w+)\")?>(.+)<\/\1>/.exec(str)
+		if (matchList) {
 			return {
-				node: list[1],
-				str: list[2]
+				node: matchList[1],
+				className: matchList[2],
+				str: matchList[3]
 			}
 		} else {
 			return null

@@ -41,12 +41,49 @@
 					})
 				}
 			}, {
-				str: '<h4>呵呵</h4>',
+				str: '<h4 class="haha">呵呵</h4>',
 				end: function () {
 					$('#app2').css({
 						'color': 'white',
 						'font-size': '5em'
 					})
+					$('.haha').css({
+						'color': '#615d5d'
+					})
+				}
+			}, {
+				str: '<h4>正则表达式很好用</h4>',
+				end: function () {
+					$('#app2').css({
+						'color': 'white',
+						'font-size': '1.5em'
+					})
+					$('.haha').css({
+						'color': 'white'
+					})
+				}
+			}, {
+				str: '<h4>能优化性能，但是我不怎么会用</h4>',
+				end: function () {
+					$('#app2').css({
+						'padding': '20px',
+						'margin-left': '300px'
+					})
+				}
+			}, {
+				str: '<h4>演示完了，接下来轮到你了</h4>',
+				end: function () {
+					$('#app2').css({
+						'padding': '50px'
+					})
+				}
+			}, {
+				str: '<a class="link">请点击这里</a>',
+				end: function () {
+					$('.link').css({
+						'text-decoration': 'none',
+						'color': 'white'
+					}).attr('href', 'https://github.com/kimZLeung/FrontEnd-Learning/tree/master/JS%20others/_typed')
 				}
 			}],
 			time: 130
@@ -112,7 +149,8 @@
 				str: '<h4>再来一次!!!!!</h4>',
 				end: function () {
 					$('#app').css({
-						'text-align': 'center'
+						'text-align': 'center',
+						'font-size': '1.5em'
 					})
 				}
 			}, {
@@ -132,7 +170,8 @@
 				str: '<h4>最近吃的多了，有点发胖</h4>',
 				end: function () {
 					$('#app').css({
-						'margin': '0'
+						'margin': '0',
+						'font-size': '2em'
 					})
 				}
 			}, {
