@@ -183,3 +183,50 @@ app.use(hot)
 
 至于`koa2`如何使用，可以参考[这里](https://www.npmjs.com/package/koa-webpack-middleware)，做法和`express`差不多
 
+
+---
+
+## 环境变量
+
+我之前会使用`cross-env`来做生产环境和线上环境的区分处理。
+
+另外`webpack`也提供了，env参数进行设置
+
+```
+webpack --env.NODE_ENV=dev
+```
+
+可以通过这样的操作启动`webpack`设置环境变量，不过还需要改写配置文件
+
+```
+// webpack.config.js
+
+module.exports = env => {
+    // 需要把配置文件导出方式从对象改成函数，环境变量将作为参数传入
+    console.log(env.NODE_ENV)
+}
+```
+
+
+---
+
+## 模块中的全局变量
+
+部分的第三方库可能会期望不用使用`import`或者`require`进来，直接使用，显得很方便。但是`webpack`是什么，`webpack`可是模块化打包工具啊，它当然不建议大家直接`<script />`引入进来作为全局变量。所以我们可以像上面那样使用`ProvidePlugin`把一些第三方库自动加入模块依赖。
+
+可以使用`export-loader`，然后为这个`loader`加载的那个模块加入`module.exports`
+
+也使用`import-loader`，然后为这个`loader`加载的那个模块进行一些全局变量的定义
+
+```
+module: {
+  rules: [{
+      test: require.resolve('index.js'),
+      use: 'imports-loader?this=>window'
+    }, {
+      test: require.resolve('globals.js'),
+      use: 'exports-loader?file,parse=helpers.parse'
+    }]
+},
+```
+
