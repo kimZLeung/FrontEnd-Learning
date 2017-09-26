@@ -1,6 +1,6 @@
 console.log('haah')
 
-// console.log('hehe')
+console.log('hehe')
 
 
 if(module.hot) {
