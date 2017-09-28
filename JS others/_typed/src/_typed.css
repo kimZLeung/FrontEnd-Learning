@@ -1,5 +1,6 @@
 .cursor {
-	margin: 0 0.2em;
+	margin: 0em 0.2em;
+	font-size: larger;
 	animation: blink .7s infinite linear;
 }
 

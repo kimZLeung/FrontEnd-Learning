@@ -7,6 +7,7 @@ var _typed = function (op) {
 	this.time = op.time || 30
 	this.html = op.isHtml || false
 	this.cursor = op.cursor || false
+	this.cursorFont = op.cursorFont
 	this.parse = false
 	this.currentTask = null
 	if (!this.html) {
@@ -142,7 +143,8 @@ _typed.prototype._run = function (task) {
 
 _typed.prototype._moveCursor = function (prev, current) {
 	if (!prev) {
-		var cursor = document.createTextNode('|')
+		// var 
+		var cursor = document.createTextNode(this.cursorFont || '|')
 		var span = document.createElement('span')
 		span.appendChild(cursor)
 		span.className = 'cursor'
@@ -161,7 +163,7 @@ _typed.prototype._moveCursor = function (prev, current) {
 
 _typed.prototype._htmlParser = function (op) {
 	var catchHtml = function (str) {
-		var matchList = /<(\w+)\s?(?:class=\"(\w+)\")?>(.+)<\/\1>/.exec(str)
+		var matchList = /<(\w+)\s*?(?:class=\"(\w+)\")?>(.+)<\/\1>/.exec(str)
 		if (matchList) {
 			return {
 				node: matchList[1],
