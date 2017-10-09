@@ -103,7 +103,7 @@ self.addEventListener('fetch', function(e) {
 
 `Cache`里面对应有我们刚刚缓存好的资源
 
-> 借用一个总结：`serviceWorker`的缓存机制：install时fetch需要缓存的文件，用cache.addAll缓存到cacheStorage里。在fetch事件触发时，先cache.match这些缓存，若存在则直接返回，若不存在则用fetch抓这个request，然后在cache.put进缓存。
+> 借用一个总结：`serviceWorker`的缓存机制是 install时fetch需要缓存的文件，用cache.addAll缓存到cacheStorage里。在fetch事件触发时，先cache.match这些缓存，若存在则直接返回，若不存在则用fetch抓这个request，然后在cache.put进缓存。
 
 ---
 
