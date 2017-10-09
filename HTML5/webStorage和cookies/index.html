@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webStorage</title>
+</head>
+<body>
+	<a href="test.html">go</a>
+	<script>
+		var go = document.querySelector('a')
+
+		go.onclick = function () {
+			set()
+		}
+
+		window.addEventListener("storage", function (e) {
+			console.log(e)
+		})
+
+		function setLocal () {
+			localStorage.setItem('haha', 'ff')
+		}
+
+		function set () {
+			sessionStorage.setItem('haha', 123)
+		}
+
+		function remove () {
+			sessionStorage.removeItem('haha')
+		}
+
+		function log () {
+			if (sessionStorage.haha) {
+				console.log(sessionStorage.haha)
+			}
+		}
+	</script>
+</body>
+</html>

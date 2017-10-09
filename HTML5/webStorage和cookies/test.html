@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<script>
+		window.addEventListener("storage", function (e) {
+			console.log(e)
+		})
+
+		function set () {
+			sessionStorage.setItem('haha', 123)
+		}
+
+		function remove () {
+			sessionStorage.removeItem('haha')
+		}
+
+		function log () {
+			if (sessionStorage.haha) {
+				console.log(sessionStorage.haha)
+			}
+		}
+	</script>
+</body>
+</html>
