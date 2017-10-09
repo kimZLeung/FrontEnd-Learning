@@ -38,3 +38,7 @@ WebStorage的优点
 - **临时存储数据**： 对于某些常用数据，或者静态资源数据，可以临时存储。对于当前窗口(tab)的临时数据可以利用 sessionStorage 来保存，如果是长期保存，则使用 localStorage
 - **减少网络流量**：数据保存在本地，避免重新向服务器请求数据，从而避免了不必要的数据请求，因此减少网络流量
 - **快速显示数据**：由于数据临时保存在本地，从而不用发送请求去服务器端获取，这样可以快速的读取数据，提供了性能
+
+Cookies的注意
+
+> 前面提到同源下Cookies会携带在每一个HTTP请求中，但是如果是跨域状态下，需要在服务器端和浏览器端传输Cookies时，客户端的`xhr`对象的`withCredentials`需要设置为true，服务器端也需要设置响应头表示同意`Access-Control-Allow-Credentials: true`。并且，这个时候`Access-Control-Allow-Origin`就不能设置为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会在每次HTTP请求中上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的`document.cookie`也无法读取服务器域名下的Cookie。
