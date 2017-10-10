@@ -60,7 +60,18 @@ Class PortalExm extends React.Component {
 
 我们一般在这个组件的生命周期函数里面通过动态操作DOM来使这个组件插入到我们的DOM树里面
 
-> 值得注意的是：虽然我们挂载到了别的DOM节点上面，但是我们在这个组件里面触发的事件依然可以冒泡到我们的父组件上面。[try it](https://codepen.io/gaearon/pen/jGBWpE)
+> 值得注意的是：虽然我们挂载到了别的DOM节点上面，真正的DOM树的结构未必为父子关系，但是我们在这个组件里面触发的事件依然可以冒泡到我们的父组件上面。不过前提是需要使用React封装好给我们使用的事件机制，而不是通过ref获取节点然后`addEventListener`这样添加事件 [try it](https://codepen.io/gaearon/pen/jGBWpE)
+
+```
+render () {
+	return (
+		<div>
+			<button onClick={(e) => {console.log(this.props.name)}}>Click</button>
+		</div>
+	)
+}
+
+```
 
 ---
 
