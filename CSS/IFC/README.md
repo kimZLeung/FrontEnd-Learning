@@ -24,3 +24,47 @@
 其实我在网上找了很多资料，也不清楚IFC和BFC的具体区别，只知道BFC的创建方法和一些特性，对于IFC的定义十分模糊。感觉上有行内元素存在就会形成IFC的布局。
 
 而且查到的关于IFC的资料上都是大篇幅讲 line box 的高度和宽度。行内元素的高度怎么决定。行内元素垂直方向的对齐问题（各inline-level box根据vertical-align属性值相对各自的父容器作垂直方向对齐）。行内元素换行分成几个 line box 这些点的理论，感觉跟BFC并不是一个完全并列的概念
+
+---
+
+（补充行内元素布局）
+
+## line-height
+
+`line-height`这个属性之前没有过多去关注。其实它作用在块级元素和内联元素上是不同的。
+
+作用在块级元素上：块级元素靠设置`height`顶开高度，但是如果没有设置`height`，我们依然可以把它顶开，如果一个标签没有定义height属性(包括百分比高度)，那么其最终表现的高度一定是由line-height起作用。所以我们其实也可以直接给这个块级元素设置它的`line-height`，通过`line-height`让下面的文字（inline-level box）撑开块级元素。块级元素包含内联元素时，内联元素形成的 line box 可以撑开块级元素的高度
+
+作用在内联元素上：内联元素在我们设置`line-height`的时候无法帮我们撑开高度，但是我们这一行的 line box 就是使用`line-height`作为高度的，而且line box可以为inline-level box撑开空间（并不是指content区），而 line box 也决定了我们很麻烦的一个属性，vertical-align（垂直对齐）的效果。内联元素的content区域也不会通过 line box 撑开，而是通过内部填充的字体撑开的
+
+---
+
+## baseline
+
+普通内联元素的[baseline](http://www.jianshu.com/p/c92849a97ef5)
+
+然而`inline-block`元素会有特殊的baseline
+
+> 一个inline-block元素，如果里面没有inline内联元素，或者overflow不是visible，则该元素的基线就是其margin底边缘，否则，其基线就是元素里面最后一行内联元素（最后一行line box）的基线。
+
+---
+
+## line-height与line box有很大的关系
+
+vertical-algn的属性表
+
+| 值 | 描述 |
+|-----|-----|
+| 长度 | 通过距离升高（正值）或降低（负值）元素。'0cm'等同于'baseline' |
+| 百分值 – % | 通过距离（相对于1line-height1值的百分大小）升高（正值）或降低（负值）元素。'0%'等同于'baseline' |
+| baseline | 默认。元素的基线与父元素的基线对齐。 |
+| sub | 降低元素的基线到父元素合适的下标位置。 |
+| super | 	升高元素的基线到父元素合适的上标位置。 |
+| top | 把对齐的子元素的顶端与line box顶端对齐。 |
+| text-top | 把元素的顶端与父元素内容区域的顶端对齐。 |
+| middle | 元素的中垂点与 父元素的基线加1/2父元素中字母x的高度 对齐。 |
+| bottom | 把对齐的子元素的底端与line box底端对齐。 |
+| text-bottom | 把元素的底端与父元素内容区域的底端对齐。 |
+| inherit | 采用父元素相关属性的相同的指定值。 |
+
+可以看到vertical-align的对齐规则和line box，baseline有很大关系
