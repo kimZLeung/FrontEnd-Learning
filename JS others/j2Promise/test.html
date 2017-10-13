@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test Promise</title>
+</head>
+<body>
+	<script src="j2Promise.js"></script>
+	<script type="text/javascript">
+		new j2Promise(function (res, rej) {
+			setTimeout(function () {
+				res('haha')
+			}, 1000)
+		})
+		.then(function (val) {
+			console.log(val)
+			return '123'
+		})
+		.then(function (val) {
+			console.log(val)
+		})
+	</script>
+</body>
+</html>
