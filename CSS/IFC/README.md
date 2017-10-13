@@ -35,7 +35,7 @@
 
 作用在块级元素上：块级元素靠设置`height`顶开高度，但是如果没有设置`height`，我们依然可以把它顶开，如果一个标签没有定义height属性(包括百分比高度)，那么其最终表现的高度一定是由line-height起作用。所以我们其实也可以直接给这个块级元素设置它的`line-height`，通过`line-height`让下面的文字（inline-level box）撑开块级元素。块级元素包含内联元素时，内联元素形成的 line box 可以撑开块级元素的高度。但是如果设定了这个块级元素的height，那么这个块级元素的高度将会由height决定，然后下面再有元素的话也不会被line box撑开
 
-作用在内联元素上：内联元素在我们设置`line-height`的时候无法帮我们撑开高度，但是我们这一行的 line box 就是使用`line-height`作为高度的，而且line box可以为inline-level box撑开空间（并不是指content区），而 line box 也决定了我们很麻烦的一个属性，vertical-align（垂直对齐）的效果。内联元素的content区域也不会通过 line box 撑开，而是通过内部填充的字体撑开的。但是这个内联元素的实际占位（高度）就是line-height决定的。因为这一行的line box 是由line-height 决定的。
+作用在内联元素上：内联元素在我们设置`line-height`的时候无法帮我们撑开内容区高度，但是我们这一行的 line box 就是又我们的`line-height`为基础计算出高度的，而且line box可以为inline-level box撑开空间（并不是指content区），而 line box 也决定了我们很麻烦的一个属性，vertical-align（垂直对齐）的效果。内联元素的内容区也不会通过 line box 撑开，而是通过内部填充的字体撑开的。但是这个内联元素的实际占位（高度）就是line-height决定的。而往往显示的是内容区。但是这一行的line box 是由`line-height`决定的。
 
 ---
 
