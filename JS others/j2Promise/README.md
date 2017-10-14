@@ -31,4 +31,5 @@ JS作为一门神奇又灵活的语言。其最鲜明的特色之一就是高阶
 
 ## 造Promise
 
+见[j2Promise.js](https://github.com/kimZLeung/FrontEnd-Learning/blob/master/JS%20others/j2Promise/j2Promise.js)
 

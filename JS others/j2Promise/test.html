@@ -7,18 +7,73 @@
 <body>
 	<script src="j2Promise.js"></script>
 	<script type="text/javascript">
-		new j2Promise(function (res, rej) {
-			setTimeout(function () {
-				res('haha')
-			}, 1000)
+		// new j2Promise(function (res, rej) {
+		// 	setTimeout(function () {
+		// 		res('haha')
+		// 	}, 1000)
+		// })
+		// .then(function (val) {
+		// 	console.log(val)
+		// 	return '123'
+		// })
+		// .then(function (val) {
+		// 	console.log(val)
+		// })
+
+		new Promise(function (res, rej) {
+			console.log('inner')
+			res('haha')
 		})
 		.then(function (val) {
 			console.log(val)
-			return '123'
 		})
-		.then(function (val) {
-			console.log(val)
-		})
+
+		console.log('outside')
+
+		// new j2Promise(function (res, rej) {
+		// 	setTimeout(function () {
+		// 		rej('error')
+		// 	}, 2000)
+		// })
+		// .then(function (val) {
+		// 	console.log(val)
+		// })
+		// .catch(function (e) {
+		// 	console.error(e)
+		// })
+		
+		// var p1 = new j2Promise(function (res) {
+		// 	setTimeout(function () {
+		// 		res('123')
+		// 	}, 1000)
+		// })
+
+		// var p2 = new j2Promise(function (res) {
+		// 	setTimeout(function () {
+		// 		res('456')
+		// 	}, 2000)
+		// })
+
+		// j2Promise.all(p1)
+		// .then(function (val) {
+		// 	console.log(val)
+		// })
+		// .catch(function (e) {
+		// 	console.log(e)
+		// })
+
+		// j2Promise.all([p1, p2, '888'])
+		// .then(function (val) {
+		// 	console.log(val)
+		// })
+		// .catch(function (e) {
+		// 	console.log(e)
+		// })
+		
+		// j2Promise.race([p1, p2])
+		// .then(function (val) {
+		// 	console.log(val)
+		// })
 	</script>
 </body>
 </html>
