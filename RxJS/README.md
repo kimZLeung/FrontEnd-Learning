@@ -50,8 +50,8 @@
 
 ``` javascript
 rx.Observable.create(function(observer) {
-	observer.onNext(42)		// emit onNext
-	observer.onCompleted()	// emit onCompleted
+	observer.next(42)		// emit onNext
+	observer.completed()	// emit onCompleted
 
 	return function() {
 		console.log('disposed')
@@ -66,14 +66,14 @@ rx.Observable.create(function(observer) {
 })
 ```
 
-> `subscribe`方法返回一个`observer`对象，调用该对象上的`dispose`方法可以取消订阅
+> `subscribe`方法返回一个`Subscription`对象，调用该对象上的`unsubscribe`方法可以取消订阅
 
 ---
 
 ## 热Observables和冷Observables
 
 > 顾名思义，热`Observables`是类似事件一类的`Observable`，不会随着订阅而开始启动更新数据，而是每时每刻都在更新数据。
-然而冷`Observables`则只会在我们`subscribe`之后才会开始数据更新和推送，如我们自己用`interval`创建出来的`Observable`（interval创建出来的会在订阅后每**秒默认从1开始推送整数）
+然而冷`Observables`则只会在我们`subscribe`之后才会开始数据更新和推送，如我们自己用`interval`创建出来的`Observable`（interval创建出来的会在订阅后每秒默认从1开始推送整数）
 
 我们也可以用`publish`方法把`Cold Observables`转换为`Hot Observables`
 
@@ -172,7 +172,7 @@ rx.Observable.fromPromise(pro)
 
 ---
 
-## 处理流的一些API
+## 处理流的一些API (operator)
 
 > 处理`Rx`的流的API有很多，`concat`，`merge`，`filter`... `Rx`的`Observable`目测其实是`Array`里衍化出来的奇行种吧...
 

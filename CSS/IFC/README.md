@@ -68,3 +68,11 @@ vertical-algn的属性表
 | inherit | 采用父元素相关属性的相同的指定值。 |
 
 可以看到vertical-align的对齐规则和line box，baseline有很大关系
+
+---
+
+## summary twice
+
+现在我对水平布局的理解：其实行内元素的水平布局过来，一般来说是从左到右通过vertical-align根据baseline对各个内联元素进行垂直方向的定位，各个定位好的元素也会根据自己的line-height把 line box 顶开，从而改变 line box 的高度。
+
+至于 line box 高度的变化我认为并不会影响到line box的baseline，我所理解的line box 的baseline就是那一行的字体的baseline
