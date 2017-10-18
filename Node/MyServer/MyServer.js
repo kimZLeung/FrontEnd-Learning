@@ -42,9 +42,12 @@ http.createServer(function(request, response) {
 						response.writeHead(404, {'Content-Type': 'text/html'});
 						response.end('<html><head><title>404</title></head><body><h1>404</h1> <h1>Not Found</h1></body></html>');
 					} else {
-						console.log('200', request.url);
-						response.writeHead(200);
-						fs.createReadStream(indexPath).pipe(response);
+						// 若有index.html则重定向到index.html的地址
+						console.log('301', indexPath);
+						response.writeHead(301, {
+							'Location': reUrl + '/index.html'
+						})
+						response.end()
 					}
 				})
 			}
