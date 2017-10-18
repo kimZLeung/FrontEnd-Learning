@@ -26,7 +26,7 @@ app.use(async (ctx) => {
 		ctx.type = _mime
 	}
 
-	if ( _mime && _mime.indexOf('image/') >= 0 ) {
+	if ( _mime && _mime.indexOf('image/') >= 0 || _mime.indexOf('video/') >= 0 ) {
 		// 如果是图片，则用node原生res，输出二进制数据
 		ctx.res.writeHead(200)
 		ctx.res.write(_content, 'binary')
