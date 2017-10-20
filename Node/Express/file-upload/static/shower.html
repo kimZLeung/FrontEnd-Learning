@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>shower</title>
+</head>
+<body>
+	<img src="" id="shower" alt="图片不存在" />
+	<script>
+		var shower = document.querySelector('#shower')
+
+		shower.src = 'image/' + location.hash.substr(1)
+	</script>
+</body>
+</html>
