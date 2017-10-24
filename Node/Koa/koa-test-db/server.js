@@ -1,6 +1,7 @@
 var Koa = require('koa')
 var bodyParser = require('koa-bodyparser')
 var static = require('koa-static')
+var router = require('koa-router')
 var query = require('./util/queryDB.js')
 
 var app = new Koa()
