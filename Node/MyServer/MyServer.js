@@ -53,7 +53,9 @@ http.createServer(function(request, response) {
 			}
 			else if(stat.isFile()) {	// 直接返回
 				console.log('200', request.url);
-				response.writeHead(200);
+				response.writeHead(200, {
+					'Set-Cookie': 'userid=kimz'
+				});
 				fs.createReadStream(filePath).pipe(response);
 			}
 		}
