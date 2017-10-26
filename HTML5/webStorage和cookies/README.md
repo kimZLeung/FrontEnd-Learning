@@ -1,21 +1,30 @@
-# WebStorage && Cookies && Session
+# WebStorage && Cookie && Session
 
 ---
 
-## Cookies 和 Session
+## Cookie 和 Session
 
-Session并不是sessionStorage。简单来说，Session是保存在服务端的，而Cookies是保存在客户端的。
+Session并不是sessionStorage。简单来说，Session是保存在服务端的，而Cookie是保存在客户端的。
 
-最起初的时候，大佬说想直接在浏览器端弄一个缓存，保存一下这个页面需要经常使用到的数据，为了不每次都请求一遍。所以产生了Cookies，用来保存一些简单的数据。
+最起初的时候，大佬说想直接在浏览器端弄一个缓存，保存一下这个页面需要经常使用到的数据，为了不每次都请求一遍。所以产生了Cookie，用来保存一些简单的数据。
 
-后来大佬发现把部分信息都保存在客户端的Cookies里面并不是太安全，所以产生了Session。服务端的Session也是用来跟踪保存用户状态，但是每个Session是对应一个用户，也就是对应一个会话的，而这个对应关系，大佬决定用Cookies来实现，于是产生了另一种做法：在Cookies中保存SessionId，然后通过这个SessionId在服务端访问对应的Session来获取用户数据。比较私密的用户数据可以存Session
+后来大佬发现把部分信息都保存在客户端的Cookie里面并不是太安全，所以产生了Session。服务端的Session也是用来跟踪保存用户状态，但是每个Session是对应一个用户，也就是对应一个会话的，而这个对应关系，大佬决定用Cookie来实现，于是产生了另一种做法：在Cookie中保存SessionId，然后通过这个SessionId在服务端访问对应的Session来获取用户数据。比较私密的用户数据可以存Session
 
-> Cookies: Cookies的数据始终会在**同源**的HTTP请求中携带，所以它会一直在浏览器和服务器直接来回传递
+> Cookie: Cookie的数据始终会在**同源**的HTTP请求中携带，所以它会一直在浏览器和服务器直接来回传递。
+
+其实从根本上来说，`Cookie`之所以会始终在**同源的HTTP**请求中携带，是因为同源的请求不需要客户端和服务端同时允许才能在请求过程中携带`Cookie`，而跨域的CORS请求需要`withCredentials: true`和`Access-Control-Allow-Credentials: true`才能使请求上带有`Cookie`。说得有点多，换句话来讲，就是`Cookie`都有作用域，由它的`domain`和`path`来决定，也就是，`Cookie`的这个作用域决定了它在什么请求上会被携带。
+
+所以我们可以想象，同源的`Cookie`的作用域就是本域，所以同源的请求会携带同源的`Cookie`，而且HTTP不会阻止`Cookie`被携带。而跨域的情况下，虽然跨域的`Cookie`会有作用域，但是由于种种限制，所以需要做出一点设置才能被携带上。
+
+> 通过`document.cookie`的方式只能访问到同源的`cookie`，也就是第一方Cookie。
+
+
+更多[`Cookie`]资料(https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies)
 
 
 ---
 
-## Cookies 和 WebStorage
+## Cookie 和 WebStorage
 
 WebStorage包含了localStorage 和 sessionStorage
 
@@ -39,6 +48,3 @@ WebStorage的优点
 - **减少网络流量**：数据保存在本地，避免重新向服务器请求数据，从而避免了不必要的数据请求，因此减少网络流量
 - **快速显示数据**：由于数据临时保存在本地，从而不用发送请求去服务器端获取，这样可以快速的读取数据，提供了性能
 
-Cookies的注意
-
-> 前面提到同源下Cookies会携带在每一个HTTP请求中，但是如果是跨域状态下，需要在服务器端和浏览器端传输Cookies时，客户端的`xhr`对象的`withCredentials`需要设置为true，服务器端也需要设置响应头表示同意`Access-Control-Allow-Credentials: true`。并且，这个时候`Access-Control-Allow-Origin`就不能设置为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会在每次HTTP请求中上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的`document.cookie`也无法读取服务器域名下的Cookie。
