@@ -28,7 +28,7 @@ Session并不是sessionStorage。简单来说，Session是保存在服务端的�
 
 WebStorage包含了localStorage 和 sessionStorage
 
-前面提到Cookies有缓存数据和追踪用户状态的作用，而WebStorage的作用大多数缓存数据，那Cookies 和 WebStorage具体有什么不同呢
+前面提到Cookies有缓存数据和追踪用户状态的作用，而WebStorage的作用大多数缓存数据，那 Cookies 和 WebStorage具体有什么不同呢
 
 - 前面也提到，cookie数据始终在**同源**的http请求中携带，而WebStorage的数据**仅仅会在客户端中保存**，并不会自动把数据传过去服务器。
 - 因为WebStorage的数据不会传到服务端，所以它和Cookies的存储大小的限制不同。cookie 数据不能超过**4k**，sessionStorage和 localStorage可以达到**5M**左右。
