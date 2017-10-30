@@ -2,7 +2,7 @@
 
 ---
 
-## 先说Vue的install方法
+## 先说Vue的use方法和vuex的install方法
 
 ```
 // 使用vuex
