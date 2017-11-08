@@ -65,7 +65,7 @@ function* bar() {
   yield 'y'
 }
 
-for (let v of bar()){
+for (let v of bar()) {
   console.log(v)
 }
 
