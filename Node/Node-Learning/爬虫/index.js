@@ -30,7 +30,7 @@ app.get('/goFetch', function(req, res, next) {
 		});
 
 		/**
-		 * 本来是用eventproxy来控制并发
+		 * 本来只是用eventproxy来实现顺序执行异步操作
 		 * 但是他那边服务器503    2017年1月8日
 		 * 一直报错...
 		 *
