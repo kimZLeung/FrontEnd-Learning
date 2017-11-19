@@ -7,7 +7,6 @@
 - 中间部分脱离文档流的
 - 中间部分不脱离文档流的
 
-开启菜鸡模式。
 
 ## 中间部分不脱离文档流
 
@@ -106,29 +105,29 @@
 
 ```
 /* center-container只包含着center，通过设置center的margin使中间不被遮住 */
-.center-container{
+.center-container {
     width: 100%;
     height: 200px;
     float: left;
 }
 
-.center{
+.center {
     margin-left: 200px;
     margin-right: 200px;
 }
 
-.left{
+.left {
     width: 200px;
     height: 200px;
     float: left;
-    margin-left:-100%;
+    margin-left: -100%;
 }
 
-.right{
+.right {
     width: 200px;
     height: 200px;
     float: left;
-    margin-left:-200px;
+    margin-left: -200px;
 }
 ```
 
@@ -137,4 +136,4 @@
 
 ## 其实flex布局可以让我们省去很多很多功夫
 
-flex布局的确简单方便又开心。但是我觉得了解这些布局，对于CSS的基础来说会有提升，毕竟很多时候，学习的目的并不是为了试着试着试出一个结果，学习的过程踩过的坑也是很帅的。
+[flex布局](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)的确简单方便又开心。但是我觉得了解这些布局，对于CSS的基础来说会有提升，毕竟很多时候，学习的目的并不是为了试着试着试出一个结果，学习的过程踩过的坑也是很帅的。
