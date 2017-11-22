@@ -4,7 +4,7 @@
 
 ## React如何做动画
 
-官方文档说到：
+官方文档是这样说的：
 
 ### Can I do animations in React?
 
