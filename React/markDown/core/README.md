@@ -35,7 +35,6 @@ ReactText = string | number
 ReactEmpty = null | undefined | boolean
 ```
 
-
 ---
 
 ## 创建上述元素 - createElement
@@ -48,4 +47,49 @@ ReactEmpty = null | undefined | boolean
 
 ## 初始化组件
 
-> Virtual DOM 模型通过`createElement`创建Virtual DOM虚拟元素，创建出虚拟元素之后，就要创建组件了
+> Virtual DOM 模型通过`createElement`创建Virtual DOM虚拟元素，创建出虚拟元素之后，就要创建组件了上面也提到了`ReactNode`分为ReactElement，ReactFragment，ReactText。分别说下这几种转化为组件
+
+
+### 文本组件
+
+在源码中通过`ReactDOMTextComponent`创建文本组件
+
+
+### DOM标签组件
+
+要创建DOM标签组件，源码中通过使用`createOpenTagMarkupAndPutListeners`来处理DOM节点上的属性和事件，在这个函数中，React会通过
+
+- `enqueuePutListener`添加事件
+- `CSSPropertyOperations.createMarkupForStyles`创建样式
+- `DOMPropertyOperations.createMarkupForProperty`创建属性
+- `DOMPropertyOperations.createMarkupForID`创建唯一标识
+
+然后是关于DOM标签组件的更新
+
+> 更新组件分为两个阶段
+
+- 第一个阶段是删除无用的旧属性
+- 第二个阶段是更新新的属性
+
+> 一个更复杂的过程是对子组件的更新，也是两个阶段
+
+- 第一个阶段是删除不需要的子节点和内容
+- 第二个阶段是更新子节点和内容
+
+
+---
+
+### React组件的生命周期
+
+> 无状态组件不存在生命周期
+
+- First Render：getDefaultProps -> getInitialState -> componentWillMount -> redner -> componentDidMount
+- Unmont: componentWillUnmount
+- Second Render: getInitialState -> componentWillMount -> redner -> componentDidMount
+- PropsChange: componentWillReceiveProps -> shouldComponentUpdate -> componentWillUpdate -> render -> componentDidUpdate
+- State Change: shouldComponentUpdate -> componentWillUpdate -> render -> componentDidUpdate
+
+---
+
+### setState API
+
