@@ -91,5 +91,53 @@ ReactEmpty = null | undefined | boolean
 
 ---
 
-### setState API
+### setState 
+
+> setState在一些情况下是异步的，在一些情况下是同步的
+
+```js
+componentDidMount () {
+  this.setState({
+    value: this.state.val + 1
+  })
+  console.log(this.state.val)
+  
+  this.setState({
+    value: this.state.val + 1
+  })
+  console.log(this.state.val)
+  
+  setTimeout(() => {
+    this.setState({
+      value: this.state.val + 1
+    })
+    console.log(this.state.val)
+    
+    this.setState({
+      value: this.state.val + 1
+    })
+    console.log(this.state.val)
+  })
+}
+```
+
+以上这个例子会顺序打印出来0,0,2,3
+
+> 我一开始对这个十分疑惑，因为我之前了解到的关于setState这个方法的解释是：这个方法是异步的，立马在setState方法后面通过this.state访问本组件的state的话，我们访问到的是更新前的state。这符合前两个打印出来的数据，但是为什么第三个和第四个会分别打印2和3？
+
+书本上说的是：`setState`这个方法，实际上是调用`enqueueSetState`，最终调用`enqueueUpdate`来执行state更新。在`enqueueUpdate`中，React通过判断一个自己维护的状态量`batchingStrategy.isBatchingUpdates`来判断是否正在处于更新状态，如果是则不会进行立即更新，而会把组件推进一个`dirtyComponents`的队列里面等待一起更新。如果不是则会立即更新（应该就是所谓的同步刷新组件）
+
+> 之前我尝试过在自定义的方法里面使用`setState`更新state。并把其挂载到一个组件的合成事件上，这个更新也是异步的。可能`setTimout`里面调用`setState`让其成为同步刷新组件是一种特殊情况吧。
+
+---
+
+### diff算法
+
+> 优秀的diff算法让React的Virtual DOM更加快速
+
+React的diff算法通过三个方式简化算法的时空复杂度
+
+- tree diff：对树进行分层比较，两科树只会将同一层级的节点进行比较
+- component diff：同一类型的组件，按照原策略继续比较；若是不同类型的组件，则判断为dirty Component，替换这个组件下的所有子节点。
+- element diff：当节点处于同一层级时，diff提供三种操作，插入、移动和删除。
 
