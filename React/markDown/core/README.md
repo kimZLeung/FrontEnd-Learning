@@ -79,7 +79,7 @@ ReactEmpty = null | undefined | boolean
 
 ---
 
-### React组件的生命周期
+## React组件的生命周期
 
 > 无状态组件不存在生命周期
 
@@ -91,7 +91,7 @@ ReactEmpty = null | undefined | boolean
 
 ---
 
-### setState 
+## set State 
 
 > setState在一些情况下是异步的，在一些情况下是同步的
 
@@ -131,13 +131,27 @@ componentDidMount () {
 
 ---
 
-### diff算法
+## diff算法
 
 > 优秀的diff算法让React的Virtual DOM更加快速
 
 React的diff算法通过三个方式简化算法的时空复杂度
 
 - tree diff：对树进行分层比较，两科树只会将同一层级的节点进行比较
-- component diff：同一类型的组件，按照原策略继续比较；若是不同类型的组件，则判断为dirty Component，替换这个组件下的所有子节点。
-- element diff：当节点处于同一层级时，diff提供三种操作，插入、移动和删除。
+- component diff：组件之间的比较，同一类型的组件，按照原策略继续比较；若是不同类型的组件，则判断为dirty Component，替换这个组件下的所有子节点。
+- element diff：当节点处于同一层级时，diff提供三种操作，插入、移动（可复用原来的节点）和删除。
+
+
+
+说一下element diff的移动操作以及其做的**顺序优化**
+
+> 之间接触到React的列表渲染常常会加入一个key值，之前听说是为了优化渲染。从深层一点的角度来看，这里涉及到了element diff的移动操作。React的源码会在同一层级的节点里面，认识到每个节点的key值，通过这个唯一的key值来判断新旧DOM树中是否存在相同节点，如果是这样的话，React将会对其保留并复用。在移动之前，React会判断这个节点移动之后的位置`if(child._mountIndex < lastIndex)`，否则就不执行移动，`lastIndex`是访问过并匹配到的节点在旧集合中最右的位置，如果新集合中当前访问的节点在旧集合中曾经的位置`_mountIndex`比`lastIndex`大，就是说当前访问的节点在旧集合中就比上一个节点位置靠后，则该节点不会影响其他节点的位置。就不会执行移动操作。
+>
+> 而当新集合中所有的节点都进行完差异对比后，React还会遍历一遍旧集合，把判断是否还存在新集合中没有但是旧集合中存在的节点，如果有则把其删除掉。
+
+---
+
+## React Patch
+
+> Patch做到的是：Patch就是补丁，也就是将diff算法计算出来的DOM差异队列更新到真实的DOM上面。React实现了计算出全部差异并放入差异队列之后，Patch方法通过这个队列来实现DOM的更新。
 
