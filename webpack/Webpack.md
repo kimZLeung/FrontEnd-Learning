@@ -4,18 +4,18 @@
 
 ---
 
- 1. 打包工具
- 2. 模块加载工具
- 3. 各种资源可以当做模块处理
+  1. 打包工具
+  2. 模块加载工具
+  3. 各种资源可以当做模块处理
 
 
 ----------
 ## 如今的JS模块化组织的方法。
 
- 1. AMD或者CMD。也就是require和sea (异步加载模块)
- 2. common。Node使用commonJS来进行模块化 (同步加载模块)
- 3. ES6的模块化，的确好用。 (有生命的模块)
- 4. webpack咯~browserify咯
+  1. AMD或者CMD。也就是require和sea (异步加载模块)
+  2. common。Node使用commonJS来进行模块化 (同步加载模块)
+  3. ES6的模块化，的确好用。 (有生命的模块)
+  4. webpack咯~browserify咯
 
 
 ----------
@@ -45,20 +45,20 @@
             },
             //...
         }
-        
-        
+
+
         // app.html
         // ...
         <script src="react.min.js" />
         <script src="bundle.js" />
-        
-        
+
+
         // 某个被打包的模块
         // commonJS
         var react = require('react');
         // ES6
         import react from 'react';
-        
+
 ---
 ## 自动挂载插件 ProvidePlugin
 - 上面这个externals配置属性可以不把externals的东西不打包进来bundle.js里面
@@ -76,7 +76,7 @@
         // 不需要 var $ = require('./../../xxoo');  直接用
         
         $('xxoo').html('<h1>Hello 世界</h1>');
-        
+
 - jq依旧会打包进去。
 
 ---
@@ -109,7 +109,6 @@
 另外：`webpack`的一个生成`html`的插件`HtmlWebpackPlugin`生成`html`的同时会自动插入生成的资源（JS，CSS），他们的补全路径默认是`output.publicPath`，所以官方推荐两处的`publicPath`配置的保持一致
 
 最后打包出来的JS，CSS，图片和字体等文件都是通过`output.path`和它自身的`filename`决定的，`output.publicPath`并不会影响打包构建的文件目录
-
 
 ---
 
@@ -183,7 +182,6 @@ app.use(hot)
 
 至于`koa2`如何使用，可以参考[这里](https://www.npmjs.com/package/koa-webpack-middleware)，做法和`express`差不多
 
-
 ---
 
 ## 环境变量
@@ -206,7 +204,6 @@ module.exports = env => {
     console.log(env.NODE_ENV)
 }
 ```
-
 
 ---
 
@@ -243,3 +240,21 @@ module: {
 - manifest：保留所有模块的详细要点的一个数据合集，runtime通过这个数据合集来进行模块加载。
 
 所以我们每一次的打包这个runtime和manifest的数据合集都会产生变化，所以我们在使用`CommonsChunkPlugin`进行代码分离的时候，通常都会多加一步，把存在于`vendor.js`里面的runtime的代码单独打包出来作为一份`manifest.js`来直接引入，这样我们的`vendor.js`这个依赖库的js文件便不需要重新加载。
+
+---
+
+## webpack chunk
+
+webpack的三种chunk：
+
+- entry chunk 入口块
+- normal chunk 普通块
+- initial chunk 初始块
+
+
+
+entry chunk就是包含`runtime`运行时的块。
+
+normal chunk就是使用jsonp包装加载的模块，通常来说就是通过`require.ensure`或者`import`异步加载进来的chunk
+
+initial chunk就是没有`runtime`的块，通常会由`CommonsChunkPlugin`产生。通过这个插件会把`manifest`文件抽出，当entry chunk失去了`runtime`时，就变成 了initial chunk了
