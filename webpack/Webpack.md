@@ -230,3 +230,16 @@ module: {
 },
 ```
 
+---
+
+## webpack runtime
+
+> 很多人不理解runtime是什么，用官方文档的话说：在浏览器运行时，webpack 用来连接模块化的应用程序的所有代码，就是runtime。runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。
+
+当我们每次webpack打包的时候，我们或许打包出来的文件只有一个，对，但是这一个`bundle.js`包含了你`/src`目录下所有文件，各种各样的依赖的处理。而runtime就是为了处理这些模块之间的依赖而存在的。
+
+总结一下：
+- runtime：在模块交互时，连接模块所需的加载和解析逻辑。
+- manifest：保留所有模块的详细要点的一个数据合集，runtime通过这个数据合集来进行模块加载。
+
+所以我们每一次的打包这个runtime和manifest的数据合集都会产生变化，所以我们在使用`CommonsChunkPlugin`进行代码分离的时候，通常都会多加一步，把存在于`vendor.js`里面的runtime的代码单独打包出来作为一份`manifest.js`来直接引入，这样我们的`vendor.js`这个依赖库的js文件便不需要重新加载。
