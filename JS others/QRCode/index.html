@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>QRCode</title>
+	<style>
+		#qrcode {
+			margin: 200px;
+			position: absolute;
+			/*float: left;*/
+		}
+
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+		}
+
+		#left {
+			width: 200px;
+			height: 100%;
+			background-color: #ccc;
+			float: left;
+		}
+
+		#right {
+			width: 200px;
+			height: 100%;
+			background-color: #ccc;
+			float: right;
+		}
+
+		#center {
+			margin: 0 200px;
+		}
+	</style>
+</head>
+<body>
+	<div id="qrcode"></div>
+	<script type="text/javascript" src="./QRCode.js"></script>
+	<script type="text/javascript">
+		new QRCode(document.getElementById("qrcode"), {
+			text: "http://10.21.23.199:8080/#/payment",
+			width: 250,
+			height: 250,
+			colorDark : "#575757",
+			colorLight : "#ccc",
+			correctLevel : QRCode.CorrectLevel.H
+		});
+	</script>
+	<div id="left"></div>
+	<div id="right"></div>
+	<div id="center">fasdfasdfas</div>
+	<script type="text/javascript">
+		function Klass(msg) {
+			this.msg = msg
+			// this.hello = function() {
+			// 	console.log(this.msg)
+			// }
+		}
+
+		Klass.prototype.hello = function() {
+			console.log(this.msg)
+		}
+	</script>
+</body>
+</html>
