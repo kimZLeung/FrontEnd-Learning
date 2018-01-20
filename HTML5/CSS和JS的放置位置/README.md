@@ -24,9 +24,14 @@
 - 相同之处在于，两个属性都可以让JS的下载与DOM的解析同步，即下载JS不会阻塞DOM的解析
 - 不同之处在于，`defer`不会让script的执行顺序乱掉，而且JS的执行将会被推到浏览器触发`DOMContentLoaded `事件的时候。而`async`则是会在下载完JS之后马上执行，所以有可能会让script的执行顺序乱掉。
 
-
-
 ---
+
+### sum
+
+- 所以我们通常会把加载的CSS放到head，把JS放到body的最后。因为不想要JS阻塞页面的DOM元素的解析，而且同时先加载CSS便不会阻塞到浏览器的渲染，或者让浏览器多次进行重排重绘渲染。而且有时候JS需要操作DOM元素，如果需要操作的DOM元素是在script标签之后的话，则会出现获取不到DOM节点的尴尬情况。
+- 如果JS不需要做到操作DOM节点的操作。只是一些函数或者变量的声明，可以放到head上，不过注意需要放到CSS的前面，因为JS的解析需要最新的CSS RULE Tree，所以如果前面有未下载好的CSS的话，会让其被阻塞，而JS又会阻塞DOM的解析，最后会导致，JS在等CSS，而DOM又在等JS的卡主一切的情况。如果JS放到CSS前面的话，则在CSS进行下载的同时没有JS，则不会阻塞到DOM，所以可以在下载构成CSS RULE Tree的同时解析后续的DOM结构。
+
+
 
 - [CSS和JS在网页中的放置顺序](http://www.jianshu.com/p/0291ad9ac8fb)
 - [浏览器的渲染：过程与原理](https://zhuanlan.zhihu.com/p/29418126)
