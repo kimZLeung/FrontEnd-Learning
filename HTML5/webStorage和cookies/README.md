@@ -19,8 +19,7 @@ Session并不是sessionStorage。简单来说，Session是保存在服务端的�
 > 通过`document.cookie`的方式只能访问到同源的`cookie`，也就是第一方Cookie。
 
 
-更多[`Cookie`]资料(https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies)
-
+更多[`Cookie`资料](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies)
 
 ---
 
