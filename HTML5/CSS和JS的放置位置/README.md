@@ -4,6 +4,16 @@
 
 ### 浏览器的渲染过程
 
+1. DNS查询
+2. TCP连接
+3. HTTP请求响应
+4. 服务器响应
+5. 客户端渲染
+
+
+
+### 客户端渲染
+
 > 下载HTML文件，对HTML文件进行解析，构造DOM树，遇到link标签下载CSS文件，进行CSS下载，CSS的下载不会阻塞DOM的解析，但是会阻塞render Tree的合成，也就是会阻塞页面渲染，因为CSS构造出的CSS RULE Tree会与DOM Tree合成为render Tree，也就是会影响到最终排版渲染出来的实际页面。遇到script进行JS的下载，JS的下载会阻塞DOM的解析，因为JS可以通过DOM API来对DOM树进行修改。而且JS下载运行前会触发一次页面的渲染，因为JS除了可以修改DOM之外还可以动态修改DOM上面的style，甚至可以取得DOM上的Class的样式，所以每次遇到JS解析浏览器时会收到一次绘制请求，会渲染一遍页面。
 
 - CSS会阻塞渲染页面，不会阻塞DOM解析

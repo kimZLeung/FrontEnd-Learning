@@ -18,16 +18,21 @@
 			var worker = new SharedWorker('shareWorker.js')
 
 			f.onchange = function() {
-				worker.port.postMessage([f.value, s.value])
+				worker.port.postMessage([f.value, s.value, 2])
 			}
 
 			s.onchange = function() {
-				worker.port.postMessage([f.value, s.value])
+				worker.port.postMessage([f.value, s.value, 2])
 			}
 
-			worker.port.onmessage = function(e) {
-				res.textContent = e.data			
-			}
+			// worker.port.onmessage = function(e) {
+			// 	res.textContent = e.data
+			// }
+
+			worker.port.addEventListener('message', function (e) {
+				res.textContent = e.data
+			}, false)
+			worker.port.start()
 		}
 	</script>
 </body>
