@@ -33,7 +33,7 @@
 
 我们也可以使用float在让两边与中间重叠起来。
 
-```
+```css
 .left {
 	float: left;
 	width: 95px;
@@ -66,7 +66,7 @@
 > 不过使用圣杯布局最好需要设定最小宽度。因为当center块比right块宽度小时，right块会自动换行到第二行。因为那种宽度下已经无法在同一行装下right块了，所以自动换行。
 
 
-```
+```css
 /* 一个bd包着center，left，right三个子元素，利用padding来避免中间内容被挡 */
 .center {
    float: left;
@@ -103,7 +103,7 @@
 
 这样做的目的是：因为没有外面父容器设置到的padding，所以这一行宽度大上了许多，所以就改善了圣杯布局那种缩两缩就整个布局崩了的现象。
 
-```
+```css
 /* center-container只包含着center，通过设置center的margin使中间不被遮住 */
 .center-container {
     width: 100%;
@@ -130,7 +130,6 @@
     margin-left: -200px;
 }
 ```
-
 
 ---
 
