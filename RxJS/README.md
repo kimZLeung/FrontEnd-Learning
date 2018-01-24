@@ -49,6 +49,9 @@
 - `onCompleted`方法，如果是自己`create`的`Observable`的话可以用`Observer`的`onCompleted`方法结束这个`Observable`并调用这个回调函数
 
 ``` javascript
+/**
+ * create方法中传入的函数会在subscribe的时候被调用
+ */
 rx.Observable.create(function(observer) {
 	observer.next(42)		// emit onNext
 	observer.completed()	// emit onCompleted
@@ -72,14 +75,17 @@ rx.Observable.create(function(observer) {
 
 ## 热Observables和冷Observables
 
-> 顾名思义，热`Observables`是类似事件一类的`Observable`，不会随着订阅而开始启动更新数据，而是每时每刻都在更新数据。
-然而冷`Observables`则只会在我们`subscribe`之后才会开始数据更新和推送，如我们自己用`interval`创建出来的`Observable`（interval创建出来的会在订阅后每秒默认从1开始推送整数）
+> 顾名思义，热`Observables`是类似事件一类的`Observable`，不会随着订阅而开始启动更新数据，而是每时每刻都在更新数据。（实际上就是不会在订阅时创建初始化数据源）
+>
+> 
+>
+> 然而冷`Observables`则只会在我们`subscribe`之后才会开始数据更新和推送，如我们自己用`interval`创建出来的`Observable`（实际上就是在订阅时创建初始化数据源，interval创建出来的会在订阅后每秒默认从1开始推送整数）
 
 我们也可以用`publish`方法把`Cold Observables`转换为`Hot Observables`
 
 ``` javascript
-var source = Rx.Observable.interval(1000);
-var hot = source.publish()	// 使用publish把流转换为Hot Observables
+var source = Rx.Observable.interval(1000)
+var hot = source.publish()	// 使用publish把流转换为Hot Observables，publish是一个操作符，内部实现是通过subject将冷的单播observable接上，再返回出来，让冷的observable可以进行多播，被多个observer订阅，而且它返回的observable有一个connect方法用于启动数据推送更新
 hot.connect()				// 然后使用connect方法启动数据更新
 var subscription1
 var subscription2
@@ -88,18 +94,18 @@ setTimeout(function() {
   subscription1 = hot.subscribe(
     function (x) { console.log('Observer 1: onNext: ' + x); },
     function (e) { console.log('Observer 1: onError: ' + e.message); },
-    function () { console.log('Observer 1: onCompleted'); });
+    function () { console.log('Observer 1: onCompleted'); })
 
   subscription2 = hot.subscribe(
     function (x) { console.log('Observer 2: onNext: ' + x); },
     function (e) { console.log('Observer 2: onError: ' + e.message); },
-    function () { console.log('Observer 2: onCompleted'); });
+    function () { console.log('Observer 2: onCompleted'); })
 }, 5000)
 
 
 setTimeout(function () {
-  subscription1.dispose();
-  subscription2.dispose();
+  subscription1.dispose()
+  subscription2.dispose()
 }, 10000);
 ```
 
@@ -126,14 +132,14 @@ var subscription = Rx.Observable.fromEvent(document, 'mousemove')
 会出现这样的封装
 
 ``` javascript
-Rx.dom = {};
+Rx.dom = {}
 
 var events = "blur focus focusin focusout load resize scroll unload click dblclick " +
   "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-  "change select submit keydown keypress keyup error contextmenu";
+  "change select submit keydown keypress keyup error contextmenu"
 
 if (root.PointerEvent) {
-  events += " pointerdown pointerup pointermove pointerover pointerout pointerenter pointerleave";
+  events += " pointerdown pointerup pointermove pointerover pointerout pointerenter pointerleave"
 }
 
 if (root.TouchEvent) {
@@ -144,8 +150,8 @@ if (root.TouchEvent) {
 events.split(' ').forEach(function (e) {
   Rx.dom[e] = function (element, selector) {
     return Rx.Observable.fromEvent(element, e, selector);
-  };
-});
+  }
+})
 ```
 
 > 关于事件我们还可以使用`Rx.Observable.fromEventPattern(addHandler, [removeHandler], [selector])`，没太懂，设置了之后会调用第一个`addHandler`里面的语句，`addHandler`和`removeHandler`有同一个参数，是最后一个`selector`函数
