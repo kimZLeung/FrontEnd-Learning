@@ -45,6 +45,10 @@ app.use(router.routes()).use(router.allowedMethods())
 app.use(async (ctx) => {
 	console.log(ctx.request.url)
 	ctx.body = 'halo'
+	ctx.cookies.set(
+		'mainId',
+		'halo main',
+	)
 })
 
 app.listen(3000)
