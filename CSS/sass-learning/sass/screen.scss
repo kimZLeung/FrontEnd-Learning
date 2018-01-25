@@ -1,0 +1,68 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass";
+
+$haha: 180;
+$i: 3;
+@mixin ll($color, $width) {
+	border: {
+		color: $color;
+		width: $width;
+		style: dashed;
+	}
+}
+
+.haha {
+	width: #{$haha}px;
+
+	.xixi {
+		height: #{$haha}px;
+	}
+}
+
+pre {
+	@include ll(blue, 2px);
+}
+
+@for $i from 1 through 3 {
+	.ee-#{$i} {
+		width: 20px * $i;
+	}
+}
+
+@each $animal in puma, wawa,  {
+  .#{$animal}-icon {
+    background-image: url('/images/#{$animal}.png');
+  }
+}
+
+@while $i > 0 {
+	.eee-#{$i} {
+		width: 20px * $i
+	}
+	$i: $i - 1;
+}
+
+@function get-width($n) {
+	@return $n * 10 + $i
+}
+
+#haha {
+	width: get-width(1);
+}
+
+#heha {
+	width: get-width(1);
+}
+
+.container {
+	@include opacity(0.5);
+}
+
+.test {
+	@include clearfix;
+}
