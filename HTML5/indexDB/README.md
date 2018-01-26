@@ -6,8 +6,8 @@
 
 在页面上使用indexDB的基本方法（封装其接口）
 
-```
-var data=[{ 
+```javascript
+	var data=[{ 
         id:1,
         name:"kimz", 
         age:18
@@ -51,7 +51,7 @@ var data=[{
 
 ## 基本的增删查改
 
-```
+```js
 // add
 
 var store = db.transaction(storename,'readwrite').objectStore(storename)
@@ -67,7 +67,7 @@ for(var i = 0 ; i < data.length;i++){
 }
 ```
 
-```
+```js
 // put：通过重复添加更新已有数据
 
 var store = db.transaction(storename,'readwrite').objectStore(storename)
@@ -83,7 +83,7 @@ for(var i = 0 ; i < data.length;i++){
 }
 ```
 
-```
+```js
 // delete
 
 var store = db.transaction(storename,'readwrite').objectStore(storename);
@@ -91,7 +91,7 @@ store.delete(key)
 console.log('已删除存储空间'+storename+'中'+key+'记录')
 ```
 
-```
+```js
 // get
 
 var store = db.transaction(storename,'readwrite').objectStore(storename)
