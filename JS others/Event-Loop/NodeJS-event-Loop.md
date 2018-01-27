@@ -58,9 +58,11 @@ NodeJS的Event loop与浏览器的Event loop不一样，并不是分为两个队
 
 首先进入poll这个阶段会首先判断是否已经有设定的timer
 
-如果有，先判断timer是否到达下限时间，到了就执行timer的回调函数；反之则可以直接开始处理poll队列里面的事件，等到poll队列里面的事件清空，poll队列回到空闲状态的时候，再去检查timers,如果有1个或多个timers的下限时间已经到达，event loop将绕回 **timers** 阶段，并执行 **timer** 队列。 没有的话就下个阶段(check)。
+如果有，直接开始处理poll队列里面的事件，等到poll队列里面的事件清空，poll队列回到空闲状态的时候，再去检查timers,如果有1个或多个timers的下限时间已经到达，event loop将绕回 **timers** 阶段，并执行 **timer** 队列。 没有的话就下个阶段(check)。
 
 如果没有timer，则判断poll队列是否为空，如果不空，则开始历队列并同步执行回调，直到队列清空或执行的回调数到达系统上限；如果为空，则分两种情况：1. 如果设置了`setImmediate()`，则直接跳去check阶段执行check的队列； 2. 如果没有设置`setImmediate()`，event loop将阻塞在该阶段等待回调被加入 poll 队列，并立即执行。
+
+> 其实始终都是需要执行poll阶段需要执行的callback，但是若有timer则有可能会回到timer阶段
 
 
 #### check
@@ -71,7 +73,6 @@ check阶段是拿来执行`setImmediate()`
 #### close callbacks
 
 如果一个 socket 或 handle 被突然关掉（比如 socket.destroy()），close事件将在这个阶段被触发，否则将通过process.nextTick()触发。
-
 
 ---
 
