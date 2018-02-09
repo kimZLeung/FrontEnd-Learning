@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>层叠上下文与硬件加速的层</title>
+	<style>
+		@keyframes haha {
+			from { opacity: 1;  }
+			to { opacity: 0.1;  }
+		}
+	</style>
+</head>
+<body>
+	<!-- 对自己的 opacity 做 CSS 动画也可以创建一个层，放到GPU进行渲染，但是这种做法比较少。 不过这种做法并不会造成z-index比自己高的兄弟节点元素也创建层 -->
+	<div style="transform: translateZ(10px); position: relative;/* z-index: 3; animation:haha 2s infinite; */">123</div>
+	<div>456</div>
+	<div style="">
+	    <img src="mm1.jpg" alt="123" style="position:absolute; z-index:2;">
+	</div>
+	<div style="">
+	    <img src="mm2.jpg" alt="22222" style="position:relative; z-index:1;">
+	</div>
+	<hr />
+	<div style="position:relative; z-index:-1;">
+	    <img src="mm1.jpg" style="position:absolute; z-index:2;">
+	</div>
+	<div style="position:relative; z-index:-1;">
+	    <img src="mm2.jpg" style="position:relative; z-index:1;">
+	</div>
+	<hr />
+</body>
+</html>
