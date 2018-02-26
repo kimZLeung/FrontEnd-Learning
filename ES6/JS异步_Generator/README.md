@@ -22,11 +22,11 @@
 
 ---
 
-## 在说说Generator为何与iterator关系密切
+## 再说说Generator为何与iterator关系密切
 
 我们都知道，一个最简单的`Generator`如下
 
-```
+```js
 function* foo() {
 	for (var i = 0; i < 6; i++) {
 		yield i;
@@ -40,7 +40,7 @@ function* foo() {
 
 当然，我们更加方便的是可以直接用`Generator`函数作为对象的一个`[Symbol.iterator]`属性，这样我们就可以很方便地自行实现`[Symbol.iterator]`接口，不需要自己把`next`函数封装出来。比如：
 
-```
+```js
 // 直接使用上面的foo
 var bb = {}
 bb[Symbol.iterator] = foo
@@ -53,7 +53,7 @@ bb[Symbol.iterator] = foo
 
 如果在`Generator`函数内部，调用另一个`Generator`函数，默认情况下是没有效果的，such as
 
-```
+```js
 function* foo() {
   yield 'a'
   yield 'b'
@@ -74,7 +74,7 @@ for (let v of bar()) {
 
 如果想把这个遍历器展开，把内部的也输出的话，需要用到`yield*`
 
-```
+```js
 function* foo() {
   yield 'a'
   yield 'b'
@@ -95,7 +95,7 @@ for (let v of bar()){
 
 我想了想其实觉得这个并没有什么用，无非就是在一个`Generator`里面展开另外一个`Generator`，`Generator`无非就可以用来生成`iterator`，可以展开数组嘛。。。所以无非就是可以展开嵌套数组嘛...
 
-```
+```js
 function* iterTree(tree) {
   if (Array.isArray(tree)) {
   	// 如果这一项是数组，则遍历每一项并且使用yield* 递归自己进行展开
@@ -127,7 +127,7 @@ for(let x of iterTree(tree)) {
 
 它还可以与Promise配合，实现自动顺序执行多个异步操作
 
-```
+```js
 var gen = function* (){
   var f1 = yield readFile('/etc/fstab');
   var f2 = yield readFile('/etc/shells');
@@ -165,7 +165,7 @@ run(gen)
 
 看一下用法
 
-```
+```js
 function bar () {
 	return new Promise(function (res, rej) {
 		setTimeout(function () {
@@ -182,13 +182,13 @@ async function foo () {
 // haha
 ```
 
-看起来写法和`Generator`差不多，但是用法差挺多的，关于`async`详细说明可以点[这里](http://es6.ruanyifeng.com/#docs/async)
+看起来写法和`Generator`差不多，但是用法差挺多的，关于`async`详细说明可以[点这里](http://es6.ruanyifeng.com/#docs/async)
 
 总的来说就是并不需要像`Generator`这样生成`iterator`然后调用`next`来遍历，而是直接用await就可以等到`Promise`then出来的值。
 
 我们都知道async会返回`Promise`值，我们平时写，要不就是直接返回一个`Promise`，或者说返回一个`await`等回来的值（这个值一般会通过Promise.resolve包装）。其实async内部自己会执行一个自动执行器。跟刚刚说的差不多
 
-```
+```js
 // 参考一下阮老师的demo
 
 async function fn(args) {

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>like</title>
+	<style type="text/css">
+		.like-active {
+			animation: like .8s steps(28, start) 1 forwards;
+			display: inline-block;
+		}
+
+		.unlike {
+			animation: unlike .8s steps(28, start) 1 forwards;
+			display: inline-block;
+		}
+
+		@keyframes like {
+			from {
+				background-position: left;
+			}
+			to {
+				background-position: right;
+			}
+		}
+
+		@keyframes unlike {
+			from {
+				background-position: right;
+			}
+			to {
+				background-position: left;
+			}
+		}
+
+		.like {
+			background-image: url(./web_heart_animation_edge.png);
+			background-position: left;
+            background-repeat: no-repeat;
+			height: 100px;
+            width: 100px;
+            cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="like"></div>
+	<script>
+		var like = document.getElementsByTagName('div')[0]
+		like.onclick = function (e) {
+			if (like.className.indexOf('like-active') !== -1) {
+				like.className = 'like unlike'
+			} else {
+				like.className = 'like like-active'
+			}
+		}
+	</script>
+</body>
+</html>
