@@ -1,7 +1,5 @@
 ﻿# Node Stream
 
-标签（空格分隔）： Node
-
 ---
 
 ## Node-Stream
@@ -21,16 +19,16 @@
 
     var Transform = require('stream').Transform;
     util.inherits(TestStream, Transform);
-
+    
     function TestStream(options) {
       Transform.call(this, options);
     }
-
+    
     TestStream.prototype._transform = function(chunk, encoding, cb) {
       this.push(chunk+'|');
       cb();     // 相当于emit data事件
     };
-
+    
     TestStream.prototype._flush = function(cb) {
       cb('end');    // // 相当于emit end事件
     };
@@ -87,6 +85,6 @@ writable.on('drain', function () {
 [stream进阶篇][3]
 
 
-  [1]: http://purplebamboo.github.io/2014/11/30/gulp-analyze/
-  [2]: https://segmentfault.com/a/1190000000357044
-  [3]: http://fe.meituan.com/stream-internals.html
+[1]: http://purplebamboo.github.io/2014/11/30/gulp-analyze/
+[2]: https://segmentfault.com/a/1190000000357044
+[3]: http://fe.meituan.com/stream-internals.html
