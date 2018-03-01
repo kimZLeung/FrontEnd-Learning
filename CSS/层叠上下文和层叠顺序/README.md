@@ -29,7 +29,7 @@
 形成层叠上下文的几个条件：
 
 - 根元素天生层叠上下文
-- position为absolute/relative/fixed的元素，z-index不为auto时，可以形成层叠上下文
+- position为`absolute/relative`的元素，或者FireFox等内核不为-webkit-的浏览器`position: fixed`的元素，z-index不为auto时，可以形成层叠上下文
 - z-index不为auto的flex项（即flex布局里的item），可以形成层叠上下文
 - 元素的`opacity`值小于1，可以形成层叠上下文
 - 元素的`transform`值不为`none`，可以形成层叠上下文
@@ -45,7 +45,7 @@
 
 > 上面这句话就是说，一旦建立了层叠上下文，两个层叠上下文内部的元素不会有任何层叠比较，均以层叠上下文这一块谁高谁厉害
 
-```
+```html
 <div style="position:relative; z-index:auto;">
     <img src="xxx.jpg" style="position:absolute; z-index:2;">
 </div>
