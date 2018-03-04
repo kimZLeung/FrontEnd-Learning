@@ -128,15 +128,18 @@
 
 ```
 entry: [
-    'webpack-dev-server/client?http://127.0.0.1:8080',  // 加入inline配置
-    'webpack/hot/only-dev-server',                      // 加入hot配置
+    // 'webpack-dev-server/client?http://127.0.0.1:8080',  // 加入inline配置
+    // 'webpack/hot/only-dev-server',                      // 加入hot配置
     './index.js'
   ],
 
 // 插件写上
 plugins: [
     new webpack.HotModuleReplacementPlugin()
-  ]
+],
+devServer: {
+    hot: true
+}
 ```
 
 个人认为第二种方式有点...太过麻烦，而且`webpack-dev-server`现在的版本默认会有`GET "http://localhost:8888/sockjs-node/info?t=1506348178939".`也就是默认开启了`inline`模式。这样加入的话只会开启两个inline模式，也就是每次刷新文件都会有两次xhr请求，这样不好。
@@ -236,14 +239,14 @@ module: {
 当我们每次webpack打包的时候，我们或许打包出来的文件只有一个，对，但是这一个`bundle.js`包含了你`/src`目录下所有文件，各种各样的依赖的处理。而runtime就是为了处理这些模块之间的依赖而存在的。
 
 总结一下：
-- runtime：在模块交互时，连接模块所需的加载和解析逻辑。
+- runtime：在模块交互时，连接模块所需的加载和解析逻辑。如 `webpackJsonp`, `__webpack_require__` 等以及依赖的一系列模块。
 - manifest：保留所有模块的详细要点的一个数据合集，runtime通过这个数据合集来进行模块加载。
 
 所以我们每一次的打包这个runtime和manifest的数据合集都会产生变化，所以我们在使用`CommonsChunkPlugin`进行代码分离的时候，通常都会多加一步，把存在于`vendor.js`里面的runtime的代码单独打包出来作为一份`manifest.js`来直接引入，这样我们的`vendor.js`这个依赖库的js文件便不需要重新加载。
 
 ---
 
-## webpack chunk
+## Webpack chunk
 
 webpack的三种chunk：
 
@@ -253,8 +256,65 @@ webpack的三种chunk：
 
 
 
-entry chunk就是包含`runtime`运行时的块。
+entry chunk：就是包含`runtime`运行时的块。
 
-normal chunk就是使用jsonp包装加载的模块，通常来说就是通过`require.ensure`或者`import`异步加载进来的chunk
+normal chunk：就是使用jsonp包装加载的模块，通常来说就是通过`require.ensure`或者`import`异步加载进来的chunk
 
-initial chunk就是没有`runtime`的块，通常会由`CommonsChunkPlugin`产生。通过这个插件会把`manifest`文件抽出，当entry chunk失去了`runtime`时，就变成 了initial chunk了
+initial chunk：包含入口模块（module 0，其实就是入口文件打包出来的模块）的代码块。就是没有`runtime`的块，当entry chunk失去了`runtime`时，就变成 了initial chunk了
+
+---
+
+## Webpack 打包流程
+
+1. optimist 分析命令行传入的参数并以键值对的形式把参数对象保存在 `optimist.argv` 中。
+2. 将`optimist.argv`传入`./node_modules/webpack/bin/convert-argv.js`中，通过判断参数修改对应配置项。
+
+```js
+// 比如
+ifBooleanArg("hot", function() {
+    ensureArray(options, "plugins");
+    var HotModuleReplacementPlugin = require("../lib/HotModuleReplacementPlugin");
+    options.plugins.push(new HotModuleReplacementPlugin());
+});
+```
+
+3. 合并好之后返回配置项`option`，通过`var compiler = webpack(option)`获得`compiler`对象，调用`compiler.run(cb)`方法启动Webpack打包。以下为Webpack打包的事件节点（生命周期），可用于编写插件。
+
+   - compile：开始编译
+   - make：分析模块以及模块间的依赖，创建模块对象
+   - build-module：构建模块
+   - after-compile：完成构建
+   - seal：封装构建结果
+   - emit：把各个chunk输出到结果文件
+   - after-emit：完成输出
+
+4. `compiler.run`调用之后会创建`Compilation`对象，这个对象是每一次执行打包都会重新创建的对象，它主要负责：
+
+   - 组织整个打包过程，包含了每个构建环节及输出环节所对应的方法（通过这个对象上的方法进行构建和输出）
+   - 存放了所有的module，chunk，生成的asset以及用来生成最后打包文件的template信息
+
+5. 创建`module`之前，compiler会触发`make`事件，调用`Compilation.addEntry`方法。通过`option.entry`去寻找入口文件。
+
+6. 通过入口文件一步一步创建后续模块。构建模块分为三步
+
+   - 通过loader处理对应模块，生成一个JS Module
+   - 调用 [acorn](https://github.com/ternjs/acorn) 解析经 loader 处理后的源文件生成抽象语法树 AST
+   - 遍历AST，将`require`引入的模块保存到一个数组里，遍历完成后递归构建后续模块
+
+7. 所有模块都构建完成后，Webpack触发`seal`事件，逐次对每个 module 和 chunk 进行整理，生成编译后的源码，合并，拆分，生成 hash
+
+8. 封装过程中会生成最终 assets
+
+   - 首屏就需要加载的JS和需要异步加载的JS会选择不同的模板对象进行封装
+
+   ```js
+   if(chunk.entry) {
+     source = this.mainTemplate.render(this.hash, chunk, this.moduleTemplate, this.dependencyTemplates);
+   } else {
+     source = this.chunkTemplate.render(chunk, this.moduleTemplate, this.dependencyTemplates);
+   }
+   ```
+
+   - 各模块进行 doBlock 后，把 module 的最终代码循环添加到 source 中。一个 source 对应着一个 asset 对象，asset对象保存了单个文件的文件名( name )和最终代码( value )。
+
+9. 调用 Compiler 中的 `emitAssets()` ，按照 output 中的配置项将文件输出到了对应的 path 中

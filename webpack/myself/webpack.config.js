@@ -1,4 +1,5 @@
 var path = require('path')
+var webpack = require('webpack')
 var kimzPlugin = require('./plugins/kimz-plugins.js')
 var outputPath = path.resolve(__dirname, 'dist')
 
@@ -27,9 +28,13 @@ module.exports = {
 			}]
 		}]
 	},
+	devServer: {
+		hot: true
+	},
 	plugins: [
 		new kimzPlugin({
 			haha: ' - kimz !'
-		})
+		}),
+		new webpack.HotModuleReplacementPlugin()
 	]
 }
