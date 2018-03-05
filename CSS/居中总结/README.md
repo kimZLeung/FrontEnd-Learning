@@ -11,7 +11,7 @@
 - 这个真的很简单，定宽嘛，直接`margin: 0 auto;`就行了
 - 或者不想用`margin`，可以使用`transform`或者负`margin`（注意兼容）
 
-```
+```css
 position: absolute;
 top: 50%;
 left: 50%;
@@ -31,7 +31,7 @@ margin-left: -50px;		/* 父元素宽度的一半 */
 - 将内部元素设置成`inline-block`，然后设置父元素的`text-align: center;`
 - 或者可以使用`flex`
 
-```
+```css
 /* flex */
 
 .container{
@@ -58,7 +58,7 @@ margin-left: -50px;		/* 父元素宽度的一半 */
 - 单行行内元素只需要将内联元素的`line-height`设置为等于高度即可利用`line-height`的一个垂直居中性直接实现垂直居中
 - 或者使用内联元素的`vertical-align: middle`
 
-```
+```css
 .container {
 	background: pink;
 	padding: 0px;
@@ -72,7 +72,7 @@ margin-left: -50px;		/* 父元素宽度的一半 */
 
 - 还可以采用`flex`布局
 
-```
+```css
 .container{
     width: 250px;
     height: 200px;
@@ -93,7 +93,7 @@ margin-left: -50px;		/* 父元素宽度的一半 */
 
 - 前面提到的`absolute`和负`margin`和`transform`都可以实现。不过都需要定宽高
 
-```
+```css
 /* absolute例子 */
 .container {
 	position: relative; 
@@ -115,7 +115,7 @@ margin-left: -50px;		/* 父元素宽度的一半 */
 
 - `flex`布局的两个关键属性设置之后可以直接将子元素水平垂直居中
 
-```
+```css
 .container{
     width: 250px;
     height: 200px;
