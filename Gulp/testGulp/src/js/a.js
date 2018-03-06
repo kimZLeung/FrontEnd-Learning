@@ -1,6 +1,6 @@
 var btn = document.getElementById('haha');
 btn.onclick = function(e) {
-	console.log('bbbbbibibibbi');
+	console.log('dcc');
 }
 
-var index = require('./index.js')
+// var index = require('./index.js')

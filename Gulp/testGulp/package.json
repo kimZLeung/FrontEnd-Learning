@@ -4,14 +4,25 @@
   "description": "soso",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp",
+    "dev": "gulp dev",
+    "build": "gulp build",
+    "cp": "gulp cp"
   },
   "author": "ljc",
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.5.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-minify-html": "^1.0.6",
     "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.0.0"
+    "gulp-rev": "^8.1.1",
+    "gulp-uglify": "^2.1.2"
+  },
+  "dependencies": {
+    "gulp-rev-collector": "^1.2.4"
   }
 }
