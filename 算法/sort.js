@@ -1,4 +1,5 @@
 var _kimzSort = function () {
+  // 用于归并排序的数组合并
   var merge = function (left, right) {
     var result = []
     while (left.length > 0 && right.length > 0) {
@@ -10,10 +11,41 @@ var _kimzSort = function () {
     }
     return result.concat(left).concat(right)
   }
+
+  // 用于小内存开销快排的核心：移动元素的工具方法
+  function partition (arr, left, right) {
+    var pivot = left
+    var index = pivot + 1
+    for (var i = index; i <= right; i++) {
+      if (arr[i] < arr[pivot]) {
+        var iTemp = arr[i]
+        arr[i] = arr[index]
+        arr[index] = iTemp
+        index++
+      }
+    }
+    var oTemp = arr[pivot]
+    arr[pivot] = arr[index - 1]
+    arr[index - 1] = oTemp
+    return index - 1
+  }
   
   return {
+    // 内存开销较小的快排实现
+    smallQuickSort: function smallQuickSort (a, left, right) {
+      var len = a.length
+      var partitionIdx = 0
+      left = typeof left !== 'number' ? 0 : left
+      right = typeof right !== 'number' ? len - 1 : right
+      if (left < right) {
+        partitionIdx = partition(a, left, right)
+        smallQuickSort(a, left, partitionIdx - 1)
+        smallQuickSort(a, partitionIdx + 1, right)
+      }
+      return a
+    },
     // 快排
-    quickSort: function (a) {
+    quickSort: function quickSort (a) {
       if (a.length <= 1) {
         return a
       }
