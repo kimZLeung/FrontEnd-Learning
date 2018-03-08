@@ -44,7 +44,7 @@
 
 `subscribe`是一个订阅流的方法，这个方法可以传入三个参数，分别是三个函数`onNext`、`onError`、`onCompleted`
 
-- `onNext`是在`Observable`调用`onNext()`方法时会调用，一般在事件触发时就会调用（所以我们处理事件时`subscribe`只传的那一个回调其实是`onNext`函数）。如果是自己`create`的`Observer`可以调用`Observable`的`onNext`方法去启动`onNext`回调
+- `onNext`是在`Observable`调用`next()`方法时会调用，一般在事件触发时就会调用（所以我们处理事件时`subscribe`只传的那一个回调其实是`onNext`函数）。如果是自己`create`的`Observer`可以调用`Observable`的`onNext`方法去启动`onNext`回调
 - `onError`方法...就跟`Promise`那个差不多，抛出错误时调用
 - `onCompleted`方法，如果是自己`create`的`Observable`的话可以用`Observer`的`onCompleted`方法结束这个`Observable`并调用这个回调函数
 

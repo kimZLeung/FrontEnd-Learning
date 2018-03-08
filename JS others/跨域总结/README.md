@@ -90,7 +90,7 @@ XSS攻击可以设置cookie的HttpOnly属性，进行一定程度上的防范。
 
 若一个页面需要另一个页面的数据，可以这样做
 
-```
+```js
 // 主页面
 
 let ifr = document.createElement('iframe')
@@ -111,7 +111,7 @@ window.addEventListener('hashchange', function(e) {
 })
 ```
 
-```
+```js
 // 另一个域的页面，通过iframe的parent对象访问上层页面修改上层页面的location.hash值来传递信息
 
 switch(location.hash) {
@@ -133,7 +133,7 @@ function callback() {
 }
 ```
 
-```
+```js
 // 第三个页面
 
 parent.parent.location.hash = self.location.hash.substring(1)
@@ -143,7 +143,7 @@ parent.parent.location.hash = self.location.hash.substring(1)
 
 window.name是一个神奇的属性，比如
 
-```
+```js
 window.name = "Hello World"
 window.location = "http://www.baidu.com"
 console.log(window.name) 	// Hello World
@@ -151,7 +151,7 @@ console.log(window.name) 	// Hello World
 
 就是跳转了页面之后仍然可以通过`window.name`访问这个窗口的这个属性。所以我们可以通过`iframe`来实现这种跳转。然后通过访问iframe的`window.name`属性获取到另一个域的数据
 
-```
+```js
 // yyy/a.html
 
 let data = ''
@@ -169,7 +169,7 @@ ifr.onload = function() {
 ```
 
 
-```
+```js
 // xxx/b.html
 
 window.name = '需要的跨域数据'
@@ -180,7 +180,7 @@ window.name = '需要的跨域数据'
 
 这个API是HTML5新增的。可以通过这个与iframe互相收发信息。
 
-```
+```js
 <iframe src="xxx/b.html" style='display: none;'></iframe>
 <script>
 window.onload = function() {
@@ -193,7 +193,7 @@ window.addEventListener('message', function(e) {
 </script>
 ```
 
-```
+```js
 // b.html
 
 window.addEventListener('message', function(e) {
@@ -212,7 +212,7 @@ window.addEventListener('message', function(e) {
 
 但是我们可以通过设置`document.domain`来实现通信
 
-```
+```js
 document.domain = 'xxx.com'
 let ifr = document.createElement('iframe')
 ifr.src = 'http://sub.example.com/b.html'
@@ -224,7 +224,7 @@ ifr.onload = function() {
 }
 ```
 
-```
+```js
 document.domain = 'xxx.com'
 window.data = 'haha'
 ```

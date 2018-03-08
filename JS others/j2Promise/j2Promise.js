@@ -166,9 +166,11 @@ function final (status, val) {
 			val = fn.call(promise, val) || val
 		}
 
+		// 把输出的结果保存到自己这个promise上
 		promise[nowStatus ? 'value' : 'reason'] = val
-		promise['resolver'] = void 666
-		promise['rejecter'] = void 666
+		// 状态已经改变了没有必要再继续维护两个队列，置空等待回收
+		promise['resolver'] = null
+		promise['rejecter'] = null
 
 	}, 0)
 }
