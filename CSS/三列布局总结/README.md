@@ -112,8 +112,10 @@
 }
 
 .center {
+    height: 100%;
     margin-left: 200px;
     margin-right: 200px;
+    background: #39c;
 }
 
 .left {
@@ -121,6 +123,7 @@
     height: 200px;
     float: left;
     margin-left: -100%;
+    background: #f60;
 }
 
 .right {
@@ -128,6 +131,7 @@
     height: 200px;
     float: left;
     margin-left: -200px;
+    background: #666;
 }
 ```
 

@@ -45,14 +45,37 @@ j2Promise.prototype.then = function (succ, fail) {
 			reject(reason)
 		}
 
-		if (promise.status === 'pending') {
-			promise.resolver.push(handle)
-			promise.rejecter.push(err)
-		} else if (promise.status === 'fullfill') {
-			handle(promise.value)
-		} else if (promise.status === 'reject') {
-			err(promise.reason)
-		}
+		/**
+		 * [这个setTimeout是必须的]
+		 * 
+		 * 执行效果可能很难看出有什么不同
+		 * 但是就原生的Promise API而言，传入Promise构造函数的函数是同步执行的
+		 * 然而通过then传入的后续的处理函数其实是异步执行的，而我们通过then把处理函数挂载上去Promise这一步其实是同步的
+		 * 所以如果这里不用setTimeout把这一段代码设置成异步：
+		 * 我们将会在执行new Promise的同时同步resolve这个Promise并且同步执行到then挂载的处理函数
+		 * 这样子可以说是不太符合原生Promise API吧
+		 *
+		 * 可以试一下跟原生的Promise对比一下这段(分别用j2Promise和Promise试一下，就知道这个的区别)
+		 *
+		 * var p = new Promise((res, rej) => {
+		 *     res('p')
+		 * })
+		 * console.log(p)
+		 *
+		 * 但是原生的Promise并不是用setTimeout实现异步的（这里只是一个简单的模拟），因为浏览器内部存在两条异步队列
+		 * macrotask和mircotask两条任务队列，而Promise的then的异步队列是属于微任务队列
+		 * setTimeout所在的任务队列是宏任务队列。
+	 	*/
+		setTimeout(function () {
+			if (promise.status === 'pending') {
+				promise.resolver.push(handle)
+				promise.rejecter.push(err)
+			} else if (promise.status === 'fullfill') {
+				handle(promise.value)
+			} else if (promise.status === 'reject') {
+				err(promise.reason)
+			}
+		}, 0)
 
 	})
 }
@@ -144,33 +167,17 @@ function final (status, val) {
 	var nowStatus
 	if (promise.status !== 'pending') return
 
-	/**
-	 * [这个setTimeout是必须的]
-	 * 
-	 * 执行效果可能很难看出有什么不同
-	 * 但是就原生的Promise API而言，传入Promise构造函数的函数是同步执行的
-	 * 然而通过then传入的后续的处理函数其实是异步执行的，而我们通过then把处理函数挂载上去Promise这一步其实是同步的
-	 * 所以如果这里不用setTimeout把这一段代码设置成异步：
-	 * 我们将会在执行new Promise的同时同步resolve这个Promise并且同步执行到then挂载的处理函数
-	 * 这样子可以说是不太符合原生Promise API吧
-	 *
-	 * 但是原生的Promise并不是用setTimeout实现异步的（这里只是一个简单的模拟），因为浏览器内部存在两条异步队列
-	 * macrotask和mircotask两条任务队列，而Promise的then的异步队列是属于微任务队列
-	 * setTimeout所在的任务队列是宏任务队列。
-	 */
-	setTimeout(function() {
-		promise.status = status
-		nowStatus = promise.status === 'fullfill'
-		queue = promise[nowStatus ? 'resolver' : 'rejecter']
-		while (fn = queue.shift()) {
-			val = fn.call(promise, val) || val
-		}
+	promise.status = status
+	nowStatus = promise.status === 'fullfill'
+	queue = promise[nowStatus ? 'resolver' : 'rejecter']
+	while (fn = queue.shift()) {
+		val = fn.call(promise, val) || val
+	}
 
-		// 把输出的结果保存到自己这个promise上
-		promise[nowStatus ? 'value' : 'reason'] = val
-		// 状态已经改变了没有必要再继续维护两个队列，置空等待回收
-		promise['resolver'] = null
-		promise['rejecter'] = null
+	// 把输出的结果保存到自己这个promise上
+	promise[nowStatus ? 'value' : 'reason'] = val
+	// 状态已经改变了没有必要再继续维护两个队列，置空等待回收
+	promise['resolver'] = null
+	promise['rejecter'] = null
 
-	}, 0)
 }

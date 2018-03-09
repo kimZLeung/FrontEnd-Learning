@@ -43,9 +43,9 @@ http.createServer(function(request, response) {
 						response.end('<html><head><title>404</title></head><body><h1>404</h1> <h1>Not Found</h1></body></html>');
 					} else {
 						// 若有index.html则重定向到index.html的地址
-						console.log('301', indexPath);
+						console.log('301', reUrl);
 						response.writeHead(301, {
-							'Location': reUrl + '/index.html'
+							'Location': reUrl + 'index.html'
 						})
 						response.end()
 					}
