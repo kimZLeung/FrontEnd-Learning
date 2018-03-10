@@ -9,6 +9,16 @@
 
 > 这是纯函数被黑的最惨的一次 QwQ
 
+## 纯函数
+
+> 可以理解为一种相同的输入必定有相同的输出的函数，没有任何可以观察到副作用，也就是执行了纯函数之后，不会对原来的数据有影响
+
+## 纯函数的优点
+
+- 更加容易被测试，因为它们唯一的职责就是根据输入计算输出
+- 结果可以被缓存，因为相同的输入总会获得相同的输出
+- 更容易被调用，因为你不用担心函数会有什么副作用
+
 ---
 ## 从了解curry开始
 > 恩，函数式编程的世界里的确到处充满着纯函数。可以说纯函数从头到尾贯穿了函数式编程！
@@ -216,6 +226,6 @@ Right.prototype.map = function(f) {
 
   [1]: http://www.ruanyifeng.com/blog/2017/03/pointfree.html
   [2]: https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/
-  [3]: http://insights.thoughtworkers.org/functional-javascript/?utm_source=tuicool&utm_medium=referral
+  [3]: http://insights.thoughtworkers.org/functional-javascript/?utm_source=tuicool&amp;utm_medium=referral
   [4]: https://zhuanlan.zhihu.com/p/21714695
   [5]: http://blog.jobbole.com/77956/

@@ -1,3 +1,24 @@
+const curry = fn => {
+  const curried = (...args) => args.length >= fn.length ?
+    fn.call(this, ...args) :
+    (...rest) => curried.call(this, ...args, ...rest);
+  return curried;
+}
+
+// 更加简单的curry版本，通过闭包访问原函数fn，每一次执行时判断参数长度，每一次调用时保存加入新的参数。
+const _curry = (fn) => {
+	const curried = (...args) => {
+		if (args.length >= fn.length) {
+			return fn.call(this, ...args)
+		} else {
+			return (...rest) => {
+				return curried.call(this, ...args, ...rest)
+			}
+		}
+	}
+	return curried
+}
+
 function curry(fn, length) {
 	var len = length || fn.length
 	return function() {

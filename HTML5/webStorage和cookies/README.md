@@ -31,7 +31,7 @@ WebStorage包含了localStorage 和 sessionStorage
 
 - 前面也提到，cookie数据始终在**同源**的http请求中携带，而WebStorage的数据**仅仅会在客户端中保存**，并不会自动把数据传过去服务器。
 - 因为WebStorage的数据不会传到服务端，所以它和Cookies的存储大小的限制不同。cookie 数据不能超过**4k**，sessionStorage和 localStorage可以达到**5M**左右。
-- **数据有效期不同。**cookie在设置的有效期（服务端设置）内有效，不管窗口或者浏览器是否关闭。sessionStroage仅在当前浏览器窗口关闭前有效（也就是说只要这个浏览器窗口没有关闭，即使刷新页面，数据仍然存在。关闭窗口后，sessionStorage即被销毁）；localStroage始终有效，窗口或者浏览器关闭也一直保存
+- **数据有效期不同。**cookie在设置的有效期（服务端设置）内有效，不管窗口或者浏览器是否关闭。sessionStroage仅在当前浏览器窗口（更贴切的说是当前的标签）关闭前有效（也就是说只要这个浏览器标签没有关闭，即使刷新页面，数据仍然存在。关闭窗口后，sessionStorage即被销毁）；localStroage始终有效，窗口或者浏览器关闭也一直保存
 - **作用域不同。**sessionStorage不在不同的浏览器**窗口**中共享，即使是同一个页面（就是说在同一标签页中，就算进行页面跳转，sessionStorage里面的数据也不会被消除，但是如果是不同的两个标签页的话就不会共享sessionStorage里面的数据，即使是同源，即使是同一个页面）；localStorage 在所有同源窗口中都是共享的；cookie 也是在所有同源窗口中都是共享的。
 - localStorage支持事件通知机制，可以将数据更新的通知发送给监听者，注意：很容易犯的错误是，在同一个网页修改本地存储，又在同一个网页监听，这样是没有效果的。这个监听是提供给同源的不同页面进行`storage`监听的
 
