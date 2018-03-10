@@ -17,7 +17,7 @@ BFC的规则：
 
 ---
 
-## 创建BFC（某些属性不能有，比如float: none和overflow: visible）
+## 创建BFC（满足以下至少一个条件）
 
 - float：属性不为none
 - position：属性为absolute或者fixed
