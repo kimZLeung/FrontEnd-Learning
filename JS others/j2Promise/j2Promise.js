@@ -42,7 +42,7 @@ j2Promise.prototype.then = function (succ, fail) {
 		function err (reason) {
 			// 因为我们平时使用Promise的时候都很少会用到then的第二个参数，即fail回调函数应该为undefined，所以做一个兼容，把reason直接穿透Promise传下去，只到有catch函数捕获它
 			reason = typeof fail === 'function' && fail(reason) || reason
-			reject(reason)
+			resolve(reason)
 		}
 
 		/**

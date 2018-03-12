@@ -109,7 +109,7 @@ var _kimzSort = function () {
         var min = a[i]
         var k = i
         for (var j = i + 1; j < a.length; j++) {
-          if (min > a[j]) {
+          if (min < a[j]) {
             min = a[j]
             k = j
           }
@@ -129,7 +129,7 @@ var _kimzSort = function () {
         //设置增量
         increment = Math.floor(increment / 3) + 1
         for (i = increment ; i < a.length; i++) {
-          console.log('本趟比较的增量设置为：', increment)
+          // console.log('本趟比较的增量设置为：', increment)
           if (a[i] < a[i - increment]) {
             temp = a[i]
             // 这里相当于插入排序，以increment为增量分出的一组的插入排序，前面的已经是有序序列
