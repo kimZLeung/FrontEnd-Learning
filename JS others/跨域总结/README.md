@@ -8,6 +8,17 @@
 
 跨域的概念：简单说来，只有当协议，域名，端口相同的时候才算是同一个域名，否则均认为需要做跨域的处理。
 
+| URL                                                          |              说明              |              是否允许通信              |
+| :----------------------------------------------------------- | :----------------------------: | :------------------------------------: |
+| [http://www.a.com/a.js](https://link.jianshu.com?t=http://www.a.com/a.js)  [http://www.a.com/b.js](https://link.jianshu.com?t=http://www.a.com/b.js) |           同一域名下           |                  允许                  |
+| [http://www.a.com/lab/a.js](https://link.jianshu.com?t=http://www.a.com/lab/a.js)  [http://www.a.com/script/b.js](https://link.jianshu.com?t=http://www.a.com/script/b.js) |      同一域名下不同文件夹      |                  允许                  |
+| [http://www.a.com:8000/a.js](https://link.jianshu.com?t=http://www.a.com:8000/a.js)  [http://www.a.com/b.js](https://link.jianshu.com?t=http://www.a.com/b.js) |       同一域名，不同端口       |                 不允许                 |
+| [http://www.a.com/a.js](https://link.jianshu.com?t=http://www.a.com/a.js)  [https://www.a.com/b.js](https://link.jianshu.com?t=https://www.a.com/b.js) |       同一域名，不同协议       |                 不允许                 |
+| [http://www.a.com/a.js](https://link.jianshu.com?t=http://www.a.com/a.js)  [http://70.32.92.74/b.js](https://link.jianshu.com?t=http://70.32.92.74/b.js) |        域名和域名对应ip        |                 不允许                 |
+| [http://www.a.com/a.js](https://link.jianshu.com?t=http://www.a.com/a.js)  [http://script.a.com/b.js](https://link.jianshu.com?t=http://script.a.com/b.js) |       主域相同，子域不同       |                 不允许                 |
+| [http://www.a.com/a.js](https://link.jianshu.com?t=http://www.a.com/a.js)  [http://file.a.com/b.js](https://link.jianshu.com?t=http://file.a.com/b.js) | 同一域名，不同二级域名（同上） | 不允许（cookie这种情况下也不允许访问） |
+| [http://www.cnblogs.com/a.js](https://link.jianshu.com?t=http://www.cnblogs.com/a.js)  [http://www.a.com/b.js](https://link.jianshu.com?t=http://www.a.com/b.js) |            不同域名            |                 不允许                 |
+
 ---
 
 ## 为什么要做同源策略
