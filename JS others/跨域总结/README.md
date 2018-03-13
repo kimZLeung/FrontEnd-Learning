@@ -93,7 +93,7 @@
 
 缺点：
 
-- 它支持 GET 请求而不支持 POST 等其它类行的 HTTP 请求。
+- 它支持 GET 请求而不支持 POST 等其它类型的 HTTP 请求。
 
 ## CORS
 
@@ -101,7 +101,7 @@
 
 在服务端返回的响应的响应头加上特殊的字段
 
-```
+```js
 'Access-Control-Allow-Origin': '*'
 ```
 
