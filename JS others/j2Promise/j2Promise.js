@@ -7,23 +7,28 @@ var j2Promise = function (fn) {
 	self.rejecter = []
 
 	function resolve (value) {
-		final.apply(self, ['fullfill', value])
+		final.apply(self, ['resolved', value])
 	}
 
 	function reject (err) {
-		final.apply(self, ['reject', err])
+		final.apply(self, ['rejected', err])
 	}
 
 	if (fn && typeof fn === 'function') {
-		fn(resolve, reject)
+		try {
+			fn(resolve, reject)
+		} catch (e) {
+			reject(e)
+		}
 	}
 }
 
 j2Promise.prototype.then = function (succ, fail) {
 	var promise = this
 
-	return new Promise(function (resolve, reject) {
+	return new j2Promise(function (resolve, reject) {
 		function handle (value) {
+			// var ret = typeof succ === 'function' && succ(value) || value
 			var ret = typeof succ === 'function' && succ(value) || value
 
 			if (ret && typeof ret['then'] == 'function') {
@@ -40,9 +45,23 @@ j2Promise.prototype.then = function (succ, fail) {
 		}
 
 		function err (reason) {
-			// 因为我们平时使用Promise的时候都很少会用到then的第二个参数，即fail回调函数应该为undefined，所以做一个兼容，把reason直接穿透Promise传下去，只到有catch函数捕获它
-			reason = typeof fail === 'function' && fail(reason) || reason
-			resolve(reason)
+			var ret = typeof fail === 'function' && fail(reason)
+			if (typeof fail === 'undefined') {
+				// 若没有传入第二个参数处理错误，保留错误信息，并通过reject这个Promise将错误继续传到下一个Promise
+				reject(reason)
+			} else if (typeof fail === 'function') {
+				if (ret && typeof ret['then'] == 'function') {
+					ret.then(function (value) {
+						resolve(value)
+					}, function (reason) {
+						reject(reason)
+					})
+				} else {
+					resolve(ret)
+				}
+			} else {
+				console.error('then的第二个参数请传入函数')
+			}
 		}
 
 		/**
@@ -67,13 +86,17 @@ j2Promise.prototype.then = function (succ, fail) {
 		 * setTimeout所在的任务队列是宏任务队列。
 	 	*/
 		setTimeout(function () {
-			if (promise.status === 'pending') {
-				promise.resolver.push(handle)
-				promise.rejecter.push(err)
-			} else if (promise.status === 'fullfill') {
-				handle(promise.value)
-			} else if (promise.status === 'reject') {
-				err(promise.reason)
+			try {
+				if (promise.status === 'pending') {
+					promise.resolver.push(handle)
+					promise.rejecter.push(err)
+				} else if (promise.status === 'resolved') {
+					handle(promise.value)
+				} else if (promise.status === 'rejected') {
+					err(promise.reason)
+				}
+			} catch (e) {
+				reject(e)
 			}
 		}, 0)
 
@@ -90,6 +113,24 @@ j2Promise.resolve = function (p) {
 	})
 }
 
+j2Promise.reject = function (p) {
+	return new j2Promise(function (res, rej) {
+		rej(p)
+	})
+}
+
+j2Promise.prototype.finally = function (callback) {
+  return this.then(function (val) {
+  	return j2Promise.resolve(callback()).then(function () {
+  		return val
+  	})
+  }, function (err) {
+  	return j2Promise.resolve(callback()).then(function () {
+  		return err
+  	})
+  })
+}
+
 j2Promise.all = function (list) {
 	if (Object.prototype.toString.call(list) === '[object Array]') {
 		var len = list.length
@@ -100,7 +141,6 @@ j2Promise.all = function (list) {
 
 			function resolver (index, value) {
 				result[index] = value
-				console.log(index, value)
 				if (--count === 0) {
 					res(result)
 				}
@@ -168,7 +208,7 @@ function final (status, val) {
 	if (promise.status !== 'pending') return
 
 	promise.status = status
-	nowStatus = promise.status === 'fullfill'
+	nowStatus = promise.status === 'resolved'
 	queue = promise[nowStatus ? 'resolver' : 'rejecter']
 	while (fn = queue.shift()) {
 		val = fn.call(promise, val) || val
@@ -179,5 +219,4 @@ function final (status, val) {
 	// 状态已经改变了没有必要再继续维护两个队列，置空等待回收
 	promise['resolver'] = null
 	promise['rejecter'] = null
-
 }
