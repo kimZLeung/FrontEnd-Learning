@@ -33,3 +33,17 @@ JS作为一门神奇又灵活的语言。其最鲜明的特色之一就是高阶
 
 见[j2Promise.js](https://github.com/kimZLeung/FrontEnd-Learning/blob/master/JS%20others/j2Promise/j2Promise.js)
 
+
+
+---
+
+## j2Promise修复
+
+修复：
+
+- [x] `then`方法第二个参数修复，传入可catch错误并且返回一个`resolved`的`j2Promise`
+- [x] 内部`try/catch`捕获错误，保证代码不会出现执行中断，并且将错误通过`j2Promise` 链传下去
+- [x] `then` 中的异步代码加入`try/catch` 操作，并且将错误通过`j2Promise` 链传下去
+- [x] 加入`catch` 方法，用于代替`then` 方法第二个参数处理`rejected`的`j2Promise`
+- [x] 加入`finally`方法，用于无条件顺序执行操作并且透明传输值。
+
