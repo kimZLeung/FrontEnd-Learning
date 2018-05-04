@@ -1,0 +1,1 @@
+{"dependencies":[{"name":"./index.js","dynamic":true}],"generated":{"html":"<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<meta charset=\"utf-8\">\r\n\t<title>parcel-bundler</title>\r\n</head>\r\n<body>\r\n\t<h1>halo parcel</h1>\r\n\t<script src=\"/parcel.db3e36e1.js\"></script>\r\n</body>\r\n</html>"},"hash":"1bbe0c50a917c8811ca77dc428233088","cacheData":{}}

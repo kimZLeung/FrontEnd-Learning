@@ -20,10 +20,5 @@
 
 React这种形式声明的组件里，`constructor`函数里面需要有`super()`
 
-因为ES6里面的class语法里，通过`extends`继承父类的class在`constructor`里面必须调用`super`才能初始化`this`，而如果需要在`constructor`内部访问到`props`，则需要把`props`传入`super`，就像`super(props)`
-
----
-# **to be continued...**
-
-
+因为ES6里面的class语法里，通过`extends`继承父类的class在`constructor`里面必须调用`super`才能初始化`this`，而如果需要在`constructor`内部访问到`props`，则需要把`props`传入`super`，就像这样`super(props)`
 

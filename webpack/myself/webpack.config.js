@@ -28,13 +28,13 @@ module.exports = {
 			}]
 		}]
 	},
-	devServer: {
-		hot: true
-	},
+	// devServer: {
+	// 	hot: true
+	// },
 	plugins: [
 		new kimzPlugin({
 			haha: ' - kimz !'
 		}),
-		new webpack.HotModuleReplacementPlugin()
+		// new webpack.HotModuleReplacementPlugin()
 	]
 }

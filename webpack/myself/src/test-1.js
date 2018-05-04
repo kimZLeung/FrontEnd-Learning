@@ -1,4 +1,4 @@
-var kimz = 'haha'
+var kimz = 'hahaa'
 
 console.log(kimz)
 kim.kimz()
